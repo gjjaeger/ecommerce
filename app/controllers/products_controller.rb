@@ -1,11 +1,14 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  require "stripe"
 
   # GET /products
   # GET /products.json
   def index
     @products = Product.all
     @order_item = current_order.order_items.new
+    @order_items = current_order.order_items
   end
 
   # GET /products/1
@@ -27,8 +30,38 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
 
+    Stripe.api_key = "sk_test_dcJW97Ip8Tjmj2e3Vjtiu6Tq"
+    product = Stripe::Product.create(
+      :name => product_params[:name],
+      :description => product_params[:description],
+      :attributes => ['size', 'weight']
+    )
+
+    sku = Stripe::SKU.create(
+      :product => product.id,
+      :attributes => {
+        'size' => product_params[:size],
+        'weight' => product_params[:weight]
+      },
+      :price => (Integer(product_params[:price])*100),
+      :currency => 'usd',
+      :inventory => {
+        'type' => 'finite',
+        'quantity' => 1
+      }
+    )
+
     respond_to do |format|
       if @product.save
+
+        if params[:images]
+          params[:images].each { |image|
+            @product.images.create(:photo=> image, :product_id => @product.id)
+          }
+        end
+        @product.sku_id = sku.id
+        @product.product_id = product.id
+        @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
@@ -70,6 +103,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:price, :name)
+      params.require(:product).permit(:price, :name, :size, :weight, :description,:params, images_attributes: [:photo, :product_id])
     end
 end

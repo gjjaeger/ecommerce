@@ -25,6 +25,26 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
+    Stripe::Order.create(
+      :currency => 'usd',
+      :items => [
+        {
+          :type => 'sku',
+          :parent => sku.id
+        }
+      ],
+      :shipping => {
+        :name => 'Matthew Davis',
+        :address => {
+          :line1 => '1234 Main Street',
+          :city => 'San Francisco',
+          :state => 'CA',
+          :country => 'US',
+          :postal_code => '94111'
+        }
+      },
+      :email => 'matthew.davis@example.com',
+    )
 
     respond_to do |format|
       if @order.save

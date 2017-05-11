@@ -4,34 +4,46 @@
 
 <% @products.each do |product| %>
  <p><%= product.name %> | <%= number_to_currency product.price %>
+  <% if !product.images.empty?%>
+    <%= image_tag(product.images.first.photo.url) %>
+  <%end%>
+
  <%= form_for @order_item do |f| %>
    <%= f.hidden_field :product_id, value: product.id %>
    <%= f.number_field :quantity %>
-   <%= f.submit "Add to cart" %>
+   <%= f.submit "Add to cart", :class=>"addToCart" %>
  <% end %></p>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Price</th>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<h1>Shopping Cart</h1>
+<% if @order_items && @order_items.any? %>
+  <% @order_items.each do |item| %>
+    <p><%= item.product.name %> | <%= link_to "Delete", order_item_path(item), :data => {:confirm => "You sure?", :method => "delete"} %></p>
+    <p> Unit Price: <%= number_to_currency item.product.price %> | Quantity: <%= item.quantity %> | Total Price: <%= number_to_currency (item.product.price * item.quantity) %></p>
+  <% end %>
+  <p>Your Total: <%= number_to_currency current_order.total_price %></p>
+  <%= form_tag charges_path do %>
+    <article>
+      <% if flash[:error].present? %>
+        <div id="error_explanation">
+          <p><%= flash[:error] %></p>
+        </div>
+      <% end %>
+      <label class="amount">
+        <span>Amount: <%= number_to_currency current_order.total_price %></span>
+      </label>
+    </article>
 
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.price %></td>
-        <td><%= product.name %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-description="Checkout cart"
+            data-shipping-address="true"
+            data-amount=<%= current_order.total_price * 100%>
+            data-locale="auto"></script>
+  <% end %>
+<% else %>
+  <p>Your shopping cart is empty.</p>
+<% end %>
 
 <br>
 

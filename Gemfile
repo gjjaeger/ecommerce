@@ -11,11 +11,17 @@ source 'https://rubygems.org'
   gem 'jbuilder', '~> 2.5'
   gem 'bootstrap-sass'
   gem 'devise'
-  gem 'paperclip', '~> 4.1'
+  gem 'paperclip', '~> 5.0.0'
+  gem 'rest-client'
+  gem 'devise-bootstrap-views'
+  gem 'stripe'
+  gem 'cancan'
+  gem 'jquery-turbolinks'
 
 
   group :development, :test do
     gem 'byebug', platform: :mri
+    gem 'dotenv-rails'
     gem 'rspec-rails'
     gem 'launchy'
     gem 'pry'

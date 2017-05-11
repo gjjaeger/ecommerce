@@ -18,14 +18,9 @@
         <td><%= order.status %></td>
         <td><%= order.account_id %></td>
         <td><%= order.total_price %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', user_order_path(user_id: current_user, id:order) %></td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Order', new_order_path %>
