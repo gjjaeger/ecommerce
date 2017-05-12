@@ -27,7 +27,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= number_to_currency current_order.total_price %>
               <span class="glyphicon glyphicon-shopping-cart"></span><span class="caret"></span></a>
               <ul class="dropdown-menu dropdown-cart" role="menu">
-                <% if @order_items!=nil %>
+                <% if @order_items!=nil && @order_items.any? %>
                   <% @order_items.each do |item| %>
                     <li>
                       <span class="item">
@@ -43,6 +43,13 @@
                         </span>
                       </span>
                     </li>
+                    <article>
+                      <% if flash[:error].present? %>
+                        <div id="error_explanation">
+                          <p><%= flash[:error] %></p>
+                        </div>
+                      <% end %>
+                    </article>
                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
                             data-description="Checkout cart"

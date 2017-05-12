@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
+  before_filter :authenticate_admin!, except: [:index, :show]
+  skip_before_filter :verify_authenticity_token
   require "stripe"
 
   # GET /products
@@ -70,7 +72,9 @@ class ProductsController < ApplicationController
       end
     end
   end
-
+  def delete
+    @product = Product.find(params[:product_id])
+  end
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
@@ -88,6 +92,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
+    @product = Product.find(params[:id])
     @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }

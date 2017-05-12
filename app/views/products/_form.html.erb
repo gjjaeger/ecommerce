@@ -1,44 +1,51 @@
-<%= form_for @product, :html => {:multipart => true} do |f| %>
-  <% if product.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <%= form_for @product, remote: true, :html => {style: "display:inline;", :multipart => true} do |f| %>
+      <div class="modal-body">
+        <% if @product.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-      <ul>
-      <% product.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+            <ul>
+            <% product.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  <div class="field">
-    <%= f.label :price %>
-    <%= f.text_field :price %>
+        <div class="field">
+          <%= f.label :price %>
+          <%= f.text_field :price %>
+        </div>
+
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
+
+        <div class="field">
+          <%= f.label :description %>
+          <%= f.text_field :description %>
+        </div>
+
+        <div class="field">
+          <%= f.label :weight %>
+          <%= f.text_field :weight %>
+        </div>
+
+        <div class="field">
+          <%= f.label :size %>
+          <%= f.text_field :size %>
+        </div>
+
+        <%= file_field_tag "images[]", type: :file, multiple: true %>
+      </div>
+
+      <div class="modal-footer">
+        <%= f.submit class: "btn btn-primary" %>
+        <%= link_to "Cancel", "#", class: "btn", data: {dismiss: "modal"} %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= f.label :weight %>
-    <%= f.text_field :weight %>
-  </div>
-
-  <div class="field">
-    <%= f.label :size %>
-    <%= f.text_field :size %>
-  </div>
-
-  <%= file_field_tag "images[]", type: :file, multiple: true %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
