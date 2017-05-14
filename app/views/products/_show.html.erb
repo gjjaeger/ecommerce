@@ -1,0 +1,56 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><%=@product.name%></h3>
+    </div>
+    <div class="modal-body">
+      <!-- <ul class="errors"></ul> -->
+      <div class="row">
+        <%= image_tag(@product.images.first.photo.url, :class=>"product-image col-xs-8 col-xs-offset-2") %>
+      </div>
+      <%=@product.description%>
+      <div class="details">
+        <% if @product.category_id =="1" %>
+          <div class="sizes row">
+            <%@product.sizes.each do |size|%>
+              <% if size.amount<=100%>
+                <div class="size">
+                  <%=image_tag("jar.png", :class=>"jam-size extra-small")%>
+                </div>
+              <% end %>
+              <% if size.amount>100 && size.amount<=200 %>
+                <div class="size">
+                  <%= image_tag("jar.png", :class=>"jam-size small") %>
+
+                </div>
+              <% end %>
+              <% if size.amount>200 && size.amount<=300 %>
+                <div class="size">
+                  <%= image_tag("jar.png", :class=>"jam-size medium") %>
+
+                </div>
+              <% end %>
+              <% if size.amount>300 %>
+                <div class="size">
+                  <%= image_tag("jar.png", :class=>"jam-size large") %>
+                </div>
+              <% end %>
+              </br>
+              <%=size.amount%>
+              <%= form_for @order_item do |f| %>
+                <%= f.hidden_field :product_id, value: @product.id %>
+                <%= f.hidden_field :size, value: size.amount%>
+                <%= f.number_field :quantity, :class=>"col-xs-12" %>
+                <%= f.submit "Add to cart", :class=>"addToCart col-xs-12" %>
+              <% end %>
+            <%end%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <%= link_to "Yes, Delete This Product", product_path(@product), method: :delete, remote: true, class: "btn btn-danger" %>
+      <%= link_to "No, Please Don't", "#", class: "btn btn-default", data: { dismiss: "modal" } %>
+    </div>
+  </div>
+</div>

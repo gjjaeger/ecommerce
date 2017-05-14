@@ -34,8 +34,13 @@
                         <span class="item-left">
                           <%= image_tag(item.product.images.first.photo.url, :class=> "cart-item-image") %>
                           <span class="item-info">
-                            <span><%= item.product.name %></span>
-                            <span><%=item.quantity%> x <%= number_to_currency item.product.price %></span>
+                            <span><%= item.product.name%> <%if item.product.category_id=="1"%><%= item.size %>g<%end%></span>
+                            <span><%=item.quantity%> x <%=number_to_currency (if item.product.price!=nil
+                              item.product.price
+                            else
+                              Size.where({amount: item.size, product_id: item.product.id}).first.price
+                            end)%></span>
+
                           </span>
                         </span>
                         <span class="item-right">
@@ -50,13 +55,13 @@
                         </div>
                       <% end %>
                     </article>
-                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-                            data-description="Checkout cart"
-                            data-shipping-address="true"
-                            data-amount=<%= current_order.total_price * 100%>
-                            data-locale="auto"></script>
                   <% end %>
+                  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                          data-description="Checkout cart"
+                          data-shipping-address="true"
+                          data-amount=<%= current_order.total_price * 100%>
+                          data-locale="auto"></script>
                 <% else %>
                   <li>
                     <span class="item-info">

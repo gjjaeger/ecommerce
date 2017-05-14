@@ -5,7 +5,11 @@ class Order < ApplicationRecord
   has_one :address
 
   def calculate_total
-    self.order_items.collect { |item| item.product.price * item.quantity }.sum
+    self.order_items.collect { |item| if item.product.price!=nil
+      item.product.price
+    else
+      Size.where({amount: item.size, product_id: item.product.id}).first.price
+    end * item.quantity }.sum
   end
 
   private

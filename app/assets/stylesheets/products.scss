@@ -15,3 +15,46 @@
   width:100%;
   height:auto;
 }
+
+
+.sizes{
+  text-align: center;
+  border: 1px solid grey;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.size{
+  text-align: center;
+  width: 10%;
+  display: inline-block;
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.jam-size{
+  text-align: center;
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
+
+.extra-small{
+  width:25%;
+  height: auto;
+}
+.small{
+  width:50%;
+  height: auto;
+}
+
+.medium{
+  width:75%;
+  height: auto;
+}
+
+.large{
+  width:100%;
+  height: auto;
+}
