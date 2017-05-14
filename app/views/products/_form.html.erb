@@ -1,6 +1,6 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <%= form_for @product, remote: true, :html => {style: "display:inline;", :multipart => true} do |f| %>
+    <%= semantic_form_for @product, remote: true, :html => {style: 'display:inline;', :multipart => true} do |f| %>
       <div class="modal-body">
         <% if @product.errors.any? %>
           <div id="error_explanation">
@@ -14,31 +14,9 @@
           </div>
         <% end %>
 
-        <%= select_tag(:category_id, options_for_select(@categories), :prompt => "Select one!") %>
+        <%= select_tag(:category_id, options_for_select(@categories), :prompt => "Select one!", :id=>"category-select" )%>
 
-        <div class="field">
-          <%= f.label :price %>
-          <%= f.text_field :price %>
-        </div>
-
-        <div class="field">
-          <%= f.label :name %>
-          <%= f.text_field :name %>
-        </div>
-
-        <div class="field">
-          <%= f.label :description %>
-          <%= f.text_field :description %>
-        </div>
-
-        <div class="field">
-          <%= f.label :weight %>
-          <%= f.text_field :weight %>
-        </div>
-
-        <div class="field">
-          <%= f.label :size %>
-          <%= f.text_field :size %>
+        <div id="form-specific">
         </div>
 
         <%= file_field_tag "images[]", type: :file, multiple: true %>

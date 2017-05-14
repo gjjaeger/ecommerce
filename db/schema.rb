@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512031749) do
+ActiveRecord::Schema.define(version: 20170514032753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,17 @@ ActiveRecord::Schema.define(version: 20170512031749) do
     t.integer  "product_id"
   end
 
+  create_table "ingredients", force: :cascade do |t|
+    t.string  "name"
+    t.integer "quantity"
+    t.integer "product_id"
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.string  "name"
+    t.integer "product_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.integer  "quantity"
     t.integer  "product_id"
@@ -82,14 +93,24 @@ ActiveRecord::Schema.define(version: 20170512031749) do
   create_table "products", force: :cascade do |t|
     t.decimal  "price"
     t.string   "name"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "description"
     t.integer  "weight"
     t.integer  "size"
     t.string   "sku_id"
     t.string   "product_id"
     t.string   "category_id"
+    t.boolean  "featured"
+    t.integer  "stock"
+    t.integer  "time_needed"
+    t.string   "storage_inst"
+  end
+
+  create_table "sizes", force: :cascade do |t|
+    t.integer "amount"
+    t.integer "price"
+    t.integer "product_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,46 @@
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div id="sizes">
+  <%= f.fields_for :sizes do |size| %>
+    <% render 'size_fields', :f => size%>
+  <%end%>
+  <div class="links">
+    <%= link_to_add_association 'add size', f, :sizes%>
+  </div>
+</div>
+
+<div class="field">
+<%= f.label :description %>
+<%= f.text_field :description %>
+</div>
+
+<div id="ingredients">
+  <%= f.fields_for :ingredients do |ingredient| %>
+    <% render 'ingredient_fields', :f => ingredient%>
+  <%end%>
+  <div class="links">
+    <%= link_to_add_association 'add ingredient', f, :ingredients%>
+  </div>
+</div>
+
+<div class="field">
+<%= f.label :storage_inst %>
+<%= f.text_field :storage_inst %>
+</div>
+
+
+<div class="field">
+  <%= f.label :featured %>
+  <div>
+    <%= label :featured, "No", value: false %>
+    <%= f.radio_button :featured, false, :checked => true, :value => false %>
+  </div>
+
+  <div>
+    <%= label :featured, "Yes", value: true %>
+    <%= f.radio_button :featured, true, :value => true%>
+  </div>
+</div>

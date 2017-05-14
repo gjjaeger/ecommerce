@@ -18,6 +18,8 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "devise_bootstrap_views";
+ @import "formtastic";
+
 
  ul.dropdown-cart{
     min-width:250px;

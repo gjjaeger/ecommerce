@@ -22,6 +22,7 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @categories = Category.all.map{|c| [ c.name, c.id ] }
+
   end
 
   # GET /products/1/edit
@@ -41,20 +42,37 @@ class ProductsController < ApplicationController
       :description => product_params[:description],
       :attributes => ['size', 'weight']
     )
+    if (@product.category_id=="3" || @product.category_id=="2")
+      sku = Stripe::SKU.create(
+        :product => product.id,
+        :attributes => {
+          'size' => product_params[:size],
+          'weight' => product_params[:weight]
+        },
+        :price => (Integer(product_params[:price])*100),
+        :currency => 'usd',
+        :inventory => {
+          'type' => 'finite',
+          'quantity' => 1
+        }
+      )
+    end
 
-    sku = Stripe::SKU.create(
-      :product => product.id,
-      :attributes => {
-        'size' => product_params[:size],
-        'weight' => product_params[:weight]
-      },
-      :price => (Integer(product_params[:price])*100),
-      :currency => 'usd',
-      :inventory => {
-        'type' => 'finite',
-        'quantity' => 1
-      }
-    )
+    if (@product.category_id == "1")
+      sku = Stripe::SKU.create(
+        :product => product.id,
+        :attributes => {
+          'size' => 3,
+          'weight' => 4
+        },
+        :price => 500,
+        :currency => 'usd',
+        :inventory => {
+          'type' => 'finite',
+          'quantity' => 1
+        }
+      )
+    end
 
     respond_to do |format|
       if @product.save
@@ -112,6 +130,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:price, :name, :size, :weight, :description,:params, images_attributes: [:photo, :product_id])
+      params.require(:product).permit(:price, :name, :size, :weight, :stock, :time_needed, :storage_inst, :featured, :description,:params, images_attributes: [:photo, :product_id], materials_attributes: [:id, :name, :product_id, :_destroy], ingredients_attributes: [:id, :name, :quantity, :product_id, :_destroy], sizes_attributes: [:id, :amount, :price, :product_id, :_destroy])
     end
 end

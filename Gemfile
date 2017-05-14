@@ -17,6 +17,8 @@ source 'https://rubygems.org'
   gem 'stripe'
   gem 'cancan'
   gem 'jquery-turbolinks'
+  gem "cocoon"
+  gem 'formtastic', '~> 3.0'
 
 
   group :development, :test do

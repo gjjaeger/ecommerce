@@ -1,0 +1,51 @@
+<div class="field">
+  <%= f.label :price %>
+  <%= f.text_field :price %>
+</div>
+
+<div class="field">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div class="field">
+<%= f.label :description %>
+<%= f.text_field :description %>
+</div>
+
+<div id="materials">
+  <%= f.fields_for :materials do |material| %>
+    <% render 'material_fields', :f => material%>
+  <%end%>
+  <div class="links">
+    <%= link_to_add_association 'add material', f, :materials%>
+  </div>
+</div>
+
+<div class="field">
+<%= f.label :weight %>
+<%= f.text_field :weight %>
+</div>
+
+<div class="field">
+<%= f.label :stock %>
+<%= f.text_field :stock %>
+</div>
+
+<div class="field">
+<%= f.label :size %>
+<%= f.text_field :size %>
+</div>
+
+<div class="field">
+  <%= f.label :featured %>
+  <div>
+    <%= label :featured, "No", value: false %>
+    <%= f.radio_button :featured, false, :checked => true, :value => false %>
+  </div>
+
+  <div>
+    <%= label :featured, "Yes", value: true %>
+    <%= f.radio_button :featured, true, :value => true%>
+  </div>
+</div>

@@ -1,2 +1,15 @@
 $("#product-modal").html("<%= escape_javascript(render 'new') %>")
 $("#product-modal").modal("show")
+
+$(document).on('change','#category-select',function(){
+  var category_id=$(this).val();
+  if (category_id=="1"){
+      $("#form-specific").html('<%= form_for @product, remote: true, :html => {style: "display:inline;", :multipart => true} do |f| %><%= j render(:partial=> "jams", :locals => { f: f })%><%end%>');
+  };
+  if (category_id=="2"){
+    $("#form-specific").html('<%= form_for @product, remote: true, :html => {style: "display:inline;", :multipart => true} do |f| %><%= j render(:partial=> "jewelery", :locals => { f: f })%><%end%>');
+  };
+  if (category_id=="3"){
+    $("#form-specific").html('<%= form_for @product, remote: true, :html => {style: "display:inline;", :multipart => true} do |f| %><%= j render(:partial=> "cakes", :locals => { f: f })%><%end%>');
+  };
+});
