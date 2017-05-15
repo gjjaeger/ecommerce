@@ -11,6 +11,9 @@ class ProductsController < ApplicationController
     @products = Product.all
     @order_item = current_order.order_items.new
     @order_items = current_order.order_items
+    @jams= Product.where({category_id: "1"})
+    @jewelery = Product.where({category_id: "2"})
+    @cakes = Product.where({category_id: "3"})
   end
 
   # GET /products/1
@@ -29,6 +32,7 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @categories = Category.all.map{|c| [ c.name, c.id ] }
+    @product=Product.find(params[:id])
   end
 
   # POST /products
@@ -78,11 +82,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
 
-        if params[:images]
-          params[:images].each { |image|
-            @product.images.create(:photo=> image, :product_id => @product.id)
-          }
-        end
+  
         @product.sku_id = sku.id
         @product.product_id = product.id
         @product.save

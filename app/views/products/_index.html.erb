@@ -1,12 +1,12 @@
-<% @products.each do |product| %>
+<% products.each do |product| %>
   <div class="col-md-4 outside-product">
-    <div class="col-md-12 product">
+    <div class="col-md-12" id="product">
       <% if !product.images.empty?%>
-        <%= image_tag(product.images.first.photo.url, :class=>"product-image col-xs-12") %>
+        <%= image_tag(product.images.first.photo.url, :class=>"col-md-12", :id=>"product-image") %>
       <%end%>
       <span class="product-name col-xs-12"><%= product.name %></span>
       <% if product.category_id == "1" %>
-        <span class="product-price col-xs-12"><%= number_to_currency product.sizes.first.price %></span>
+        <span class="product-price col-xs-12"><%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
       <% else %>
         <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
       <% end %>

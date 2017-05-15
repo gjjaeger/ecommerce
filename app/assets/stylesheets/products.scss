@@ -5,15 +5,29 @@
 @import "bootstrap";
 @import "devise_bootstrap_views";
 
-.product{
+#product{
   text-align: center;
   border: 1px solid black;
   border-radius: 10px;
   height:300px;
+  padding:0;
 }
-.product-image{
+#product-image{
   width:100%;
   height:auto;
+  padding-left:0;
+  padding-right: 0;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.col-md-12{
+  padding-left:0;
+  padding-right: 0;
+}
+
+.preview-img{
+  width:100%;
+  height: auto;
 }
 
 

@@ -1,0 +1,13 @@
+<div class='nested-fields'>
+  
+  <div class="field">
+    <%= f.label :photo %>
+    <%= f.file_field :photo, :id=>"pictureInput" %>
+  </div>
+  <div class="row">
+    <div id="target" class="col-xs-5">
+    </div>
+  </div>
+
+  <%= link_to_remove_association "remove image", f %>
+</div>

@@ -18,8 +18,22 @@
 
         <div id="form-specific">
         </div>
-
-        <%= file_field_tag "images[]", type: :file, multiple: true %>
+        <% if !@product.images.empty? %>
+          <%@product.images.each do |image|%>
+            <%= image_tag image.photo.url %>
+            <%= link_to 'Delete', image, :confirm=> 'Are you sure?', :method=> :delete %>
+          <%end%>
+        <% end %>
+        <div id="images">
+          <% if f.object.new_record? %>
+            <%= f.fields_for :images do |image| %>
+              <% render 'image_fields', :f => image%>
+            <%end%>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'add image', f, :images%>
+          </div>
+        </div>
       </div>
 
       <div class="modal-footer">

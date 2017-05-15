@@ -1,11 +1,30 @@
 <p id="notice"><%= notice %></p>
+<div class="container">
+  <% if @jams.any? %>
+    <div class="jams row">
+      <h1>Jams</h1>
+      <%= render partial: "index", locals: {products: @jams} %>
+    </div>
+  <% end %>
 
-<h1>Products</h1>
-<%= render "index" %>
+  <% if @jewelery.any? %>
+    <div class="jewelery row">
+      <h1>Jewelery</h1>
+      <%= render partial: "index", locals: {products: @jewelery} %>
+    </div>
+  <%end%>
+
+  <% if @cakes.any? %>
+    <div class="cakes row">
+      <h1>Cakes</h1>
+      <%= render partial: "index", locals: {products: @cakes} %>
+    </div>
+  <%end%>
 
 
-<div class="well">
-  <%= link_to "New Product", new_product_path, remote: true, class: "btn btn-primary" %>
+  <div class="well">
+    <%= link_to "New Product", new_product_path, remote: true, class: "btn btn-primary" %>
+  </div>
+
+  <div id="product-modal" class="modal fade"></div>
 </div>
-
-<div id="product-modal" class="modal fade"></div>
