@@ -23,3 +23,9 @@
 $(document).on('turbolinks:load', function() {
   $(".dropdown-toggle").dropdown();
 });
+
+$(document).ready(function(){
+  $('#product-modal').on('shown.bs.modal', function() {
+    $('#carouselExampleIndicators').carousel();
+  })
+});

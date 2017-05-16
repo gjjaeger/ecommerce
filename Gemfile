@@ -19,6 +19,7 @@ source 'https://rubygems.org'
   gem 'jquery-turbolinks'
   gem "cocoon"
   gem 'formtastic', '~> 3.0'
+  gem 'bootstrap_form'
   gem 'dotenv-rails', :groups => [:development, :test]
 
 

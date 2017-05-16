@@ -1,26 +1,50 @@
 <% products.each do |product| %>
   <div class="col-md-4 outside-product">
-    <div class="col-md-12" id="product">
-      <% if !product.images.empty?%>
-        <%= image_tag(product.images.first.photo.url, :class=>"col-md-12", :id=>"product-image") %>
-      <%end%>
-      <span class="product-name col-xs-12"><%= product.name %></span>
-      <% if product.category_id == "1" %>
-        <span class="product-price col-xs-12"><%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
-      <% else %>
-        <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
-      <% end %>
-      <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
-      <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
-      <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
-
-      <%if product.category_id!="1"%>
-        <%= form_for @order_item do |f| %>
-          <%= f.hidden_field :product_id, value: product.id %>
-          <%= f.number_field :quantity, :class=>"col-xs-12" %>
-          <%= f.submit "Add to cart", :class=>"addToCart col-xs-12" %>
+    <%= link_to product_path(product), remote: true do %>
+      <div class="col-md-12" id="product">
+        <% if product.featured%>
+          <div class="featured">
+            <div class="ribbon">Featured</div>
+          </div>
+        <%end%>
+        <% if !product.images.empty?%>
+          <%= image_tag(product.images.first.photo.url, :class=>"col-md-12", :id=>"product-image") %>
+        <%end%>
+        <span class="product-name col-xs-12"><%= product.name %></span>
+        <% if product.category_id == "1" %>
+          <span class="product-price col-xs-12">Starting from <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
+        <% else %>
+          <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
         <% end %>
-      <%end%>
-    </div>
+        <div class="description">
+          <span><%=product.description%></span>
+        </div>
+        <% if product.category_id == "1"|| product.category_id=="3" %>
+          <span class="ingredient-title">Ingredients</span>
+          <ul class="ingredient-list">
+            <%product.ingredients.each do |ingredient|%>
+              <li><%=ingredient.name%></li>
+            <%end%>
+          </ul>
+        <%end%>
+        <div class="row">
+          <% if product.category_id == "2"%>
+            <span class="stock-title">Stock:</span>
+            <span class="stock-amount"><%=product.stock%></span>
+          <%end%>
+        </div>
+        <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
+        <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
+        <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
+
+        <%if product.category_id!="1"%>
+          <%= form_for @order_item do |f| %>
+            <%= f.hidden_field :product_id, value: product.id %>
+            <%= f.number_field :quantity, :class=>"col-xs-12" %>
+            <%= f.submit "Add to cart", :class=>"addToCart col-xs-12" %>
+          <% end %>
+        <%end%>
+      </div>
+    <%end%>
   </div>
 <% end %>

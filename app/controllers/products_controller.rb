@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
     @jams= Product.where({category_id: "1"})
     @jewelery = Product.where({category_id: "2"})
     @cakes = Product.where({category_id: "3"})
+    @categories=Category.all
   end
 
   # GET /products/1
@@ -82,7 +83,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
 
-  
+
         @product.sku_id = sku.id
         @product.product_id = product.id
         @product.save

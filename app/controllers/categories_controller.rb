@@ -10,6 +10,8 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
+    @order_item=current_order.order_items.new
+    @categories=Category.all
   end
 
   # GET /categories/new

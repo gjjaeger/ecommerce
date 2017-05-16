@@ -1,5 +1,13 @@
 <p id="notice"><%= notice %></p>
 <div class="container">
+  <ul class="categories">
+    <%@categories.each do |category|%>
+      <li><%= link_to category_path(category), class: "btn btn-primary" do %>
+        <%=category.name%>
+      <%end%>
+      </li>
+    <%end%>
+  </ul>
   <% if @jams.any? %>
     <div class="jams row">
       <h1>Jams</h1>
