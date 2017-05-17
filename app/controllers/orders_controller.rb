@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
+    byebug
     @order = Order.new(order_params)
     Stripe::Order.create(
       :currency => 'usd',

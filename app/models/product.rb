@@ -9,4 +9,7 @@ class Product < ApplicationRecord
   has_many :images, inverse_of: :product, dependent: :destroy
   accepts_nested_attributes_for :images, reject_if: :all_blank, allow_destroy: true
   belongs_to :category
+  has_many :tags, :through=> :product_tags
+  has_many :product_tags
+  accepts_nested_attributes_for :product_tags
 end

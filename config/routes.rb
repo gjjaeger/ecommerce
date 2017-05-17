@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :categories
+  resources :categories do
+    resources :tags
+  end
   devise_for :admins
   root 'products#index'
   devise_for :users

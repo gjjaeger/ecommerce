@@ -12,6 +12,8 @@ class CategoriesController < ApplicationController
   def show
     @order_item=current_order.order_items.new
     @categories=Category.all
+    @category=Category.find(params[:id])
+    @tags=@category.tags
   end
 
   # GET /categories/new

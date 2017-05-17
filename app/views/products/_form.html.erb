@@ -15,7 +15,7 @@
         <% end %>
 
         <%= select_tag(:category_id, options_for_select(@categories), :prompt => "Select one!", :id=>"category-select" )%>
-
+        
         <div id="form-specific">
         </div>
         <% if !@product.images.empty? %>

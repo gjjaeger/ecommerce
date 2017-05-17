@@ -15,7 +15,7 @@
   <%end%>
 </ul>
 <h3> Products under this category </h3>
-<% Product.where(category_id: @category.id).each do |product| %>
+<% @items.each do |product| %>
   <div class="col-md-4 outside-product">
     <%= link_to product_path(product), remote: true do %>
       <div class="col-md-12" id="product">
