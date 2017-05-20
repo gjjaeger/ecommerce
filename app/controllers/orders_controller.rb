@@ -1,15 +1,22 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+
+  before_action :check_user, only: [:index, :show, :edit, :update, :destroy]
+
 
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    if user_signed_in?
+      @orders = current_user.account.orders
+    elsif admin_signed_in?
+      @orders=Order.all()
+    end
   end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @order=Order.find(params[:id])
   end
 
   # GET /orders/new
@@ -24,28 +31,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    byebug
     @order = Order.new(order_params)
-    Stripe::Order.create(
-      :currency => 'usd',
-      :items => [
-        {
-          :type => 'sku',
-          :parent => sku.id
-        }
-      ],
-      :shipping => {
-        :name => 'Matthew Davis',
-        :address => {
-          :line1 => '1234 Main Street',
-          :city => 'San Francisco',
-          :state => 'CA',
-          :country => 'US',
-          :postal_code => '94111'
-        }
-      },
-      :email => 'matthew.davis@example.com',
-    )
 
     respond_to do |format|
       if @order.save
@@ -85,7 +71,14 @@ class OrdersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
-      @order = Order.find(params[:id])
+      # @order = Order.find(params[:id])
+    end
+
+    def check_user
+      if admin_signed_in?
+      else
+        set_order
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

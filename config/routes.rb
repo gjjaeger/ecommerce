@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :order_items
     resources :orders
   end
+  resources :orders
   resources :order_items
   resources :products do
     get "delete"

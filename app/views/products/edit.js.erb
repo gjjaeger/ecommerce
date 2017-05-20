@@ -13,3 +13,16 @@ if (category_id=="2"){
 if (category_id=="3"){
   $("#form-specific").html('<%= form_for @product, remote: true, :html => {style: "display:inline;", :multipart => true} do |f| %><%= j render(:partial=> "cakes", :locals => { f: f })%><%end%>');
 };
+
+$(document).on('change','#pictureInput',function(event){
+  var files = event.target.files;
+  var image = files[0]
+  var reader = new FileReader();
+  reader.onload = function(file) {
+    var img = new Image();
+    img.src = file.target.result;
+    img.class="preview-img"
+    $('#target').html(img);
+  }
+  reader.readAsDataURL(image);
+});

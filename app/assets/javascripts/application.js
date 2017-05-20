@@ -15,6 +15,8 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
+//= require moment
+//= require bootstrap-datetimepicker
 //= require bootstrap.min
 //= require cocoon
 //= require turbolinks
@@ -27,5 +29,14 @@ $(document).on('turbolinks:load', function() {
 $(document).ready(function(){
   $('#product-modal').on('shown.bs.modal', function() {
     $('#carouselExampleIndicators').carousel();
-  })
+    var date = new Date();
+    $('#datetimepicker1').datetimepicker({minDate: (date.setDate(date.getDate()+2))});
+    $("#datetimepicker1").change(function(){
+      var date2 = $(this).data("DateTimePicker").getDate();
+      
+      debugger;
+      $('#expected-delivery').html(date2);
+    });
+
+  });
 });

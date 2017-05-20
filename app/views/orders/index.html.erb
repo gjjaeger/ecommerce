@@ -1,26 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Orders</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Status</th>
-      <th>Account</th>
-      <th>Total price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.status %></td>
-        <td><%= order.account_id %></td>
-        <td><%= order.total_price %></td>
-        <td><%= link_to 'Show', user_order_path(user_id: current_user, id:order) %></td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container">
+  <%if user_signed_in?%>
+    <h1>My Orders</h1>
+  <%elsif admin_signed_in?%>
+    <h1>All Order</h1>
+  <%end%>
+  <% @orders.each do |order|%>
+    <%= link_to order_path(order), remote: true do %>
+      <div class="col-md-12 order">
+        <div class="col-md-2">
+          <%=order.status%>
+        </div>
+        <div class="col-md-2">
+          <%=order.total_price%>
+        </div>
+        <div class="col-md-4">
+          <%order.order_items.each do |order_item|%>
+            <div class="col-md-12">
+              <%=order_item.quantity%> x
+              <%=order_item.product.name%>
+              <%if order_item.product.category_id=="1"%>
+                (<%=order_item.size%>g)
+              <%else%>
+                (<%=order_item.product.size%>cm)
+              <%end%>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    <%end%>
+  <%end%>
+</div>
+<div id="order-modal" class="modal fade"></div>

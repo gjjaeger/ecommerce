@@ -1,0 +1,68 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3><%=@order.id%></h3>
+    </div>
+    <div class="modal-body">
+      <!-- <ul class="errors"></ul> -->
+      <div class="row">
+        <%@order.order_items.each do |order_item|%>
+          <div class="col-md-12 order-item">
+            <div class="details">
+              <%=order_item.quantity%> x
+              <%=order_item.product.name%>
+              <%if order_item.product.category_id=="1"%>
+                (<%=order_item.size%>g)
+              <%else%>
+                (<%=order_item.product.size%>cm)
+              <%end%>
+            </div>
+            <div class="price">
+              <div class="col-md-12">
+                <div class="price individual-price">
+                  <%=order_item.quantity%> x
+                  <%if order_item.product.category_id=="1"%>
+                    <%=number_to_currency Size.where({amount: order_item.size, product_id: order_item.product.id}).first.price%>
+                  <%else%>
+                    <%=number_to_currency order_item.product.price%>
+                  <%end%>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="price">
+                  _________
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="price">
+                  <%if order_item.product.category_id=="1"%>
+                    <%=number_to_currency Size.where({amount: order_item.size, product_id: order_item.product.id}).first.price*order_item.quantity%>
+                  <%else%>
+                    <%=number_to_currency order_item.product.price*order_item.quantity%>
+                  <%end%>
+                </div>
+              </div>
+            </div>
+          </div>
+        <%end%>
+        <div class="col-md-12">
+          <div class="total-price">
+            <div class="col-md-12">
+              <div class="total-price">
+                _________
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="total-price">
+                <%=number_to_currency @order.total_price%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <%= link_to "Close", "#", class: "btn btn-default", data: { dismiss: "modal" } %>
+    </div>
+  </div>
+</div>
