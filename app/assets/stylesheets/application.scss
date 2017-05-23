@@ -19,7 +19,7 @@
  @import "bootstrap";
  @import "devise_bootstrap_views";
  @import "formtastic";
- @import "bootstrap-datetimepicker";
+ @import "bootstrap-datepicker";
 
  ul.dropdown-cart{
     min-width:250px;
@@ -27,6 +27,8 @@
     padding: 2px;
     margin: 7px;
     margin-top: 11px;
+    overflow: scroll;
+    max-height: 500px;
 }
 .cart-item-image{
   width:50px;

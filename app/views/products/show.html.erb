@@ -1,14 +1,72 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
+<%if @product.category_id=="1"||@product.category_id=="3"%>
+  <div class="row">
+    <%= image_tag(@product.images.first.photo.url, :class=>"product-image col-xs-8 col-xs-offset-2") %>
+  </div>
+<%end%>
+<%if @product.category_id=="2"%>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <% @product.images.each_with_index do |image, index| %>
+        <li data-target="#carouselExampleIndicators" data-slide-to="<%=index%>" class="<%= index == 0 ? 'active' : '' %>"></li>
+      <% end %>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <% @product.images.each_with_index do |image, index| %>
+        <div class="carousel-item item <%=index == 0 ? 'active' : '' %>">
+          <%= image_tag(image.photo.url, :class=>"d-block img-fluid")%>
+        </div>
+      <% end %>
+    </div>
+    <a class="carousel-control left" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control right" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+<%end%>
+<%=@product.description%>
+<%if @product.category_id=="3"%>
+  <%= link_to "Buy", product_delivery_path(@product), remote: true, class: "btn btn-default" %>
+<%end%>
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
-
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<div class="details">
+  <% if @product.category_id =="1" %>
+    <div class="sizes row">
+      <%@product.sizes.each do |size|%>
+        <% if size.amount<=100%>
+          <div class="size">
+            <%=image_tag("jar.png", :class=>"jam-size extra-small")%>
+          </div>
+        <% end %>
+        <% if size.amount>100 && size.amount<=200 %>
+          <div class="size">
+            <%= image_tag("jar.png", :class=>"jam-size small") %>
+          </div>
+        <% end %>
+        <% if size.amount>200 && size.amount<=300 %>
+          <div class="size">
+            <%= image_tag("jar.png", :class=>"jam-size medium") %>
+          </div>
+        <% end %>
+        <% if size.amount>300 %>
+          <div class="size">
+            <%= image_tag("jar.png", :class=>"jam-size large") %>
+          </div>
+        <% end %>
+        </br>
+        <%=size.amount%>g
+        <%= form_for @order_item do |f| %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <%= f.hidden_field :size, value: size.amount%>
+          <%= f.number_field :quantity, :class=>"col-xs-12" %>
+          <%= f.submit "Add to cart", :class=>"addToCart col-xs-12" %>
+        <% end %>
+      <%end%>
+    </div>
+  <% end %>
+</div>

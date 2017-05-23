@@ -132,6 +132,11 @@ class ProductsController < ApplicationController
   def delete
     @product = Product.find(params[:product_id])
   end
+
+  def delivery
+    @order_item=OrderItem.new()
+    @product=Product.find(params[:product_id])
+  end
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update

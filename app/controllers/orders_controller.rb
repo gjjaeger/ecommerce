@@ -68,6 +68,33 @@ class OrdersController < ApplicationController
     end
   end
 
+  def checkout
+    @address = Address.new()
+    @order=Order.find(current_order)
+  end
+
+  def shipping
+    @order=current_order
+    if !@order.order_items.any? {|order_item| !order_item.delivery }
+      rates = session[:rates]
+      totalship = 0
+      rates.each do |rate|
+        totalship+=BigDecimal(rate[4])
+      end
+      @shipping=totalship
+      @total100 = (current_order.total_price * 100) + (BigDecimal(@shipping)*100)
+      @total = (current_order.total_price) + (BigDecimal(@shipping))
+      order = Order.find(current_order)
+      order.total_shipping=totalship
+      order.save
+    else
+      @shipping=0
+      @total100 = (current_order.total_price * 100)
+      @total = (current_order.total_price)
+    end
+    render partial: '/orders/shipping', locals:{shipping: @shipping, total: @total}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order

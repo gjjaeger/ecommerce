@@ -26,6 +26,7 @@ class OrderItemsController < ApplicationController
   def create
     @order = current_order
     @item = @order.order_items.new(item_params)
+    @item.save
     @order.save
     session[:order_id] = @order.id
     redirect_to products_path
@@ -73,10 +74,10 @@ class OrderItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_item_params
-      params.require(:order_item).permit(:quantity, :product_id, :order_id)
+      params.require(:order_item).permit(:quantity, :product_id, :order_id, :requested_date, :requested_time, :delivery)
     end
 
     def item_params
-      params.require(:order_item).permit(:quantity, :product_id, :size)
+      params.require(:order_item).permit(:quantity, :product_id, :size, :requested_date, :requested_time, :delivery)
     end
 end

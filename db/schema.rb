@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518090550) do
+ActiveRecord::Schema.define(version: 20170523031243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,9 +25,12 @@ ActiveRecord::Schema.define(version: 20170518090550) do
     t.string   "line1"
     t.string   "city"
     t.string   "country"
-    t.string   "postal_code"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "line2"
+    t.string   "state"
   end
 
   create_table "admins", force: :cascade do |t|
@@ -77,18 +80,22 @@ ActiveRecord::Schema.define(version: 20170518090550) do
     t.integer  "quantity"
     t.integer  "product_id"
     t.integer  "order_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "size"
+    t.date     "requested_date"
+    t.time     "requested_time"
+    t.boolean  "delivery",       default: true
   end
 
   create_table "orders", force: :cascade do |t|
     t.string   "status"
     t.integer  "account_id"
     t.decimal  "total_price"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "address_id"
+    t.decimal  "total_shipping"
   end
 
   create_table "product_tags", force: :cascade do |t|

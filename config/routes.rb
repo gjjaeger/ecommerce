@@ -9,10 +9,16 @@ Rails.application.routes.draw do
     resources :order_items
     resources :orders
   end
-  resources :orders
+  resources :orders do
+    get "checkout"
+    get "shipping"
+  end
   resources :order_items
+  resources :addresses do
+  end
   resources :products do
     get "delete"
+    get "delivery"
   end
   resources :images
   resource :cart, only: [:show]

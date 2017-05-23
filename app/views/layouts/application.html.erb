@@ -60,6 +60,7 @@
                       </span>
                     </li>
                   <% end %>
+                  <%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default" %>
                   <%= form_tag charges_path do %>
                     <article>
                       <% if flash[:error].present? %>
@@ -68,7 +69,7 @@
                         </div>
                       <% end %>
                     </article>
-
+                    
                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
                             data-description="Checkout cart"
