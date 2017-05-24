@@ -21,14 +21,27 @@
  @import "formtastic";
  @import "bootstrap-datepicker";
 
- ul.dropdown-cart{
-    min-width:250px;
-    border: 2px solid #343434;
+*{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 18px;
+}
+
+#navbar{
+  background-color: white;
+}
+
+ul.dropdown-cart{
+    min-width:320px;
+    border: 1px solid #ece8e8;
     padding: 2px;
     margin: 7px;
     margin-top: 11px;
     overflow: scroll;
     max-height: 500px;
+    text-align: center;
+}
+.cart-dropdown{
+  color: #e1c546
 }
 .cart-item-image{
   width:50px;
@@ -39,7 +52,6 @@ ul.dropdown-cart li .item{
     display:block;
     padding:3px 10px;
     margin: 3px 0;
-
 }
 ul.dropdown-cart li .item:hover{
     background-color:#c3c5c5;
@@ -72,4 +84,9 @@ ul.dropdown-cart li .item-right{
 }
 ul.dropdown-cart li .item-right button{
     margin-top:14px;
+}
+
+body {
+  padding-top: 0px;
+  margin-top: 0px;
 }

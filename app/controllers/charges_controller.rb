@@ -59,13 +59,19 @@ class ChargesController < ApplicationController
           }
         },
       )
+      shipment=EasyPost::Shipment.retrieve(item.shipment_id)
+      purchased=shipment.buy(rate: shipment.lowest_rate())
+      label = shipment.label(file_format:"PDF")
+      tracker=purchased[:tracker]
+      @shipment = Shipment.create(:recipient => address.name, :tracker_code => tracker[:tracking_code], :carrier => tracker[:carrier], :est_delivery_date => tracker[:est_delivery_date], :order_item_id => item.id, :shipment_id => shipment.id, :public_url => tracker[:public_url])
     end
 
-    session[:rates].each do |rate|
-      shipment=EasyPost::Shipment.retrieve(rate[5])
-      shipment.buy(rate: shipment.lowest_rate())
-      label = shipment.label(file_format:"PDF")
-    end
+    # session[:rates].each do |rate|
+    #   shipment=EasyPost::Shipment.retrieve(rate[5])
+    #   purchased=shipment.buy(rate: shipment.lowest_rate())
+    #   byebug
+    #   label = shipment.label(file_format:"PDF")
+    # end
 
     # @shippingAddress=Address.create(:line1 => params[:stripeShippingAddressLine1], :city => params[:stripeShippingAddressCity],:country => params[:stripeShippingAddressCountry], :postal_code => params[:stripeShippingAddressZip])
     @order = Order.find(current_order)
@@ -84,6 +90,7 @@ class ChargesController < ApplicationController
           item.product.save
         end
       end
+      SendEmailJob.set(wait: 20.seconds).perform_later(params[:stripeEmail])
       session[:order_id]=nil
       redirect_to products_path
     end

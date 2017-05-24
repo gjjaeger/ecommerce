@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523031243) do
+ActiveRecord::Schema.define(version: 20170523090905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,21 @@ ActiveRecord::Schema.define(version: 20170523031243) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
+
   create_table "images", force: :cascade do |t|
     t.string   "photo_file_name"
     t.string   "photo_content_type"
@@ -86,6 +101,7 @@ ActiveRecord::Schema.define(version: 20170523031243) do
     t.date     "requested_date"
     t.time     "requested_time"
     t.boolean  "delivery",       default: true
+    t.string   "shipment_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -121,6 +137,18 @@ ActiveRecord::Schema.define(version: 20170523031243) do
     t.integer  "height"
     t.integer  "length"
     t.integer  "width"
+  end
+
+  create_table "shipments", force: :cascade do |t|
+    t.string   "recipient"
+    t.string   "tracker_code"
+    t.string   "carrier"
+    t.string   "est_delivery_date"
+    t.integer  "order_item_id"
+    t.integer  "shipment_id"
+    t.string   "public_url"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "sizes", force: :cascade do |t|

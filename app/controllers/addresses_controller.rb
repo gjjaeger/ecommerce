@@ -27,6 +27,7 @@ class AddressesController < ApplicationController
 
     session[:rates]=[]
     customs_items = []
+    parcels=[]
     current_order.order_items.each do |item|
       if (item.product.category_id!="3")
         customs_item = EasyPost::CustomsItem.create(
@@ -86,10 +87,19 @@ class AddressesController < ApplicationController
           :parcel => parcel,
           :customs_info => customs_info
         )
+        parcels.push({parcel: {length: parcel[:length], width: parcel[:width], height: parcel[:height], weight: parcel[:weight]}})
         @rate = shipment.lowest_rate()
+        order_item=OrderItem.find(item.id)
+        order_item.shipment_id=shipment.id
+        order_item.save
         session[:rates].push([@rate["carrier"],@rate["id"],@rate["delivery_days"],@rate["delivery_date"],@rate["rate"],@rate["shipment_id"]])
       end
     end
+    order = EasyPost::Order.create(
+      to_address: to_address,
+      from_address: from_address,
+      shipments: parcels
+    )
     if @address.save
       order=Order.find(current_order)
       order.address_id=@address.id

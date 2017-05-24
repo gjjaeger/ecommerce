@@ -1,10 +1,10 @@
 <% products.each do |product| %>
-  <div class="col-md-4 outside-product">
+  <div class="col-md-3 outside-product">
     <%= link_to product_path(product) do %>
       <div class="col-md-12" id="product">
-        <% if product.featured%>
+        <% if product.featured && product.category_id!="2"%>
           <div class="featured">
-            <div class="ribbon">Featured</div>
+            <div class="ribbon">Best Seller</div>
           </div>
         <%end%>
         <% if !product.images.empty?%>
@@ -12,38 +12,33 @@
         <%end%>
         <span class="product-name col-xs-12"><%= product.name %></span>
         <% if product.category_id == "1" %>
-          <span class="product-price col-xs-12">Starting from <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
+          <span class="product-price col-xs-12"><span class="starting-from">Starting from</span> <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
         <% else %>
           <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
         <% end %>
-        <div class="description">
-          <span><%=product.description%></span>
-        </div>
-        <% if product.category_id == "1"|| product.category_id=="3" %>
-          <span class="ingredient-title">Ingredients</span>
-          <ul class="ingredient-list">
-            <%product.ingredients.each do |ingredient|%>
-              <li><%=ingredient.name%></li>
+        <% if admin_signed_in? %>
+          <div class="row">
+            <% if product.category_id == "2"%>
+              <span class="stock-title">Stock:</span>
+              <span class="stock-amount"><%=product.stock%></span>
             <%end%>
-          </ul>
-        <%end%>
-        <div class="row">
-          <% if product.category_id == "2"%>
-            <span class="stock-title">Stock:</span>
-            <span class="stock-amount"><%=product.stock%></span>
-          <%end%>
-        </div>
-        <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
-        <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
-        <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
+          </div>
+        <% end %>
 
-        <%if product.category_id=="2"%>
+        <% if admin_signed_in? %>
+          <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
+          <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
+          <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
+        <% end %>
+
+
+        <!-- <%if product.category_id=="2"%>
           <%= form_for @order_item do |f| %>
             <%= f.hidden_field :product_id, value: product.id %>
             <%= f.number_field :quantity, :class=>"col-xs-12" %>
             <%= f.submit "Add to cart", :class=>"addToCart col-xs-12" %>
           <%end%>
-        <%end%>
+        <%end%> -->
         <%if product.category_id=="3"%>
           <%= link_to "Buy", product_delivery_path(product), remote: true, class: "btn btn-default" %>
         <%end%>

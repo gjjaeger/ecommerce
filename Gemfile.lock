@@ -74,6 +74,11 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     devise (4.2.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -123,6 +128,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.5)
       mime-types (>= 1.16, < 4)
+    mailgun-ruby (1.1.6)
+      rest-client (~> 2.0)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -267,6 +274,7 @@ DEPENDENCIES
   capybara
   cocoon
   coffee-rails (~> 4.2)
+  delayed_job_active_record
   devise
   devise-bootstrap-views
   dotenv-rails
@@ -278,6 +286,8 @@ DEPENDENCIES
   jquery-turbolinks
   launchy
   listen (~> 3.0.5)
+  mail
+  mailgun-ruby
   momentjs-rails (~> 2.5.0)
   paperclip (~> 5.0.0)
   pg (~> 0.18)

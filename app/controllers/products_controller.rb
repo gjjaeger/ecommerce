@@ -11,9 +11,15 @@ class ProductsController < ApplicationController
     @products = Product.all
     @order_item = current_order.order_items.new
     @order_items = current_order.order_items
-    @jams= Product.where({category_id: "1"})
-    @jewelery = Product.where({category_id: "2"})
-    @cakes = Product.where({category_id: "3"})
+    bsellerjam=Product.where({category_id: "1", featured:true}).limit(2)
+    restjam=Product.where({category_id: "1"}).limit(8-bsellerjam.length())
+    @jams=(bsellerjam + restjam).uniq(&:id)
+    bsellerjewelery=Product.where({category_id: "2", featured:true}).limit(3)
+    restjewelery=Product.where({category_id: "2"}).limit(8-bsellerjewelery.length())
+    @jewelery=(bsellerjewelery + restjewelery).uniq(&:id)
+    bsellercake=Product.where({category_id: "3", featured:true}).limit(3)
+    restcake=Product.where({category_id: "3"}).limit(8-bsellercake.length())
+    @cakes=(bsellercake + restcake).uniq(&:id)
     @categories=Category.all
   end
 

@@ -1,38 +1,59 @@
-<p id="notice"><%= notice %></p>
+<%=image_tag("jams.jpg", :class=>"jams-homescreen")%>
 <div class="container">
+  <p id="notice"><%= notice %></p>
   <ul class="categories">
     <%@categories.each do |category|%>
-      <li><%= link_to category_path(category), class: "btn btn-primary" do %>
-        <%=category.name%>
-      <%end%>
+      <li class="outer-category">
+        <%= link_to category_path(category), class: "category" do %>
+          <% if category.id==1 %>
+            <%=image_tag("jam-icon.png", :class=>"icon jam-icon")%>
+          <% end %>
+          <% if category.id==2 %>
+            <%=image_tag("jewelery-icon.png", :class=>"icon jam-icon")%>
+          <% end %>
+          <% if category.id==3 %>
+            <%=image_tag("cake-icon.png", :class=>"icon jam-icon")%>
+          <% end %>
+          <span id="category-name"><%=category.name%></span>
+        <%end%>
       </li>
     <%end%>
   </ul>
   <% if @jams.any? %>
-    <div class="jams row">
-      <h1>Jams</h1>
+    <div class="jams row section">
+      <h1 class="jam-title title">Jams</h1>
+      <div class="row">
+        <div class="title-underlign col-xs-2 col-xs-offset-5"></div>
+      </div>
       <%= render partial: "index", locals: {products: @jams} %>
     </div>
   <% end %>
 
   <% if @jewelery.any? %>
-    <div class="jewelery row">
-      <h1>Jewelery</h1>
+    <div class="jewelery row section">
+      <h1 class="jewelery-title title">Jewelery</h1>
+      <div class="row">
+        <div class="title-underlign col-xs-2 col-xs-offset-5"></div>
+      </div>
       <%= render partial: "index", locals: {products: @jewelery} %>
     </div>
   <%end%>
 
   <% if @cakes.any? %>
-    <div class="cakes row">
-      <h1>Cakes</h1>
+    <div class="cakes row section">
+      <h1 class="cakes-title title">Cakes</h1>
+      <div class="row">
+        <div class="title-underlign col-xs-2 col-xs-offset-5"></div>
+      </div>
       <%= render partial: "index", locals: {products: @cakes} %>
     </div>
   <%end%>
 
-
+  <% if admin_signed_in? %>
   <div class="well">
     <%= link_to "New Product", new_product_path, remote: true, class: "btn btn-primary" %>
   </div>
+  <% end %>
 
   <div id="product-modal" class="modal fade"></div>
 </div>

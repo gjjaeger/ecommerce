@@ -25,6 +25,9 @@ source 'https://rubygems.org'
   gem 'momentjs-rails', '~> 2.5.0'
   gem 'bootstrap-datepicker-rails'
   gem 'iso_country_codes'
+  gem 'mail'
+  gem 'mailgun-ruby'
+  gem 'delayed_job_active_record'
 
 
 
