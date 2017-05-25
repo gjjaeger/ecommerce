@@ -1,18 +1,19 @@
 <div class="modal-dialog">
   <div class="modal-content">
   <div class="modal-header">
-    <h3>Purchase Product</h3>
+    <h3>Order Cake</h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body delivery-body">
     <%= form_for @order_item do |f| %>
+    <div class="delivery-body">
       <%= f.hidden_field :product_id, value: @product.id %>
       <%= f.hidden_field :prep_time, value: @product.time_needed, :id=>"prep_time" %>
-      <%= f.number_field :quantity, :class=>"col-xs-12" %>
+      <%= f.number_field :quantity, :class=>"cake-quantity" %>
       <div class="form-group">
         <%= f.radio_button :delivery, "1", checked:true, class: 'delivery-option' %> <%= f.label :delivery, "Get Delivery ($10 per order)" %>
-        <%= f.radio_button :delivery, "0", class: 'delivery-option' %> <%= f.label :delivery, "Pick up from 53 Clover Way" %>
+        <%= f.radio_button :delivery, "0", class: 'delivery-option' %> <%= f.label :delivery, "Pick up from 16 Beach Street" %>
       </div>
-      <h5 class="pickup-title">Pick up time from</h5>
+      <h5 class="pickup-title">Pick up time from 14 Beach Street</h5>
       <h5 class="delivery-title">Deliver to my home</h5>
       <div class="form-group requested-datetime">
         <div class='input-group' id='datetimepicker1'>
@@ -20,11 +21,9 @@
             <%= f.text_field :requested_date, data:{ provide:'datepicker' }, :id=>"requested_date" %>
           </div>
           <%=f.time_field :requested_time, :id=>"requested_time"%>
-          <span class="input-group-addon">
-              <span class="glyphicon glyphicon-calendar"></span>
-          </span>
         </div>
       </div>
+    </div>
   <div class="modal-footer">
       <%= f.submit "Add to cart", :class=>"addToCart col-xs-12 btn btn-default" %>
     <% end %>

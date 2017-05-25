@@ -1,4 +1,6 @@
 class AddressesController < ApplicationController
+  include ChargesHelper
+  include AddressesHelper
   require 'easypost'
 
   def create
@@ -34,14 +36,14 @@ class AddressesController < ApplicationController
           :description => item.product.name,
           :quantity => item.quantity,
           :value => if(item.product.category_id=="1")
-                      Size.where({amount: item.size, product_id: item.product.id}).first.price*item.quantity
+                      retrieve_size_price(item.size, item.product_id)*item.quantity
                     else
                       Integer(item.product.price*item.quantity)
                     end,
           :weight => if(item.product.category_id=="1")
-                      (BigDecimal(item.size*item.quantity)/28.3495).to_f
+                      weight_in_ounces(item.size,item.quantity)
                     else
-                      (BigDecimal(item.product.weight*item.quantity)/28.3495).to_f
+                      weight_in_ounces(item.product.weight,item.quantity)
                     end,
           :origin_country => 'us',
           :hs_tariff_number => 610910
@@ -49,24 +51,24 @@ class AddressesController < ApplicationController
         customs_items.push(customs_item)
         parcel = EasyPost::Parcel.create(
           :width => if(item.product.category_id=="1")
-                      (BigDecimal(Size.where({amount: item.size, product_id: item.product.id}).first.width)/2.54).to_f
+                      cm_to_inches(retrieve_size_width(item.size, item.product.id))
                     else
-                      (BigDecimal(item.product.width)/2.54).to_f
+                      cm_to_inches(item.product.width)
                     end,
           :length => if(item.product.category_id=="1")
-                      (BigDecimal(Size.where({amount: item.size, product_id: item.product.id}).first.length)/2.54).to_f
+                      cm_to_inches(retrieve_size_length(item.size, item.product.id))
                     else
-                      (BigDecimal(item.product.length)/2.54).to_f
+                      cm_to_inches(item.product.length)
                     end,
           :height => if(item.product.category_id=="1")
-                      (BigDecimal(Size.where({amount: item.size, product_id: item.product.id}).first.height*item.quantity)/2.54).to_f
+                      cm_to_inches(retrieve_size_height(item.size, item.product.id))
                     else
-                      (BigDecimal(item.product.height*item.quantity)/2.54).to_f
+                      cm_to_inches(item.product.height)
                     end,
           :weight => if(item.product.category_id=="1")
-                      (BigDecimal(item.size*item.quantity)/28.3495).to_f
+                      weight_in_ounces(item.size,item.quantity)
                     else
-                      (BigDecimal(item.product.weight*item.quantity)/28.3495).to_f
+                      weight_in_ounces(item.product.weight,item.quantity)
                     end
         )
         customs_info = EasyPost::CustomsInfo.create(
@@ -88,6 +90,7 @@ class AddressesController < ApplicationController
           :customs_info => customs_info
         )
         parcels.push({parcel: {length: parcel[:length], width: parcel[:width], height: parcel[:height], weight: parcel[:weight]}})
+        byebug
         @rate = shipment.lowest_rate()
         order_item=OrderItem.find(item.id)
         order_item.shipment_id=shipment.id

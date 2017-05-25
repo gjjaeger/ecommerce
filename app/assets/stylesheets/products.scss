@@ -24,8 +24,8 @@
   border-radius: 4px;
 }
 
-.item-show{
-  margin-top: 90px;
+#show-item{
+  margin-top: 20px;
 }
 
 .section {
@@ -105,18 +105,29 @@
   padding-right: 0;
   border-radius: 4px 4px 0px 0px;
 }
+
+#jewelery-main-image{
+  width:100%;
+  height:120px;
+  max-height: 180px;
+  object-fit: cover;
+  padding-left:0;
+  padding-right: 0;
+  border-radius: 4px 4px 0px 0px;
+}
+
+.main-details{
+  margin-bottom: 10vh;
+}
+
 .col-md-12{
   padding-left:0;
   padding-right: 0;
 }
 
-#carouselExampleIndicators{
-  width: 100%;
-}
-
 .carousel-item img{
   width: 100%;
-  max-height: 400px;
+  max-height: 500px;
   object-fit: cover;
 }
 
@@ -141,18 +152,24 @@
 }
 
 .size-image{
-
+  height:100px;
+  object-fit: cover;
 }
 
-.ingredient-icon{
+.ingredient-icon, .material-icon{
   width:40px;
   height:auto;
   float: right;
 }
 
-.ingredient-name{
+.ingredient-name, .material-name{
   float: left;
   vertical-align: middle;
+}
+
+.header-image{
+  margin-top: 6vh;
+  margin-bottom: 6vh;
 }
 
 .sub-title{
@@ -164,20 +181,76 @@
   margin-top: 3vh;
 }
 
-.ingredient{
+.ingredient, .material{
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
 
-.product-ingredients{
+.material {
+  padding-left: 12vh;
+  padding-right: 12vh;
+}
+
+.order-cake{
+  text-align: center;
+}
+
+.product-ingredients, .product-materials{
   border: 1px solid #ece8e8;
   border-radius: 3px;
+  text-align: center;
+}
+
+#order-cake-btn{
+  border: 1px solid #e1c546;
+  border-radius: 3px;
+  color: #666;
+  background-color: white;
+  width:100%;
+  margin-bottom: 4vh;
+}
+
+.order-cake-text{
+  font-weight: bold;
+  font-size: 24px;
+}
+
+#order-cake{
+  padding-left:0;
+  padding-right: 0;
+}
+
+#order-cake-btn:hover{
+  text-decoration: none;
+  background-color: white;
+  color: #666;
+  border: 1px solid #c37600;
+}
+
+.product-materials {
+  margin-top: 6vh;
+  padding:2vh;
+}
+
+.outer-material{
+  padding:2vh;
+}
+
+
+
+#material-title{
+  padding-top: 3vh;
+  margin-bottom: 4vh;
+}
+
+.container{
+  margin:75px;
 }
 
 .size{
   width: 15%;
   display: inline-block;
-  border: 1px solid #ece8e8;
+  border: 1px solid #e1c546;
   border-radius: 5px;
   padding-bottom: 1vh;
   margin-left: 2vh;
@@ -186,6 +259,18 @@
 
 .jam-quantity{
   width:50%;
+}
+
+.jewelery-quantity{
+  width:42%;
+}
+
+.new-order-item{
+  text-align: center;
+}
+
+.cake-quantity{
+  width:40%;
 }
 
 .add-cart{
@@ -197,10 +282,36 @@
   width:100%;
 }
 
+.jewelery-add-cart{
+  width:50%;
+  border: 1px solid #ece8e8;
+  text-align: center;
+  border-radius: 4px;
+  padding:3vh;
+}
+
+.carousel{
+  text-align: center;
+}
+
+#index{
+  margin-top: 30px;
+}
+
+#carouselExampleIndicators{
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.carousel-inner{
+  border-radius: 5px;
+  border: 1px solid #ece8e8;
+}
+
 .jam-size{
   text-align: center;
   margin-top: 20%;
-  margin-bottom: 20%;
 }
 
 .extra-small{

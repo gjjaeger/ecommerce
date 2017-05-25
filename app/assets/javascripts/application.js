@@ -29,6 +29,9 @@ $(document).on('turbolinks:load', function() {
 $(document).ready(function(){
   $('#product-modal').on('shown.bs.modal', function() {
     $('#carouselExampleIndicators').carousel();
+    $("#requested_date").change(function(){
+      $(this).datepicker('hide');
+    });
     // var date = new Date();
     // $('#datetimepicker1').datetimepicker({minDate: (date.setDate(date.getDate()+2))});
     // $("#datetimepicker1").change(function(){
@@ -57,12 +60,8 @@ $(document).ready(function(){
       };
     });
   });
-  $("#requested_date").change(function(){
-    $(this).datepicker('hide');
-    var date = $("#requested_date").val();
-    var time = $("#requested_time").val();
-    $('#requested_datetime').html(date);
-  });
+
+
   $(document).on('click','#shipping',function(){
     var id = $("#shipping").attr('data-href')
     $.get( "/orders/"+ id +"/checkout", function() {

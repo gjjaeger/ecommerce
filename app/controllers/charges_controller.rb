@@ -1,4 +1,5 @@
 class ChargesController < ApplicationController
+  include ChargesHelper
   require 'stripe'
   require 'easypost'
   def new
@@ -25,7 +26,7 @@ class ChargesController < ApplicationController
       charge = Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => if(item.product.category_id=="1")
-                          Size.where({amount: item.size, product_id: item.product.id}).first.price*100*item.quantity
+                          retrieve_size_price(item.size, item.product_id)*100*item.quantity
                         else
                           Integer(item.product.price*100*item.quantity)
                         end,
@@ -40,7 +41,7 @@ class ChargesController < ApplicationController
           {
             :type => 'sku',
             :parent =>  if(item.product.category_id=="1")
-                          Size.where({amount: item.size, product_id: item.product.id}).first.sku_id
+                          retrieve_size_sku(item.size, item.product.id)
                         else
                           item.product.sku_id
                         end,

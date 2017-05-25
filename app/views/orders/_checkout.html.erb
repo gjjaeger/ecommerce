@@ -38,7 +38,7 @@
         <%= f.submit "Next", :class=>"addToCart col-xs-12",:"data-href" => @order.id, :id=>"shipping" %>
       <%end%>
     <% else %>
-      <span>You have mentioned that you will be picking up one or more items in this shopping cart personally from the following address: 63 Clover Way 579119 Singapore. All the purchased items will be waiting for you on that day on the requested time. Should you wish to have the other items still shipped to you, please check them out seperately.</span>
+      <span>You have mentioned that you will be picking up one or more items in this shopping cart personally from the following address: 13 Beach Street 726355 Singapore. All the purchased items will be waiting for you on that day on the requested time. Should you wish to have the other items still shipped to you, please check them out seperately.</span>
       <%= link_to "Continue", order_shipping_path(current_order), remote: true, class: "btn btn-primary", :id =>"shipping", :"data-href" => @order.id %>
     <%end%>
 
