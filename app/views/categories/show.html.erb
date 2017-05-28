@@ -1,15 +1,10 @@
 <div class="container">
-  <ul class="categories">
-    <%@categories.each do |category|%>
-      <li class="outer-category" id=<%=category.name%>-category>
-        <%= link_to category_path(category), class: "category" do %>
-        <%=image_tag(category.name + "-icon.png", :class=>"icon jam-icon", :id=>category.name+"-category")%>
-        <span id="category-name"><%=category.name%></span>
-        <%end%>
-      </li>
-    <%end%>
-  </ul>
   <ul class="tags row">
+    <li class="outer-tag">
+      <%= link_to category_path(@category), class: "tag" do %>
+        <span id="tag-name">All</span>
+      <%end%>
+    </li>
     <%@tags.each do |tag|%>
       <li class="outer-tag">
         <%= link_to category_tag_path(@category,tag), class: "tag" do %>
@@ -19,11 +14,19 @@
     <%end%>
   </ul>
   <h3> Products under this category </h3>
-  <p>
-    <label for = "price">Price range:</label>
-    <input type = "text" id = "price" style = "border:0; color:#b9cd6d; font-weight:bold;">
-  </p>
-  <div id = "slider-3" data-href = <%=@category.id%> ></div>
+
+  <div class="filter row">
+    <div class="price-filter col-xs-5">
+      <span>
+        <label for = "price">Price range:</label>
+        <input type = "text" id = "price" style = "border:0; color:#b9cd6d; font-weight:bold;">
+      </span>
+      <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
+
+    </div>
+  </div>
+
+
   <div id="productss"><%=render 'products'%></div>
 
 

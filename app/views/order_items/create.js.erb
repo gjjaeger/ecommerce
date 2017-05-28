@@ -1,0 +1,24 @@
+if ($('.empty-cart-div').length>0){
+  $('.empty-cart-div').html("")
+}
+
+if ($('.empty-cart').length>0){
+  $('.empty-cart').html("")
+}
+
+if ($('.order-item').length == 0){
+
+  $(".shopping-cart").html("<%= escape_javascript(render 'order_item', :locals => {item: @item}) %>");
+  if ($('.checkout-button').length!=0){
+    $('.checkout-button').show()
+  }
+  else{
+    $('.checkout-button-div').show()
+  }
+}
+else {
+  $("<%= escape_javascript(render 'order_item', :locals => {item: @item}) %>").appendTo(".shopping-cart");
+
+};
+$('#order-total').html("<%= number_to_currency current_order.calculate_total %>")
+$("#product-modal").modal("hide")

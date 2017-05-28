@@ -29,7 +29,12 @@ class OrderItemsController < ApplicationController
     @item.save
     @order.save
     session[:order_id] = @order.id
-    redirect_to product_path(params[:order_item][:product_id])
+    respond_to do |format|
+      format.html { redirect_to products_path }
+      format.json { head :no_content }
+      format.js   { render :layout => false }
+    end
+    # redirect_to product_path(params[:order_item][:product_id])
 
     # respond_to do |format|
     #   if @order_item.save
@@ -63,7 +68,11 @@ class OrderItemsController < ApplicationController
     @item = @order.order_items.find(params[:id])
     @item.destroy
     @order.save
-    redirect_to products_path
+    respond_to do |format|
+      format.html { redirect_to products_path }
+      format.json { head :no_content }
+      format.js   { render :layout => false }
+    end
   end
 
   private

@@ -53,16 +53,16 @@ ul.dropdown-cart{
   max-height: 50px;
 }
 
-ul.dropdown-cart li .item{
+ul.dropdown-cart li .order-item{
     display:block;
     padding:3px 10px;
     margin: 3px 0;
 }
-ul.dropdown-cart li .item:hover{
+ul.dropdown-cart li .order-item:hover{
     background-color:#c3c5c5;
 
 }
-ul.dropdown-cart li .item:after{
+ul.dropdown-cart li .order-item:after{
     visibility: hidden;
     display: block;
     font-size: 0;
@@ -94,4 +94,8 @@ ul.dropdown-cart li .item-right button{
 body {
   padding-top: 0px;
   margin-top: 0px;
+}
+
+.checkout-button-div{
+  display: none;
 }

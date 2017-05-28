@@ -115,6 +115,7 @@ $(document).on('turbolinks:load', function() {
 });
 
 $(document).ready(function(){
+  
   $(function() {
     $( "#slider-3" ).slider({
       range:true,

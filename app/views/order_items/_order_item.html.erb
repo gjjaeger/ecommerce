@@ -1,0 +1,18 @@
+<li>
+  <span class="order-item">
+    <span class="item-left">
+      <%= image_tag(@item.product.images.first.photo.url, :class=> "cart-item-image") %>
+      <span class="item-info">
+        <span><%= @item.product.name%> <%if @item.product.category_id=="1"%><%= @item.size %>g<%end%></span>
+        <span><%=@item.quantity%> x <%=number_to_currency (if @item.product.price!=nil
+          @item.product.price
+        else
+          retrieve_size_price(@item.size, @item.product.id)
+        end)%></span>
+      </span>
+    </span>
+    <span class="item-right">
+      <%= link_to "x", order_item_path(@item), :data => {:method => "delete"}, remote: true, :class =>"btn btn-danger  delete_order_item fa fa-close"%>
+    </span>
+  </span>
+</li>

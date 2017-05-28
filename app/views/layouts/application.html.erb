@@ -21,10 +21,8 @@
   <body>
     <div class="collapse navbar-collapse navbar-fixed-top" id="navbar">
           <ul class="nav navbar-nav">
-            <li><%= link_to 'All Products', products_path %></li>
-            <% if user_signed_in? %>
-              <li><%= link_to 'My Orders', user_orders_path(current_user) %></li>
-            <%elsif admin_signed_in?%>
+            <li><%= link_to 'Home', products_path %></li>
+            <%if admin_signed_in?%>
               <li><%= link_to 'All Orders', orders_path() %></li>
             <%else%>
               <li><%= link_to 'Track Order', orders_path() %></li>
@@ -36,54 +34,46 @@
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
-          <ul class="nav navbar-nav navbar-left">
+          <ul class="nav navbar-nav">
+            <li><%= link_to 'Jams', category_path(1) %></li>
+            <li><%= link_to 'Jewelery', category_path(2) %></li>
+            <li><%= link_to 'Cakes', category_path(3) %></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><%= number_to_currency current_order.calculate_total %>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total"><%= number_to_currency current_order.calculate_total %></span>
               <span class="glyphicon glyphicon-shopping-cart"></span><span class="caret"></span><span></a>
               <ul class="dropdown-menu dropdown-cart" role="menu">
-                <% if current_order_items!=nil && current_order_items.any? %>
-                  <% current_order_items.each do |item| %>
-                    <li>
-                      <span class="item">
-                        <span class="item-left">
-                          <%= image_tag(item.product.images.first.photo.url, :class=> "cart-item-image") %>
-                          <span class="item-info">
-                            <span><%= item.product.name%> <%if item.product.category_id=="1"%><%= item.size %>g<%end%></span>
-                            <span><%=item.quantity%> x <%=number_to_currency (if item.product.price!=nil
-                              item.product.price
-                            else
-                              retrieve_size_price(item.size, item.product.id)
-                            end)%></span>
+                <div class="shopping-cart">
+                  <%= render "layouts/shopping_cart" %>
+                </div>
 
-                          </span>
-                        </span>
-                        <span class="item-right">
-                          <%= link_to "x", order_item_path(item), :data => {:method => "delete"}, :class =>"btn btn-danger  fa fa-close"%>
-                        </span>
-                      </span>
-                    </li>
-                  <% end %>
+                <div class="empty-cart-div">
+                </div>
+
+                <div class="checkout-button-div">
                   <%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default", id:"checkout-button" %>
-                <% else %>
+                </div>
+
+                <% if current_order_items==nil || !current_order_items.any? %>
                   <li>
-                    <span class="item-info">
+                    <span class="empty-cart">
                       <p>Your shopping cart is empty.</p>
                     </span>
                   </li>
+                <%end%>
+                <%if current_order_items!=nil && current_order_items.any?%>
+                  <div class="checkout-button">
+                    <%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default", id:"checkout-button" %>
+                  </div>
                 <% end %>
               </ul>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <% if user_signed_in? %>
-              <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
-              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete%></li>
-            <% elsif admin_signed_in? %>
+            <% if admin_signed_in? %>
               <li><%= link_to 'Edit profile', edit_admin_registration_path %></li>
               <li><%= link_to 'Logout Admin', destroy_admin_session_path, method: :delete%></li>
-            <% else %>
-              <li><%= link_to "Sign up", new_user_registration_path %></li>
-              <li><%= link_to "Login", new_user_session_path %></li>
             <% end%>
           </ul>
         </div>

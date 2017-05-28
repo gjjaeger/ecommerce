@@ -67,7 +67,7 @@
         </div>
         <div class="col-xs-3 jewelery-add-cart">
           <%if @product.category_id=="2"%>
-            <%= form_for @order_item do |f| %>
+            <%= form_for @order_item, remote: true do |f| %>
               <div class="cart-form">
                 <%= f.hidden_field :product_id, value: @product.id %>
                 <div class="minus-quantity"><span>-</span></div>
@@ -154,7 +154,7 @@
               <%=number_to_currency size.price%>
             </div>
             <div class="size-add-cart">
-              <%= form_for @order_item do |f| %>
+              <%= form_for @order_item, remote:true do |f| %>
                 <div class="cart-form">
                   <%= f.hidden_field :product_id, value: @product.id %>
                   <%= f.hidden_field :size, value: size.amount%>
