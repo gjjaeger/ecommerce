@@ -3,18 +3,10 @@
   <p id="notice"><%= notice %></p>
   <ul class="categories">
     <%@categories.each do |category|%>
-      <li class="outer-category">
+      <li class="outer-category" id=<%=category.name%>-category>
         <%= link_to category_path(category), class: "category" do %>
-          <% if category.id==1 %>
-            <%=image_tag("jam-icon.png", :class=>"icon jam-icon")%>
-          <% end %>
-          <% if category.id==2 %>
-            <%=image_tag("jewelery-icon.png", :class=>"icon jam-icon")%>
-          <% end %>
-          <% if category.id==3 %>
-            <%=image_tag("cake-icon.png", :class=>"icon jam-icon")%>
-          <% end %>
-          <span id="category-name"><%=category.name%></span>
+        <%=image_tag(category.name + "-icon.png", :class=>"icon jam-icon", :id=>category.name+"-category")%>
+        <span id="category-name"><%=category.name%></span>
         <%end%>
       </li>
     <%end%>

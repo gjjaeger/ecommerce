@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
@@ -39,8 +41,8 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><%= number_to_currency current_order.calculate_total %>
               <span class="glyphicon glyphicon-shopping-cart"></span><span class="caret"></span><span></a>
               <ul class="dropdown-menu dropdown-cart" role="menu">
-                <% if @order_items!=nil && @order_items.any? %>
-                  <% @order_items.each do |item| %>
+                <% if current_order_items!=nil && current_order_items.any? %>
+                  <% current_order_items.each do |item| %>
                     <li>
                       <span class="item">
                         <span class="item-left">
@@ -50,7 +52,7 @@
                             <span><%=item.quantity%> x <%=number_to_currency (if item.product.price!=nil
                               item.product.price
                             else
-                              Size.where({amount: item.size, product_id: item.product.id}).first.price
+                              retrieve_size_price(item.size, item.product.id)
                             end)%></span>
 
                           </span>

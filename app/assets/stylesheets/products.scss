@@ -32,18 +32,20 @@
   padding: 5vh 0vh;
 }
 
-.category{
+.category, .tag{
   padding:10px;
   border: 1px solid #ece8e8;
   border-radius: 5px;
   font-size: 28px;
 }
 
-.outer-category{
+
+
+.outer-category, .outer-tag{
   margin: 10px;
 }
 
-.category:hover{
+.category:hover, .tag:hover{
   background-color:white;
   border: 1px solid #c37600;
   text-decoration: none;
@@ -258,7 +260,25 @@
 }
 
 .jam-quantity{
-  width:50%;
+  width:20%;
+  text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+
+}
+
+input{
+  border-radius: 2px;
+  border: 1px solid #ece8e8;
+}
+
+input:focus{
+  outline: none;
 }
 
 .jewelery-quantity{
@@ -343,11 +363,11 @@
   object-fit: cover;
 }
 
-.categories li{
+.categories li, .tags li{
   display: inline;
 }
 
-.categories {
+.categories, .tags {
   padding-top: 15px;
   padding-left:0px;
 }
@@ -392,4 +412,23 @@
 
 .starting-from{
   font-size: 14px;
+}
+
+.minus-quantity, .plus-quantity{
+  border: 1px solid #ece8e8;
+  text-align: center;
+  width:20%;
+  display: inline-block;
+  border-radius: 2px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.minus-quantity:hover, .plus-quantity:hover{
+  border: 1px solid #c37600;
 }

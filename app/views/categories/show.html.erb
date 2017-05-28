@@ -1,68 +1,32 @@
-<ul class="categories row">
-  <%@categories.each do |category|%>
-    <li class="category"><%= link_to category_path(category), class: "btn btn-primary" do %>
-      <%=category.name%>
+<div class="container">
+  <ul class="categories">
+    <%@categories.each do |category|%>
+      <li class="outer-category" id=<%=category.name%>-category>
+        <%= link_to category_path(category), class: "category" do %>
+        <%=image_tag(category.name + "-icon.png", :class=>"icon jam-icon", :id=>category.name+"-category")%>
+        <span id="category-name"><%=category.name%></span>
+        <%end%>
+      </li>
     <%end%>
-    </li>
-  <%end%>
-</ul>
-<ul class="tags row">
-  <%@tags.each do |tag|%>
-    <li class="tag"><%= link_to category_tag_path(@category,tag), class: "btn btn-primary" do %>
-      <%=tag.name%>
+  </ul>
+  <ul class="tags row">
+    <%@tags.each do |tag|%>
+      <li class="outer-tag">
+        <%= link_to category_tag_path(@category,tag), class: "tag" do %>
+          <span id="tag-name"><%=tag.name%></span>
+        <%end%>
+      </li>
     <%end%>
-    </li>
-  <%end%>
-</ul>
-<h3> Products under this category </h3>
-<% Product.where(category_id: @category.id).each do |product| %>
-  <div class="col-md-4 outside-product">
-    <%= link_to product_path(product), remote: true do %>
-      <div class="col-md-12" id="product">
-        <% if product.featured%>
-          <div class="featured">
-            <div class="ribbon">Featured</div>
-          </div>
-        <%end%>
-        <% if !product.images.empty?%>
-          <%= image_tag(product.images.first.photo.url, :class=>"col-md-12", :id=>"product-image") %>
-        <%end%>
-        <span class="product-name col-xs-12"><%= product.name %></span>
-        <% if product.category_id == "1" %>
-          <span class="product-price col-xs-12">Starting from <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
-        <% else %>
-          <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
-        <% end %>
-        <div class="description">
-          <span><%=product.description%></span>
-        </div>
-        <% if product.category_id == "1"|| product.category_id=="3" %>
-          <span class="ingredient-title">Ingredients</span>
-          <ul class="ingredient-list">
-            <%product.ingredients.each do |ingredient|%>
-              <li><%=ingredient.name%></li>
-            <%end%>
-          </ul>
-        <%end%>
-        <div class="row">
-          <% if product.category_id == "2"%>
-            <span class="stock-title">Stock:</span>
-            <span class="stock-amount"><%=product.stock%></span>
-          <%end%>
-        </div>
-        <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
-        <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
-        <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
+  </ul>
+  <h3> Products under this category </h3>
+  <p>
+    <label for = "price">Price range:</label>
+    <input type = "text" id = "price" style = "border:0; color:#b9cd6d; font-weight:bold;">
+  </p>
+  <div id = "slider-3" data-href = <%=@category.id%> ></div>
+  <div id="productss"><%=render 'products'%></div>
 
-        <%if product.category_id!="1"%>
-          <%= form_for @order_item do |f| %>
-            <%= f.hidden_field :product_id, value: product.id %>
-            <%= f.number_field :quantity, :class=>"col-xs-12" %>
-            <%= f.submit "Add to cart", :class=>"addToCart col-xs-12" %>
-          <% end %>
-        <%end%>
-      </div>
-    <%end%>
-  </div>
-<% end %>
+
+</div>
+
 <div id="product-modal" class="modal fade"></div>

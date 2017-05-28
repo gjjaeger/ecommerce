@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  include ChargesHelper
 
   before_action :check_user, only: [:index, :show, :edit, :update, :destroy]
 

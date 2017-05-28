@@ -28,6 +28,7 @@ source 'https://rubygems.org'
   gem 'mail'
   gem 'mailgun-ruby'
   gem 'delayed_job_active_record'
+  gem 'jquery-ui-rails'
 
 
 

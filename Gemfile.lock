@@ -119,6 +119,8 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    jquery-ui-rails (6.0.1)
+      railties (>= 3.2.16)
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (3.0.8)
@@ -284,6 +286,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   jquery-turbolinks
+  jquery-ui-rails
   launchy
   listen (~> 3.0.5)
   mail

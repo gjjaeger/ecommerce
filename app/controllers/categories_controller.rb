@@ -14,6 +14,19 @@ class CategoriesController < ApplicationController
     @categories=Category.all
     @category=Category.find(params[:id])
     @tags=@category.tags
+    if params[:id] == '2'
+      @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 350, @category.id.to_s)
+    elsif params[:id] == '3'
+      @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)
+    else
+      sizes=Size.where("(price >= ? AND price <= ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 50)
+      @products = []
+      sizes.each do |size|
+        product=Product.find_by({id: size.product_id})
+        @products.push(product)
+      end
+      @products = @products.uniq
+    end
   end
 
   # GET /categories/new

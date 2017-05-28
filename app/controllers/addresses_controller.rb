@@ -90,7 +90,6 @@ class AddressesController < ApplicationController
           :customs_info => customs_info
         )
         parcels.push({parcel: {length: parcel[:length], width: parcel[:width], height: parcel[:height], weight: parcel[:weight]}})
-        byebug
         @rate = shipment.lowest_rate()
         order_item=OrderItem.find(item.id)
         order_item.shipment_id=shipment.id

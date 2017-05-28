@@ -20,6 +20,7 @@
  @import "devise_bootstrap_views";
  @import "formtastic";
  @import "bootstrap-datepicker";
+ @import "jquery-ui";
 
 *{
   font-family: 'Josefin Sans', sans-serif;
@@ -46,6 +47,10 @@ ul.dropdown-cart{
 .cart-item-image{
   width:50px;
   height: auto;
+}
+
+.dropdown-toggle{
+  max-height: 50px;
 }
 
 ul.dropdown-cart li .item{

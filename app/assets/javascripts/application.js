@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootstrap
 //= require moment
 //= require bootstrap-datepicker
@@ -23,11 +24,123 @@
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {
+  $(function() {
+    var id = $("#slider-3").attr('data-href')
+    if (id =='2'){
+      $( "#slider-3" ).slider({
+        range:true,
+        min: 0,
+        max: 350,
+        values: [ 35, 350 ],
+        slide: function( event, ui ) {
+          $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        },
+        stop: function(event, ui) {
+          var id = $("#slider-3").attr('data-href')
+          $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
+          })
+          .success( function (data) {
+            products = $(data).find('#productss')
+            $('#productss').html(products);
+          })
+        }
+      });
+    }
+    if (id =='1'){
+      $( "#slider-3" ).slider({
+        range:true,
+        min: 0,
+        max: 50,
+        values: [ 0, 50 ],
+        slide: function( event, ui ) {
+          $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        },
+        stop: function(event, ui) {
+          var id = $("#slider-3").attr('data-href')
+          $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
+          })
+          .success( function (data) {
+            products = $(data).find('#productss')
+            $('#productss').html(products);
+          })
+        }
+      });
+    }
+    if (id =='3'){
+      $( "#slider-3" ).slider({
+        range:true,
+        min: 0,
+        max: 100,
+        values: [ 0, 100 ],
+        slide: function( event, ui ) {
+          $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        },
+        stop: function(event, ui) {
+          var id = $("#slider-3").attr('data-href')
+          $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
+          })
+          .success( function (data) {
+            products = $(data).find('#productss')
+            $('#productss').html(products);
+          })
+        }
+      });
+    }
+
+    $( "#price" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-3" ).slider( "values", 1 ) );
+  });
+
+
   $(".dropdown-toggle").dropdown();
+  $('.quantity').val(0);
+  $('.add-cart').prop('disabled', true);
+
+  $(".outer-category").click(function () {
+    var id = $(this).attr("id");
+
+    $('#' + id).siblings().find(".active-category").removeClass("active-category");
+        //                       ^ you forgot this
+    $('#' + id).addClass("active-category");
+    localStorage.setItem("selectedolditem", id);
+  });
+
+  var selectedolditem = localStorage.getItem('selectedolditem');
+
+  if (selectedolditem != null) {
+    $('#' + selectedolditem).siblings().find(".active-category").removeClass("active-category");
+    //                                        ^ you forgot this
+    $('#' + selectedolditem).addClass("active-category");
+  };
 });
 
 $(document).ready(function(){
+  $(function() {
+    $( "#slider-3" ).slider({
+      range:true,
+      min: 0,
+      max: 350,
+      values: [ 35, 200 ],
+      slide: function( event, ui ) {
+        $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      },
+      stop: function(event, ui) {
+        var id = $("#slider-3").attr('data-href')
+        $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
+        })
+        .success( function (data) {
+          products = $(data).find('#productss')
+          $('#productss').html(products);
+        })
+      }
+    });
+    $( "#price" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-3" ).slider( "values", 1 ) );
+  });
+
   $('#product-modal').on('shown.bs.modal', function() {
+    $('.cake-quantity').val(0);
+    $('.add-cart').prop('disabled', true);
     $('#carouselExampleIndicators').carousel();
     $("#requested_date").change(function(){
       $(this).datepicker('hide');
@@ -61,6 +174,73 @@ $(document).ready(function(){
     });
   });
 
+
+
+  $(document).on('change','.quantity',function(){
+    if ($(this).val()<=0) {
+      $(this).parent().children('.add-cart').prop('disabled', true)
+    }
+    else {
+      $(this).parent().children('.add-cart').prop('disabled', false)
+    };
+    if ($(this).val()=="") {
+      $(this).val(0);
+    };
+  });
+  $(document).on('click','.minus-quantity',function(){
+    qelement = $(this).parent().children('.quantity');
+    quantity = parseInt(qelement.val());
+    if (quantity <=0){
+      $(this).parent().children('.add-cart').prop('disabled', true)
+    }
+    else {
+      qelement.val(quantity-1);
+      if (qelement.val() <=0){
+        $(this).parent().children('.add-cart').prop('disabled', true)
+      }
+    }
+  });
+  $(document).on('click','.plus-quantity',function(){
+    qelement = $(this).parent().children('.quantity');
+    quantity = parseInt(qelement.val());
+    qelement.val(quantity+1);
+
+    $(this).parent().children('.add-cart').prop('disabled', false)
+  });
+
+
+
+  //for cakes
+  $(document).on('change','.cake-quantity',function(){
+    if ($(this).val()<=0) {
+      $(this).parent().parent().children('.modal-footer').children('.add-cart').prop('disabled', true)
+    }
+    else {
+      $(this).parent().parent().children('.modal-footer').children('.add-cart').prop('disabled', false)
+    };
+    if ($(this).val()=="") {
+      $(this).val(0);
+    };
+  });
+  $(document).on('click','.minus-quantity',function(){
+    qelement = $(this).parent().children('.cake-quantity');
+    quantity = parseInt(qelement.val());
+    if (quantity <=0){
+      $(this).parent().parent().children('.modal-footer').children('.add-cart').prop('disabled', true)
+    }
+    else {
+      qelement.val(quantity-1);
+      if (qelement.val() <=0){
+        $(this).parent().parent().children('.modal-footer').children('.add-cart').prop('disabled', true)
+      }
+    }
+  });
+  $(document).on('click','.plus-quantity',function(){
+    qelement = $(this).parent().children('.cake-quantity');
+    quantity = parseInt(qelement.val());
+    qelement.val(quantity+1);
+    $(this).parent().parent().children('.modal-footer').children('.add-cart').prop('disabled', false)
+  });
 
   $(document).on('click','#shipping',function(){
     var id = $("#shipping").attr('data-href')

@@ -35,7 +35,7 @@
             <div class="col-md-12">
               <div class="price">
                 <%if order_item.product.category_id=="1"%>
-                  <%=number_to_currency Size.where({amount: order_item.size, product_id: order_item.product.id}).first.price*order_item.quantity%>
+                  <%=number_to_currency retrieve_size_price(order_item.size,order_item.product.id)*order_item.quantity%>
                 <%else%>
                   <%=number_to_currency order_item.product.price*order_item.quantity%>
                 <%end%>
