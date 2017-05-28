@@ -1,5 +1,6 @@
 $('.delete_order_item').bind('ajax:success', function() {
   $('#order-total').html("<%= number_to_currency current_order.calculate_total %>")
+  $('.item-count').html("<%=current_order.order_items.count%>");
   $(this).closest('li').remove();
   if ($('.order-item').length == 0){
     $('.empty-cart-div').html("<p>Your shopping cart is empty.</p>")

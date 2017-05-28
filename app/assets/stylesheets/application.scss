@@ -97,5 +97,19 @@ body {
 }
 
 .checkout-button-div{
-  display: none;
+
+}
+
+.item-count{
+  position: absolute;
+  top:6px;
+  right:18px;
+  width:15px;
+  height:15px;
+  line-height: 18px;
+  font-size: 12px;
+  background-color: red;
+  border-radius: 100%;
+  color:white;
+  text-align: center;
 }

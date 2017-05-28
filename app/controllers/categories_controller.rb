@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
     @category=Category.find(params[:id])
     @tags=@category.tags
     if params[:id] == '2'
-      @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 350, @category.id.to_s)
+      @products=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 350, @category.id.to_s, 0)
     elsif params[:id] == '3'
       @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)
     else

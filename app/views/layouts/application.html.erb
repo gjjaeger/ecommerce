@@ -42,7 +42,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total"><%= number_to_currency current_order.calculate_total %></span>
-              <span class="glyphicon glyphicon-shopping-cart"></span><span class="caret"></span><span></a>
+              <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.count%></span><span class="caret"></span><span></a>
               <ul class="dropdown-menu dropdown-cart" role="menu">
                 <div class="shopping-cart">
                   <%= render "layouts/shopping_cart" %>
@@ -52,7 +52,6 @@
                 </div>
 
                 <div class="checkout-button-div">
-                  <%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default", id:"checkout-button" %>
                 </div>
 
                 <% if current_order_items==nil || !current_order_items.any? %>

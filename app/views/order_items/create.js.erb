@@ -13,12 +13,13 @@ if ($('.order-item').length == 0){
     $('.checkout-button').show()
   }
   else{
-    $('.checkout-button-div').show()
+    $('.checkout-button-div').html('<%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default", id:"checkout-button" %>');
   }
 }
 else {
   $("<%= escape_javascript(render 'order_item', :locals => {item: @item}) %>").appendTo(".shopping-cart");
 
 };
-$('#order-total').html("<%= number_to_currency current_order.calculate_total %>")
-$("#product-modal").modal("hide")
+$('#order-total').html("<%= number_to_currency current_order.calculate_total %>");
+$('.item-count').html("<%=current_order.order_items.count%>");
+$("#product-modal").modal("hide");

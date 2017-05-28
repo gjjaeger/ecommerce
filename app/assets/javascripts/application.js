@@ -24,6 +24,42 @@
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {
+  $('#product-modal').on('shown.bs.modal', function() {
+    $('.cake-quantity').val(0);
+    $('.add-cart').prop('disabled', true);
+    $('#carouselExampleIndicators').carousel();
+    $("#requested_date").change(function(){
+      $(this).datepicker('hide');
+    });
+    // var date = new Date();
+    // $('#datetimepicker1').datetimepicker({minDate: (date.setDate(date.getDate()+2))});
+    // $("#datetimepicker1").change(function(){
+    //   var date2 = $(this).data("DateTimePicker").getDate();
+    //   $('#expected-delivery').html(date2._d);
+    // });
+  });
+
+
+  $('#product-modal').on('shown.bs.modal', function() {
+    var today = new Date();
+    var dater = today.setDate(today.getDate() + parseInt($('#prep_time').val()));
+    var date=new Date(dater);
+    $('#requested_date').datepicker({startDate : date,format: 'yyyy-mm-dd'});
+    if ($('.delivery-option').val()=="1"){
+      $('.delivery-title').show();
+
+    };
+    $('.delivery-option').change(function(){
+      if ($(this).val()=="1"){
+        $('.delivery-title').show();
+        $('.pickup-title').hide();
+      };
+      if ($(this).val()=="0"){
+        $('.delivery-title').hide();
+        $('.pickup-title').show();
+      };
+    });
+  });
   $(function() {
     var id = $("#slider-3").attr('data-href')
     if (id =='2'){
@@ -115,7 +151,7 @@ $(document).on('turbolinks:load', function() {
 });
 
 $(document).ready(function(){
-  
+
   $(function() {
     $( "#slider-3" ).slider({
       range:true,
@@ -153,9 +189,10 @@ $(document).ready(function(){
     //   $('#expected-delivery').html(date2._d);
     // });
   });
-  var today = new Date();
+
 
   $('#product-modal').on('shown.bs.modal', function() {
+    var today = new Date();
     var dater = today.setDate(today.getDate() + parseInt($('#prep_time').val()));
     var date=new Date(dater);
     $('#requested_date').datepicker({startDate : date,format: 'yyyy-mm-dd'});
