@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   include ChargesHelper
+  skip_before_action :verify_authenticity_token
 
   before_action :check_user, only: [:index, :show, :edit, :update, :destroy]
 
@@ -76,7 +77,8 @@ class OrdersController < ApplicationController
 
   def shipping
     @order=current_order
-    if !@order.order_items.any? {|order_item| !order_item.delivery }
+    order = Order.find(current_order)
+    if !@order.order_items.any? {|order_item| order_item.product.category_id=="3" }
       rates = session[:rates]
       totalship = 0
       rates.each do |rate|
@@ -85,15 +87,62 @@ class OrdersController < ApplicationController
       @shipping=totalship
       @total100 = (current_order.total_price * 100) + (BigDecimal(@shipping)*100)
       @total = (current_order.total_price) + (BigDecimal(@shipping))
-      order = Order.find(current_order)
       order.total_shipping=totalship
-      order.save
-    else
+    elsif @order.order_items.any? {|order_item| !order_item.delivery && order_item.product.category_id=="3"}
       @shipping=0
-      @total100 = (current_order.total_price * 100)
-      @total = (current_order.total_price)
+      @total100 = (current_order.total_price * 100)+ (BigDecimal(@shipping)*100)
+      @total = (current_order.total_price) + (BigDecimal(@shipping))
+      order.total_shipping=@shipping
+      order.order_items.each do |item|
+        item.delivery = false
+        item.save
+      end
+    elsif @order.order_items.any? {|order_item| order_item.delivery && order_item.product.category_id=="3"}
+      @shipping=10
+      @total100 = (current_order.total_price * 100)+ (BigDecimal(@shipping)*100)
+      @total = (current_order.total_price) + (BigDecimal(@shipping))
+      order.total_shipping=@shipping
+      order.order_items.each do |item|
+        item.delivery = true
+        item.save
+      end
     end
-    render partial: '/orders/shipping', locals:{shipping: @shipping, total: @total}
+    order.save
+  end
+
+  def tracking
+    request_string = request.body.read
+    parsed_request = JSON.parse(request_string)
+
+    if parsed_request['object'] == 'Event' && parsed_request['description'] == 'tracker.updated'
+      event = EasyPost::Event.receive(request_string)
+      tracker = event.result
+
+      message = "Hey, this is FunCompany."
+      if tracker.status == 'delivered'
+        message += "Your package has arrived! "
+      else
+        message += "There's an update on your package: "
+      end
+
+      td = tracker.tracking_details.reverse.find{ |tracking_detail| tracking_detail.status == tracker.status }
+      message += "#{tracker.carrier} says: #{td.message} in #{td.tracking_location.city}." if td.present?
+      
+      order=Order.find(params[:order_id])
+
+      TrackerUpdateJob.set(wait: 20.seconds).perform_later(order.customer_email, message)
+      # from = SendGrid::Email.new(email: 'test@fromaddress.com')
+      # subject = 'Hello World from the SendGrid Ruby Library!'
+      # to = SendGrid::Email.new(email: 'customer@gmail.com')
+      # content = SendGrid::Content.new(type: 'text/plain', value: message)
+      # mail = SendGrid::Mail.new(from, subject, to, content)
+      #
+      # output = settings.sendgrid.client.mail._("send").post(request_body: mail.to_json)
+
+      [200, {}, "Email update was sent to the customer!"]
+    else
+      [200, {}, "Not a Tracker event, so nothing to do here for now..."]
+    end
   end
 
   private

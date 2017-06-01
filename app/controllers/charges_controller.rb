@@ -2,24 +2,27 @@ class ChargesController < ApplicationController
   include ChargesHelper
   require 'stripe'
   require 'easypost'
+  require 'mail'
   def new
   end
 
   def create
-    order=Order.find(current_order)
-    address=Address.find(order.address_id)
+    order_object=Order.find(current_order)
+    address=Address.find(order_object.address_id)
     # Amount in cents
     customer = Stripe::Customer.create(
       :email => params[:stripeEmail],
       :source  => params[:stripeToken]
     )
 
-    charge = Stripe::Charge.create(
-      :customer    => customer.id,
-      :amount      => Integer(current_order.total_shipping*100),
-      :description => "Shipping",
-      :currency    => 'usd'
-    )
+    if current_order.total_shipping > 0
+      charge = Stripe::Charge.create(
+        :customer    => customer.id,
+        :amount      => Integer(current_order.total_shipping*100),
+        :description => "Shipping/Delivery",
+        :currency    => 'usd'
+      )
+    end
 
 
     current_order.order_items.each do |item|
@@ -60,11 +63,17 @@ class ChargesController < ApplicationController
           }
         },
       )
-      shipment=EasyPost::Shipment.retrieve(item.shipment_id)
-      purchased=shipment.buy(rate: shipment.lowest_rate())
-      label = shipment.label(file_format:"PDF")
-      tracker=purchased[:tracker]
-      @shipment = Shipment.create(:recipient => address.name, :tracker_code => tracker[:tracking_code], :carrier => tracker[:carrier], :est_delivery_date => tracker[:est_delivery_date], :order_item_id => item.id, :shipment_id => shipment.id, :public_url => tracker[:public_url])
+      if !current_order.order_items.any? {|order_item| order_item.product.category_id=="3" }
+        shipment=EasyPost::Shipment.retrieve(item.shipment_id)
+        purchased=shipment.buy(rate: shipment.lowest_rate())
+        label = shipment.label(file_format:"PDF")
+        tracker=purchased[:tracker]
+        trackerObject = EasyPost::Tracker.create({
+          tracking_code: "EZ1000000001" #tracker[:id]
+        })
+        EasyPost::Webhook.create({url: "http://4f3dd57b.ngrok.io/orders/"+(order_object.id).to_s+"/tracking"})
+        @shipment = Shipment.create(:recipient => address.name, :tracker_code => tracker[:tracking_code], :carrier => tracker[:carrier], :est_delivery_date => tracker[:est_delivery_date], :order_item_id => item.id, :shipment_id => shipment.id, :public_url => tracker[:public_url])
+      end
     end
 
     # session[:rates].each do |rate|
@@ -77,6 +86,7 @@ class ChargesController < ApplicationController
     # @shippingAddress=Address.create(:line1 => params[:stripeShippingAddressLine1], :city => params[:stripeShippingAddressCity],:country => params[:stripeShippingAddressCountry], :postal_code => params[:stripeShippingAddressZip])
     @order = Order.find(current_order)
     @order.status = "created"
+    @order.customer_email=params[:stripeEmail]
     # @order.address_id= @shippingAddress.id
     if current_user
       @order.account_id=current_user.account.id
@@ -91,6 +101,27 @@ class ChargesController < ApplicationController
           item.product.save
         end
       end
+      # Mail.defaults do
+      #   delivery_method :smtp, {
+      #     :port      => 587,
+      #     :address   => "smtp.mailgun.com",
+      #     :domain         => ENV['domain'],
+      #     :user_name      => ENV['username'],
+      #     :password       => ENV['password'],
+      #     :openssl_verify_mode => 'none',
+      #     :authentication => :plain,
+      #   }
+      # end
+      #
+      # mail = Mail.deliver do
+      #   to      'peterparkster109@gmail.com'
+      #   from    'gabrieljaeger1@gmail.com'
+      #   subject 'Hello'
+      #
+      #   text_part do
+      #     body 'Testing some Mailgun awesomness'
+      #   end
+      # end
       SendEmailJob.set(wait: 20.seconds).perform_later(params[:stripeEmail])
       session[:order_id]=nil
       redirect_to products_path

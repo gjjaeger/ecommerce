@@ -6,8 +6,16 @@
   float:left;
 }
 
+.summary{
+  margin-top: 60px;
+}
+
 .price{
   float: right;
+}
+
+.pay-button{
+  text-align: center;
 }
 
 .total-price{
@@ -28,5 +36,5 @@
 .filter {
   border:1px solid black;
   padding:15px;
-  border-radius: 5px; 
+  border-radius: 5px;
 }

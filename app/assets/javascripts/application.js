@@ -24,6 +24,14 @@
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {
+  $(document).on("page:fetch", function(){
+    $("#loading-modal").modal("show");
+    debugger;
+  });
+
+  $(document).on("page:receive", function(){
+    $("#loading-modal").modal("hide")
+  });
   $('#product-modal').on('shown.bs.modal', function() {
     $('.cake-quantity').val(0);
     $('.add-cart').prop('disabled', true);
@@ -151,6 +159,65 @@ $(document).on('turbolinks:load', function() {
 });
 
 $(document).ready(function(){
+  $(function() {
+    var amount = '';
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_3plF76arhkygGMgwCEerThpa',
+      image: 'Mango-icon.png',
+      token: function(token, args) {
+        // Use the token to create the charge with a server-side script.
+        // You can access the token ID with `token.id`
+        console.log(token)
+        var chargeData = {
+          amount: amount,
+          token: token
+        }
+        $.ajax({
+            url: '/link/to/php/stripeDonate.php',
+            type: 'post',
+            data: {chargeData: chargeData},
+            success: function(data) {
+              if (data == 'success') {
+                  console.log("Card successfully charged!")
+              }
+              else {
+                  console.log("Success Error!")
+              }
+
+            },
+            error: function(data) {
+                  console.log("Ajax Error!");
+                  console.log(data);
+            }
+          }); // end ajax call
+      }
+    });
+
+    $('.donate-button').bind('click', function(e) {
+      donationAmt = $(this).html().substring(1) + '00';
+      donationAmt = parseInt(donationAmt); // Grabs the donation amount in the html of the button and store it in a variable
+      // Open Checkout with further options
+      handler.open({
+        name: 'Company Name',
+        description: 'A donation',
+        amount: donationAmt
+      });
+      e.preventDefault();
+    });
+  });
+  $("#loading-modal").modal("hide");
+
+  // show spinner on AJAX start
+  $(document).ajaxStart(function(){
+    $("#loading-modal").modal("show");
+    debugger;
+  });
+
+  // hide spinner on AJAX stop
+  $(document).ajaxStop(function(){
+    $("#loading-modal").modal("hide");
+    debugger;
+  });
 
   $(function() {
     $( "#slider-3" ).slider({
@@ -283,10 +350,11 @@ $(document).ready(function(){
   $(document).on('click','#shipping',function(){
     var id = $("#shipping").attr('data-href')
     $.get( "/orders/"+ id +"/checkout", function() {
+      $("#loading-modal").modal("show");
     })
     .done(function() {
-      $("#product-modal").html("<%= escape_javascript(render 'shipping') %>");
-      $("#product-modal").modal("show");
+      setTimeout(function(){$("#loading-modal").modal("hide");},3000);
+      $("#product-modal").modal("hide");
     })
 
   });

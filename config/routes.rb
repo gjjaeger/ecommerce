@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :orders do
     get "checkout"
     get "shipping"
+    post "tracking"
   end
   resources :order_items
   resources :addresses do

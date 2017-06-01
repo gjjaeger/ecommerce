@@ -97,11 +97,13 @@ class AddressesController < ApplicationController
         session[:rates].push([@rate["carrier"],@rate["id"],@rate["delivery_days"],@rate["delivery_date"],@rate["rate"],@rate["shipment_id"]])
       end
     end
-    order = EasyPost::Order.create(
-      to_address: to_address,
-      from_address: from_address,
-      shipments: parcels
-    )
+    if !current_order.order_items.any? {|order_item| order_item.product.category_id=="3"}
+      order = EasyPost::Order.create(
+        to_address: to_address,
+        from_address: from_address,
+        shipments: parcels
+      )
+    end
     if @address.save
       order=Order.find(current_order)
       order.address_id=@address.id

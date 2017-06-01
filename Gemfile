@@ -29,6 +29,7 @@ source 'https://rubygems.org'
   gem 'mailgun-ruby'
   gem 'delayed_job_active_record'
   gem 'jquery-ui-rails'
+  gem 'figaro'
 
 
 
