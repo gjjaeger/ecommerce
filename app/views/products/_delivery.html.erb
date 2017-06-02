@@ -7,6 +7,9 @@
     <%= form_for @order_item, remote: true do |f| %>
     <div class="cart-form">
       <div class="delivery-body">
+        <div class="small-show-image">
+          <%= image_tag(@product.images.first.photo.url, :class=>"small-product-show-image") %>
+        </div>
         <%= f.hidden_field :product_id, value: @product.id %>
         <%= f.hidden_field :prep_time, value: @product.time_needed, :id=>"prep_time" %>
         <div class="minus-quantity"><span>-</span></div>
@@ -28,7 +31,7 @@
         </div>
       </div>
       <div class="modal-footer">
-          <%= f.submit "Add to cart", :class=>"add-cart col-xs-12 btn btn-default" %>
+          <%= f.submit "Add to cart", :class=>"add-cart col-xs-12 btn btn-default",:id=>"cake-add-cart" %>
         <% end %>
       </div>
     </div>

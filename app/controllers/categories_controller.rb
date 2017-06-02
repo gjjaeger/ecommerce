@@ -13,9 +13,29 @@ class CategoriesController < ApplicationController
     @order_item=current_order.order_items.new
     @categories=Category.all
     @category=Category.find(params[:id])
-    @tags=@category.tags
+    @tags=@category.tags.select("name").group(:name)
+
+
     if params[:id] == '2'
-      @products=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 350, @category.id.to_s, 0)
+
+      tagss=[]
+      @products1 = []
+      if params[:tags]
+        if params[:tags] == 0
+        else
+          params[:tags].each do |tag|
+            tag_object = Tag.find_by({name: tag})
+            products = tag_object.products
+            products.each do |product|
+              @products1.push(product)
+            end
+          end
+        end
+      else
+        @products1=@category.products.where("(stock > ?)", 0)
+      end
+      @products2=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 400, @category.id.to_s, 0)
+      @products=@products1 & @products2
     elsif params[:id] == '3'
       @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)
     else
@@ -42,7 +62,6 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
     @category = Category.new(category_params)
-
     respond_to do |format|
       if @category.save
         format.html { redirect_to @category, notice: 'Category was successfully created.' }

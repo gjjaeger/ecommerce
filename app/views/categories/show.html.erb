@@ -1,30 +1,68 @@
 <div class="container">
-  <ul class="tags row">
-    <li class="outer-tag">
-      <%= link_to category_path(@category), class: "tag" do %>
-        <span id="tag-name">All</span>
-      <%end%>
-    </li>
-    <%@tags.each do |tag|%>
-      <li class="outer-tag">
-        <%= link_to category_tag_path(@category,tag), class: "tag" do %>
-          <span id="tag-name"><%=tag.name%></span>
-        <%end%>
-      </li>
-    <%end%>
-  </ul>
-  <h3> Products under this category </h3>
-
-  <div class="filter row">
-    <div class="price-filter col-xs-5">
-      <span>
-        <label for = "price">Price range:</label>
-        <input type = "text" id = "price" style = "border:0; color:#b9cd6d; font-weight:bold;">
-      </span>
-      <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
-
+  <% if @category.id==2 %>
+    <div class="filter row">
+      <div class="price-filter col-xs-5">
+        <span>
+          <label for = "price">Price range:</label>
+          <input type = "text" id = "price" style = "border:0; color:#b9cd6d; font-weight:bold;">
+        </span>
+        <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
+      </div>
+      <div class="tag-filter col-xs-5">
+        <div class="row">
+      		<h2>Multiple Select with Search Option - Tiled Layout </h2>
+          <div class="form-group">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <input type="search" class="form-control" id="search" placeholder="Add your options..">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="searchable-container">
+              <%@tags.each do |tag|%>
+                <div class="items col-xs-5 col-sm-5 col-md-3 col-lg-3">
+                  <div class="info-block block-info clearfix">
+                    <div class="btn-group bizmoduleselect">
+                      <label class="btn btn-default active">
+                        <div class="bizcontent">
+                          <input class="tag-check-box" type="checkbox" name="tag_ids[]" autocomplete="off" checked value=<%=tag.name%>>
+                          <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                          <h5><%=tag.name%></h5>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              <%end%>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <div class="searchable-container">
+              <%@tags.each do |tag|%>
+                <div class="items col-xs-5 col-sm-5 col-md-3 col-lg-3">
+                  <div class="info-block block-info clearfix">
+                    <div class="btn-group bizmoduleselect">
+                      <label class="btn btn-default active">
+                        <div class="bizcontent">
+                          <input class="tag-check-box" type="button" name="tag_ids[]" autocomplete="off" checked value=<%=tag.name%>>
+                          <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                          <h5><%=tag.name%></h5>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  <% end %>
+
 
 
   <div id="productss"><%=render 'products'%></div>
@@ -35,26 +73,17 @@
 <div id="product-modal" class="modal fade"></div>
 
 <div id="loading-modal" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="spinner">
-          <div class="sk-cube-grid">
-            <div class="sk-cube sk-cube1"></div>
-            <div class="sk-cube sk-cube2"></div>
-            <div class="sk-cube sk-cube3"></div>
-            <div class="sk-cube sk-cube4"></div>
-            <div class="sk-cube sk-cube5"></div>
-            <div class="sk-cube sk-cube6"></div>
-            <div class="sk-cube sk-cube7"></div>
-            <div class="sk-cube sk-cube8"></div>
-            <div class="sk-cube sk-cube9"></div>
-          </div>
-        </div>
-        <div class="text-center">
-          <span class="">Loading, please wait a moment</span>
-        </div>
-      </div>
+  <div class="spinner">
+    <div class="sk-cube-grid">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
     </div>
   </div>
 </div>

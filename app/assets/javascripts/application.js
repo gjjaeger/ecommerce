@@ -24,6 +24,61 @@
 //= require_tree .
 
 $(document).on('turbolinks:load', function() {
+  $(function() {
+    $('#search').on('keyup', function() {
+        var pattern = $(this).val();
+        $('.searchable-container .items').hide();
+        $('.searchable-container .items').filter(function() {
+            return $(this).text().match(new RegExp(pattern, 'i'));
+        }).show();
+    });
+});
+
+  $('.add-cart').on('click', function () {
+    var cart = $('.cart-dropdown');
+
+    if ($(this).attr('id')=="jam-add-cart"){
+      var imgtodrag = $(this).parent().parent().parent().parent('.size').find('.size-image').eq(0);
+    }
+    else if ($(this).attr('id')=="jewelery-add-cart") {
+      var imgtodrag = $(".product-show-image");
+    }
+    else if ($(this).attr('id')=="cake-add-cart") {
+
+      var imgtodrag = $(".product-show-image");
+    };
+    if (imgtodrag) {
+      var imgclone = imgtodrag.clone()
+          .offset({
+          top: imgtodrag.offset().top,
+          left: imgtodrag.offset().left
+      })
+          .css({
+          'opacity': '0.5',
+              'position': 'absolute',
+              'height': '150px',
+              'width': '150px',
+              'z-index': '100'
+      })
+          .appendTo($('body'))
+          .animate({
+          'top': cart.offset().top + 10,
+              'left': cart.offset().left + 10,
+              'width': 75,
+              'height': 75
+      }, 1000, 'easeInOutExpo');
+
+
+
+      imgclone.animate({
+          'width': 0,
+              'height': 0
+      }, function () {
+          $(this).detach()
+      });
+    }
+  });
+
   $(document).on("page:fetch", function(){
     $("#loading-modal").modal("show");
     debugger;
@@ -38,6 +93,48 @@ $(document).on('turbolinks:load', function() {
     $('#carouselExampleIndicators').carousel();
     $("#requested_date").change(function(){
       $(this).datepicker('hide');
+    });
+    $('.add-cart').on('click', function () {
+      var cart = $('.cart-dropdown');
+      if ($(this).attr('id')=="jam-add-cart"){
+        var imgtodrag = $(this).parent().parent().parent().parent('.size').find('.size-image').eq(0);
+      }
+      else if ($(this).attr('id')=="jewelery-add-cart") {
+        var imgtodrag = $(".product-show-image");
+      }
+      else if ($(this).attr('id')=="cake-add-cart") {
+        var imgtodrag = $(".product-show-image");
+      };
+      if (imgtodrag) {
+        var imgclone = imgtodrag.clone()
+            .offset({
+            top: imgtodrag.offset().top,
+            left: imgtodrag.offset().left
+        })
+            .css({
+            'opacity': '0.5',
+                'position': 'absolute',
+                'height': '150px',
+                'width': '150px',
+                'z-index': '100'
+        })
+            .appendTo($('body'))
+            .animate({
+            'top': cart.offset().top + 10,
+                'left': cart.offset().left + 10,
+                'width': 75,
+                'height': 75
+        }, 1000, 'easeInOutExpo');
+
+
+
+        imgclone.animate({
+            'width': 0,
+                'height': 0
+        }, function () {
+            $(this).detach()
+        });
+      }
     });
     // var date = new Date();
     // $('#datetimepicker1').datetimepicker({minDate: (date.setDate(date.getDate()+2))});
@@ -68,72 +165,54 @@ $(document).on('turbolinks:load', function() {
       };
     });
   });
+
   $(function() {
     var id = $("#slider-3").attr('data-href')
-    if (id =='2'){
-      $( "#slider-3" ).slider({
-        range:true,
-        min: 0,
-        max: 350,
-        values: [ 35, 350 ],
-        slide: function( event, ui ) {
-          $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        },
-        stop: function(event, ui) {
-          var id = $("#slider-3").attr('data-href')
-          $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
-          })
-          .success( function (data) {
-            products = $(data).find('#productss')
-            $('#productss').html(products);
-          })
-        }
-      });
-    }
-    if (id =='1'){
-      $( "#slider-3" ).slider({
-        range:true,
-        min: 0,
-        max: 50,
-        values: [ 0, 50 ],
-        slide: function( event, ui ) {
-          $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        },
-        stop: function(event, ui) {
-          var id = $("#slider-3").attr('data-href')
-          $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
-          })
-          .success( function (data) {
-            products = $(data).find('#productss')
-            $('#productss').html(products);
-          })
-        }
-      });
-    }
-    if (id =='3'){
-      $( "#slider-3" ).slider({
-        range:true,
-        min: 0,
-        max: 100,
-        values: [ 0, 100 ],
-        slide: function( event, ui ) {
-          $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        },
-        stop: function(event, ui) {
-          var id = $("#slider-3").attr('data-href')
-          $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
-          })
-          .success( function (data) {
-            products = $(data).find('#productss')
-            $('#productss').html(products);
-          })
-        }
-      });
-    }
-
+    $( "#slider-3" ).slider({
+      range:true,
+      min: (id='2' ? 5 : 0) ,
+      max: (id='2' ? 400 : 50),
+      values: [ (id='2' ? 5 : 0), (id='2' ? 400 : 50) ],
+      slide: function( event, ui ) {
+        $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      },
+      stop: function(event, ui) {
+        var tags = $('input:checkbox:checked.tag-check-box').map(function (){
+          return this.value;
+        }).get();
+        tags = tags ? tags : 0
+        var id = $("#slider-3").attr('data-href')
+        $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ], tags: tags }, function() {
+          localStorage.setItem("lowPrice", ui.values[ 0 ]);
+          localStorage.setItem("highPrice", ui.values[ 1 ]);
+        })
+        .success( function (data) {
+          products = $(data).find('#productss')
+          $('#productss').html(products);
+        })
+      }
+    });
     $( "#price" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
       " - $" + $( "#slider-3" ).slider( "values", 1 ) );
   });
+
+  $('.tag-check-box').change(function(){
+    var id = $("#slider-3").attr('data-href');
+    var tags = $('input:checkbox:checked.tag-check-box').map(function (){
+      return this.value;
+    }).get();
+    tags = tags ? tags : 0
+    lowPrice = localStorage.getItem('lowPrice') ? localStorage.getItem('lowPrice') : 0
+    highPrice = localStorage.getItem('highPrice') ? localStorage.getItem('highPrice') : 400
+
+    $.get("/categories/"+ id, {low: lowPrice, high: highPrice ,tags: tags }, function() {
+    })
+    .success( function (data) {
+      products = $(data).find('#productss')
+      $('#productss').html(products);
+    })
+  });
+
 
 
   $(".dropdown-toggle").dropdown();
@@ -159,78 +238,56 @@ $(document).on('turbolinks:load', function() {
 });
 
 $(document).ready(function(){
-  $(function() {
-    var amount = '';
-    var handler = StripeCheckout.configure({
-      key: 'pk_test_3plF76arhkygGMgwCEerThpa',
-      image: 'Mango-icon.png',
-      token: function(token, args) {
-        // Use the token to create the charge with a server-side script.
-        // You can access the token ID with `token.id`
-        console.log(token)
-        var chargeData = {
-          amount: amount,
-          token: token
-        }
-        $.ajax({
-            url: '/link/to/php/stripeDonate.php',
-            type: 'post',
-            data: {chargeData: chargeData},
-            success: function(data) {
-              if (data == 'success') {
-                  console.log("Card successfully charged!")
-              }
-              else {
-                  console.log("Success Error!")
-              }
+  localStorage.setItem("lowPrice", 0);
+  localStorage.setItem("highPrice", 400);
 
-            },
-            error: function(data) {
-                  console.log("Ajax Error!");
-                  console.log(data);
-            }
-          }); // end ajax call
-      }
-    });
-
-    $('.donate-button').bind('click', function(e) {
-      donationAmt = $(this).html().substring(1) + '00';
-      donationAmt = parseInt(donationAmt); // Grabs the donation amount in the html of the button and store it in a variable
-      // Open Checkout with further options
-      handler.open({
-        name: 'Company Name',
-        description: 'A donation',
-        amount: donationAmt
-      });
-      e.preventDefault();
-    });
+  $('#search').on('keyup', function() {
+      var pattern = $(this).val();
+      $('.searchable-container .items').hide();
+      $('.searchable-container .items').filter(function() {
+          return $(this).text().match(new RegExp(pattern, 'i'));
+      }).show();
   });
+
+
+
   $("#loading-modal").modal("hide");
 
   // show spinner on AJAX start
   $(document).ajaxStart(function(){
     $("#loading-modal").modal("show");
-    debugger;
+
   });
 
   // hide spinner on AJAX stop
   $(document).ajaxStop(function(){
     $("#loading-modal").modal("hide");
-    debugger;
   });
 
-  $(function() {
+  $('.searchable-container label.btn-default').on('click', function(){
+    $(this).toggleClass("active")
+  });
+
+
+    var id = $("#slider-3").attr('data-href')
     $( "#slider-3" ).slider({
       range:true,
-      min: 0,
-      max: 350,
-      values: [ 35, 200 ],
+      min: (id='2' ? 5 : 0) ,
+      max: (id='2' ? 400 : 50),
+      values: [ (id='2' ? 5 : 0), (id='2' ? 400 : 50) ],
       slide: function( event, ui ) {
         $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
       },
       stop: function(event, ui) {
+
+        var tags = $('input:checkbox:checked.tag-check-box').map(function (){
+          return this.value;
+        }).get();
+        tags = tags ? tags : 0
         var id = $("#slider-3").attr('data-href')
-        $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ] }, function() {
+        $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ], tags: tags }, function() {
+          localStorage.setItem("lowPrice", ui.values[ 0 ]);
+          localStorage.setItem("highPrice", ui.values[ 1 ]);
         })
         .success( function (data) {
           products = $(data).find('#productss')
@@ -240,6 +297,27 @@ $(document).ready(function(){
     });
     $( "#price" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
       " - $" + $( "#slider-3" ).slider( "values", 1 ) );
+
+
+  $('.tag-check-box').click(function(){
+    var id = $("#slider-3").attr('data-href');
+    var tags = $('label.btn.btn-default.active').map(function (){
+      return this.value;
+    }).get();
+    debugger;
+    var tags = $('input:checkbox:checked.tag-check-box').map(function (){
+      return this.value;
+    }).get();
+    tags = tags ? tags : 0
+    lowPrice = localStorage.getItem('lowPrice') ? localStorage.getItem('lowPrice') : 0
+    highPrice = localStorage.getItem('highPrice') ? localStorage.getItem('highPrice') : 400
+
+    $.get("/categories/"+ id, {low: lowPrice, high: highPrice ,tags: tags }, function() {
+    })
+    .success( function (data) {
+      products = $(data).find('#productss')
+      $('#productss').html(products);
+    })
   });
 
   $('#product-modal').on('shown.bs.modal', function() {
@@ -292,6 +370,7 @@ $(document).ready(function(){
       $(this).val(0);
     };
   });
+
   $(document).on('click','.minus-quantity',function(){
     qelement = $(this).parent().children('.quantity');
     quantity = parseInt(qelement.val());
