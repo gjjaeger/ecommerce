@@ -9,14 +9,8 @@
         <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
       </div>
       <div class="tag-filter col-xs-5">
-        <div class="row">
-      		<h2>Multiple Select with Search Option - Tiled Layout </h2>
-          <div class="form-group">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-                <input type="search" class="form-control" id="search" placeholder="Add your options..">
-            </div>
-          </div>
-        </div>
+        <h6>Search by tag</h6>
+
         <div class="row">
           <div class="form-group">
             <div class="searchable-container">
@@ -24,34 +18,12 @@
                 <div class="items col-xs-5 col-sm-5 col-md-3 col-lg-3">
                   <div class="info-block block-info clearfix">
                     <div class="btn-group bizmoduleselect">
-                      <label class="btn btn-default active">
-                        <div class="bizcontent">
-                          <input class="tag-check-box" type="checkbox" name="tag_ids[]" autocomplete="off" checked value=<%=tag.name%>>
+                      <div class="bizcontent">
+                        <button class='tag-check-box active' id=<%=tag.name%>>
                           <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
                           <h5><%=tag.name%></h5>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              <%end%>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group">
-            <div class="searchable-container">
-              <%@tags.each do |tag|%>
-                <div class="items col-xs-5 col-sm-5 col-md-3 col-lg-3">
-                  <div class="info-block block-info clearfix">
-                    <div class="btn-group bizmoduleselect">
-                      <label class="btn btn-default active">
-                        <div class="bizcontent">
-                          <input class="tag-check-box" type="button" name="tag_ids[]" autocomplete="off" checked value=<%=tag.name%>>
-                          <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                          <h5><%=tag.name%></h5>
-                        </div>
-                      </label>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

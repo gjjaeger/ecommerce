@@ -177,8 +177,8 @@ $(document).on('turbolinks:load', function() {
         $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
       },
       stop: function(event, ui) {
-        var tags = $('input:checkbox:checked.tag-check-box').map(function (){
-          return this.value;
+        var tags = $('.tag-check-box.active').map(function (){
+          return this.id;
         }).get();
         tags = tags ? tags : 0
         var id = $("#slider-3").attr('data-href')
@@ -198,8 +198,8 @@ $(document).on('turbolinks:load', function() {
 
   $('.tag-check-box').change(function(){
     var id = $("#slider-3").attr('data-href');
-    var tags = $('input:checkbox:checked.tag-check-box').map(function (){
-      return this.value;
+    var tags = $('.tag-check-box.active').map(function (){
+      return this.id;
     }).get();
     tags = tags ? tags : 0
     lowPrice = localStorage.getItem('lowPrice') ? localStorage.getItem('lowPrice') : 0
@@ -264,7 +264,7 @@ $(document).ready(function(){
     $("#loading-modal").modal("hide");
   });
 
-  $('.searchable-container label.btn-default').on('click', function(){
+  $('.tag-check-box').on('click', function(){
     $(this).toggleClass("active")
   });
 
@@ -280,8 +280,8 @@ $(document).ready(function(){
       },
       stop: function(event, ui) {
 
-        var tags = $('input:checkbox:checked.tag-check-box').map(function (){
-          return this.value;
+        var tags = $('.tag-check-box.active').map(function (){
+          return this.id;
         }).get();
         tags = tags ? tags : 0
         var id = $("#slider-3").attr('data-href')
@@ -301,12 +301,8 @@ $(document).ready(function(){
 
   $('.tag-check-box').click(function(){
     var id = $("#slider-3").attr('data-href');
-    var tags = $('label.btn.btn-default.active').map(function (){
-      return this.value;
-    }).get();
-    debugger;
-    var tags = $('input:checkbox:checked.tag-check-box').map(function (){
-      return this.value;
+    var tags = $('.tag-check-box.active').map(function (){
+      return this.id;
     }).get();
     tags = tags ? tags : 0
     lowPrice = localStorage.getItem('lowPrice') ? localStorage.getItem('lowPrice') : 0
