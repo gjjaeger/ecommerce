@@ -22,14 +22,16 @@ source 'https://rubygems.org'
   gem 'bootstrap_form'
   gem 'dotenv-rails', :groups => [:development, :test]
   gem 'easypost'
-  gem 'momentjs-rails', '~> 2.5.0'
   gem 'bootstrap-datepicker-rails'
+  gem 'momentjs-rails', '>= 2.9.0'
+  gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
   gem 'iso_country_codes'
   gem 'mail'
   gem 'mailgun-ruby'
   gem 'delayed_job_active_record'
   gem 'jquery-ui-rails'
   gem 'figaro'
+  gem 'geocoder'
 
 
 

@@ -50,6 +50,8 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap3-datetimepicker-rails (4.14.30)
+      momentjs-rails (>= 2.8.1)
     bootstrap_form (2.7.0)
     builder (3.2.3)
     byebug (9.0.6)
@@ -105,6 +107,7 @@ GEM
       thor (~> 0.14)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
+    geocoder (1.4.4)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     http-cookie (1.0.3)
@@ -141,7 +144,7 @@ GEM
     mimemagic (0.3.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
-    momentjs-rails (2.5.1)
+    momentjs-rails (2.17.1)
       railties (>= 3.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
@@ -272,6 +275,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-sass
+  bootstrap3-datetimepicker-rails (~> 4.14.30)
   bootstrap_form
   byebug
   cancan
@@ -285,6 +289,7 @@ DEPENDENCIES
   easypost
   figaro
   formtastic (~> 3.0)
+  geocoder
   iso_country_codes
   jbuilder (~> 2.5)
   jquery-rails
@@ -294,7 +299,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   mail
   mailgun-ruby
-  momentjs-rails (~> 2.5.0)
+  momentjs-rails (>= 2.9.0)
   paperclip (~> 5.0.0)
   pg (~> 0.18)
   pry

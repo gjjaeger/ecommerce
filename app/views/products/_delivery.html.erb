@@ -22,11 +22,29 @@
         <h5 class="pickup-title">Pick up time from 14 Beach Street</h5>
         <h5 class="delivery-title">Deliver to my home</h5>
         <div class="form-group requested-datetime">
-          <div class='input-group' id='datetimepicker1'>
-            <div id="datepicker date">
-              <%= f.text_field :requested_date, data:{ provide:'datepicker' }, :id=>"requested_date" %>
+          <div class="row">
+            <div class='col-sm-6'>
+              <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                  <%=f.text_field :requested_date, :id=>"requested_date", :class=>"form-control"%>
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
             </div>
-            <%=f.time_field :requested_time, :id=>"requested_time"%>
+          </div>
+          <div class="row">
+            <div class='col-xs-12'>
+              <div class="form-group">
+                  <div class='input-group date' id='datetimepicker3'>
+                      <%=f.text_field :requested_time, :id=>"requested_time", :class=>"form-control"%>
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-time"></span>
+                      </span>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

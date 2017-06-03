@@ -18,6 +18,7 @@
 //= require bootstrap
 //= require moment
 //= require bootstrap-datepicker
+//= require bootstrap-datetimepicker
 //= require bootstrap.min
 //= require cocoon
 //= require turbolinks
@@ -88,11 +89,16 @@ $(document).on('turbolinks:load', function() {
     $("#loading-modal").modal("hide")
   });
   $('#product-modal').on('shown.bs.modal', function() {
+
+    $('#datetimepicker3').datetimepicker({
+      format: 'LT'
+    });
+
     $('.cake-quantity').val(0);
     $('.add-cart').prop('disabled', true);
     $('#carouselExampleIndicators').carousel();
-    $("#requested_date").change(function(){
-      $(this).datepicker('hide');
+    $("#datetimepicker1").change(function(){
+      $(this).datetimepicker('hide');
     });
     $('.add-cart').on('click', function () {
       var cart = $('.cart-dropdown');
@@ -149,7 +155,7 @@ $(document).on('turbolinks:load', function() {
     var today = new Date();
     var dater = today.setDate(today.getDate() + parseInt($('#prep_time').val()));
     var date=new Date(dater);
-    $('#requested_date').datepicker({startDate : date,format: 'yyyy-mm-dd'});
+    $('#datetimepicker1').datetimepicker({minDate : date, format: 'L'});
     if ($('.delivery-option').val()=="1"){
       $('.delivery-title').show();
 
@@ -180,7 +186,7 @@ $(document).on('turbolinks:load', function() {
         var tags = $('.tag-check-box.active').map(function (){
           return this.id;
         }).get();
-        tags = tags ? tags : 0
+        tags = tags.length>0 ? tags : 0
         var id = $("#slider-3").attr('data-href')
         $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ], tags: tags }, function() {
           localStorage.setItem("lowPrice", ui.values[ 0 ]);
@@ -201,7 +207,7 @@ $(document).on('turbolinks:load', function() {
     var tags = $('.tag-check-box.active').map(function (){
       return this.id;
     }).get();
-    tags = tags ? tags : 0
+    tags = tags.length>0 ? tags : 0
     lowPrice = localStorage.getItem('lowPrice') ? localStorage.getItem('lowPrice') : 0
     highPrice = localStorage.getItem('highPrice') ? localStorage.getItem('highPrice') : 400
 
@@ -269,6 +275,12 @@ $(document).ready(function(){
   });
 
 
+  $('#datetimepicker3').datetimepicker({
+    format: 'LT'
+  });
+
+
+
     var id = $("#slider-3").attr('data-href')
     $( "#slider-3" ).slider({
       range:true,
@@ -283,7 +295,7 @@ $(document).ready(function(){
         var tags = $('.tag-check-box.active').map(function (){
           return this.id;
         }).get();
-        tags = tags ? tags : 0
+        tags = tags.length>0 ? tags : 0
         var id = $("#slider-3").attr('data-href')
         $.get("/categories/"+ id, { low: ui.values[ 0 ], high: ui.values[ 1 ], tags: tags }, function() {
           localStorage.setItem("lowPrice", ui.values[ 0 ]);
@@ -304,7 +316,7 @@ $(document).ready(function(){
     var tags = $('.tag-check-box.active').map(function (){
       return this.id;
     }).get();
-    tags = tags ? tags : 0
+    tags = tags.length>0 ? tags : 0
     lowPrice = localStorage.getItem('lowPrice') ? localStorage.getItem('lowPrice') : 0
     highPrice = localStorage.getItem('highPrice') ? localStorage.getItem('highPrice') : 400
 
@@ -320,8 +332,11 @@ $(document).ready(function(){
     $('.cake-quantity').val(0);
     $('.add-cart').prop('disabled', true);
     $('#carouselExampleIndicators').carousel();
-    $("#requested_date").change(function(){
-      $(this).datepicker('hide');
+    $("#datetimepicker1").change(function(){
+      $(this).datetimepicker('hide');
+    });
+    $('#datetimepicker3').datetimepicker({
+      format: 'LT'
     });
     // var date = new Date();
     // $('#datetimepicker1').datetimepicker({minDate: (date.setDate(date.getDate()+2))});
@@ -336,7 +351,7 @@ $(document).ready(function(){
     var today = new Date();
     var dater = today.setDate(today.getDate() + parseInt($('#prep_time').val()));
     var date=new Date(dater);
-    $('#requested_date').datepicker({startDate : date,format: 'yyyy-mm-dd'});
+    $('#datetimepicker1').datetimepicker({minDate : date,format: 'L'});
     if ($('.delivery-option').val()=="1"){
       $('.delivery-title').show();
 

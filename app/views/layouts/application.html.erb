@@ -37,7 +37,9 @@
           <ul class="nav navbar-nav">
             <li><%= link_to 'Jams', category_path(1) %></li>
             <li><%= link_to 'Jewelery', category_path(2) %></li>
-            <li><%= link_to 'Cakes', category_path(3) %></li>
+            <% if in_singapore %>
+              <li><%= link_to 'Cakes', category_path(3) %></li>
+            <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

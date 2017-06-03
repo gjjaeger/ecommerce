@@ -17,11 +17,10 @@ class CategoriesController < ApplicationController
 
 
     if params[:id] == '2'
-
       tagss=[]
       @products1 = []
       if params[:tags]
-        if params[:tags] == 0
+        if params[:tags] == "0"
         else
           params[:tags].each do |tag|
             tag_object = Tag.find_by({name: tag})
