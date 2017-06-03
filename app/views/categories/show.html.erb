@@ -8,27 +8,23 @@
         </span>
         <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
       </div>
-      <div class="tag-filter col-xs-5">
-        <div class="row">
-          <div class="form-group">
-            <div class="searchable-container">
-              <%@tags.each do |tag|%>
-                <div class="items col-xs-5 col-sm-5 col-md-3 col-lg-3">
-                  <div class="info-block block-info clearfix">
-                    <div class="btn-group bizmoduleselect">
-                      <div class="bizcontent">
-                        <button class='tag-check-box active' id=<%=tag.name%>>
-                          <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                          <h5><%=tag.name%></h5>
-                        </button>
-                      </div>
-                    </div>
+      <div class="tag-filter col-xs-7">
+        <div class="searchable-container">
+          <%@tags.each do |tag|%>
+            <div class="items col-xs-6 col-sm-6 col-md-3 col-lg-3">
+              <div class="info-block block-info clearfix">
+                <div class="btn-group bizmoduleselect">
+                  <div class="bizcontent">
+                    <button class='tag-check-box active' id=<%=tag.name%>>
+                      <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                      <h5><%=tag.name%></h5>
+                    </button>
                   </div>
                 </div>
-              <%end%>
+              </div>
             </div>
-          </div>
-        </div>
+          <%end%>
+        </div>      
       </div>
     </div>
   <% end %>

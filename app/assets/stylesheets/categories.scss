@@ -11,6 +11,53 @@ outline: 0;
 outline: none;
 }
 
+.price-slider.ui-corner-all,
+.price-slider .ui-corner-all {
+  border-radius: 0;
+}
+
+.price-slider.ui-slider {
+  border: 0;
+  background: #f7d2cc;
+  border-radius: 10px;
+}
+
+.price-slider.ui-slider {
+  height: 14px;
+}
+
+
+
+.price-slider .ui-slider-handle {
+  width: 30px;
+  height: 30px;
+  background: #a4a9a3;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.price-slider.ui-slider .ui-slider-handle {
+  top: 50%;
+  margin-top: -15px;
+}
+
+.price-slider .ui-slider-handle:hover {
+  opacity: .8;
+}
+
+.price-slider .ui-slider-range {
+  border: 0;
+  border-radius: 10;
+  background: #f99;
+}
+
+.price-slider.ui-slider .ui-slider-range {
+  top: 0;
+  height: 14px;
+}
+
+
 .categories, .tags{
   text-align: center;
   list-style: none;
@@ -81,11 +128,26 @@ outline: none;
             transform: scale3D(0, 0, 1);
   }
 }
-.searchable-container{margin:20px 0 0 0}
-.searchable-container .tag-check-box.active{background-color:#007ba7;color:#FFF}
-.searchable-container .tag-check-box{width:90%;border:1px solid #efefef;margin:5px; box-shadow:5px 8px 8px 0 #ccc;}
-.searchable-container .bizcontent{width:100%;}
-.searchable-container .btn-group{width:90%}
+.searchable-container{
+  margin:0 0 0 0
+}
+
+.searchable-container .tag-check-box.active{
+  background-color:#007ba7;
+  color:#FFF
+}
+.searchable-container .tag-check-box{
+  width:90%;
+  border:1px solid #efefef;
+  margin:5px;
+  box-shadow:2px 5px 5px 0 #ccc;
+}
+.searchable-container .bizcontent{
+  width:100%;
+}
+.searchable-container .btn-group{
+  width:100%
+}
 .searchable-container .tag-check-box span.glyphicon{
     opacity: 0;
 }
@@ -96,4 +158,20 @@ outline: none;
 .tag-check-box{
   border-radius: 3px;
   background-color: white;
+}
+
+.filter {
+  border:1px solid #ece8e8;
+  padding:15px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  text-align: center;
+  vertical-align: middle;
+  height:100px;
+}
+
+.tag-filter {
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
 }
