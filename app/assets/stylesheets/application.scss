@@ -21,10 +21,16 @@
  @import "formtastic";
  @import "bootstrap-datepicker";
  @import "jquery-ui";
+ @import "bootstrap-select";
 
 *{
   font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
+}
+
+*:focus {
+outline: 0;
+outline: none;
 }
 
 .sk-cube-grid {

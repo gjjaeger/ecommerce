@@ -30,6 +30,24 @@
               <%end%>
             </div>
           <%end%>
+          <% if @product.category_id =="1" %>
+            <div class="col-xs-12 jam-add-cart">
+              <%= form_for @order_item, remote:true do |f| %>
+                <div class="cart-form">
+                  <%= f.hidden_field :product_id, value: @product.id %>
+                  <div class="col-xs-12">
+                    <%= f.select(:size, options_for_select(@product.sizes.collect{ |u| ["#{u.amount} g - #{number_to_currency u.price}" , u.amount] }), {include_blank: "Select size"}, { :class => 'selectpicker'})%>
+                  </div>
+                  <div class="minus-quantity"><span>-</span></div>
+                  <%= f.number_field :quantity, :class=>"jam-quantity quantity"%>
+                  <div class="plus-quantity"><span>+</span></div>
+                  <%= button_tag(type: 'submit', :class=>"add-cart btn btn-default", :id=>"jam-add-cart") do %>
+                    <span class="add-cart-text">Add to cart</span>
+                  <%end%>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
           <div class="col-xs-12 product-ingredients">
             <div class="col-xs-12">
               <span class="sub-title">Ingredients</span>
@@ -41,7 +59,6 @@
               </div>
             <%end%>
           </div>
-
         </div>
       </div>
     </div>
@@ -122,54 +139,5 @@
   <%end%>
 
 
-  <div class="addtional-details">
-    <% if @product.category_id =="1" %>
-      <div class="sizes row">
-        <%@product.sizes.each do |size|%>
-          <div class="size">
-            <% if size.amount<=100%>
-              <div class="size-image">
-                <%=image_tag("jar.png", :class=>"jam-size extra-small")%>
-              </div>
-            <% end %>
-            <% if size.amount>100 && size.amount<=200 %>
-              <div class="size-image">
-                <%= image_tag("jar.png", :class=>"jam-size small") %>
-              </div>
-            <% end %>
-            <% if size.amount>200 && size.amount<=300 %>
-              <div class="size-image">
-                <%= image_tag("jar.png", :class=>"jam-size medium") %>
-              </div>
-            <% end %>
-            <% if size.amount>300 %>
-              <div class="size-image">
-                <%= image_tag("jar.png", :class=>"jam-size large") %>
-              </div>
-            <% end %>
-            <div class="size-amount">
-              <%=size.amount%>g
-            </div>
-            <div class="size-price">
-              <%=number_to_currency size.price%>
-            </div>
-            <div class="size-add-cart">
-              <%= form_for @order_item, remote:true do |f| %>
-                <div class="cart-form">
-                  <%= f.hidden_field :product_id, value: @product.id %>
-                  <%= f.hidden_field :size, value: size.amount%>
-                  <div class="minus-quantity"><span>-</span></div>
-                  <%= f.number_field :quantity, :class=>"jam-quantity quantity" %>
-                  <div class="plus-quantity"><span>+</span></div>
-                  <%= button_tag(type: 'submit', :class=>"add-cart btn btn-default", :id=>"jam-add-cart") do %>
-                    <span class="add-cart-text">Add to cart</span>
-                  <%end%>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <%end%>
-      </div>
-    <% end %>
-  </div>
+
   <div id="product-modal" class="modal fade"></div>

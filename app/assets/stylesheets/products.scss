@@ -5,6 +5,11 @@
 @import "bootstrap";
 @import "devise_bootstrap_views";
 
+*:focus {
+outline: 0;
+outline: none;
+}
+
 #product{
   text-align: center;
   border: 1px solid #ece8e8;
@@ -153,22 +158,6 @@
   height: auto;
 }
 
-
-.sizes{
-  text-align: center;
-  padding-top: 2%;
-  padding-bottom: 2%;
-}
-
-.sizes{
-  text-align: center;
-}
-
-.size-image{
-  height:100px;
-  object-fit: cover;
-}
-
 .ingredient-icon, .material-icon{
   width:40px;
   height:auto;
@@ -178,6 +167,10 @@
 .ingredient-name, .material-name{
   float: left;
   vertical-align: middle;
+}
+
+.glyphicon.glyphicon-ok.check-mark{
+  display: none;
 }
 
 .header-image{
@@ -309,11 +302,8 @@ input:focus{
   width:60%;
 }
 
-.size-image, .size-amount, .size-add-cart {
-  width:100%;
-}
 
-.jewelery-add-cart{
+.jewelery-add-cart, .jam-add-cart{
   width:50%;
   border: 1px solid #ece8e8;
   text-align: center;
@@ -338,30 +328,6 @@ input:focus{
 .carousel-inner{
   border-radius: 5px;
   border: 1px solid #ece8e8;
-}
-
-.jam-size{
-  text-align: center;
-  margin-top: 20%;
-}
-
-.extra-small{
-  width:16%;
-  height: auto;
-}
-.small{
-  width:20%;
-  height: auto;
-}
-
-.medium{
-  width:24%;
-  height: auto;
-}
-
-.large{
-  width:28%;
-  height: auto;
 }
 
 .delivery-title, .pickup-title{

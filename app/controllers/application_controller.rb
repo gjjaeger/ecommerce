@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def in_singapore
-    true
-    # request.safe_location.country == "Singapore"
+    return true
+    # request.safe_location.country == "Singapore" || request.safe_location.country == "Malaysia"
   end
 end

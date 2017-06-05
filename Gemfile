@@ -32,7 +32,9 @@ source 'https://rubygems.org'
   gem 'jquery-ui-rails'
   gem 'figaro'
   gem 'geocoder'
-
+  gem 'bootstrap-select-rails'
+  gem 'bootstrap-select-wrapper-rails'
+  
 
 
   group :development, :test do
