@@ -490,6 +490,23 @@ $(document).on('turbolinks:load', function(){
       $('#productss').html(products);
     });
   });
+  $('#product-modal').on('shown.bs.modal', function() {
+
+    $('#shipping').click(function(event){
+
+      var order_id= $("#shipping").attr('data-href');
+
+      $.get("/orders/"+ id + "/shipping", function() {
+      })
+      .success( function (data) {
+
+        shipping = $(data).find('.shipping-content')
+        $("#product-modal").modal("show");
+        $('#content').html(shipping);
+      });
+      event.preventDefault()
+    });
+  });
 
   $('#product-modal').on('shown.bs.modal', function() {
     cartFunctions();

@@ -1,96 +1,94 @@
-<div class="col-xs-6 col-xs-offset-3 summary">
-  <h5 class="title">Summary of your order</h5>
-  <div class="row">
-    <%@order.order_items.each do |order_item|%>
-      <div class="col-md-12 order-item">
-        <div class="details">
-          <%=order_item.quantity%> x
-          <%=order_item.product.name%>
-          <%if order_item.product.category_id=="1"%>
-            (<%=order_item.size%>g)
-          <%else%>
-            (<%=order_item.product.size%>cm)
-          <%end%>
-        </div>
-        <div class="price">
-          <div class="col-md-12">
-            <div class="price individual-price">
-              <%=order_item.quantity%> x
-              <%if order_item.product.category_id=="1"%>
-                <%=number_to_currency retrieve_size_price(order_item.size,order_item.product.id)%>
-              <%else%>
-                <%=number_to_currency order_item.product.price%>
-              <%end%>
+<div class="big wrapper">
+  <div class="shipping-content">
+    <div class="modal-header">
+      <h3>Summary of your order</h3>
+    </div>
+    <div class="modal-body">
+      <%@order.order_items.each do |order_item|%>
+        <div class="col-md-12 order-item">
+          <div class="details">
+            <%=order_item.quantity%> x
+            <%=order_item.product.name%>
+            <%if order_item.product.category_id=="1"%>
+              (<%=order_item.size%>g)
+            <%else%>
+              (<%=order_item.product.size%>cm)
+            <%end%>
+          </div>
+          <div class="price">
+            <div class="col-md-12">
+              <div class="price individual-price">
+                <%=order_item.quantity%> x
+                <%if order_item.product.category_id=="1"%>
+                  <%=number_to_currency retrieve_size_price(order_item.size,order_item.product.id)%>
+                <%else%>
+                  <%=number_to_currency order_item.product.price%>
+                <%end%>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="price">
+                _________
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="price">
+                <%if order_item.product.category_id=="1"%>
+                  <%=number_to_currency retrieve_size_price(order_item.size,order_item.product.id)*order_item.quantity%>
+                <%else%>
+                  <%=number_to_currency order_item.product.price*order_item.quantity%>
+                <%end%>
+              </div>
             </div>
           </div>
+        </div>
+      <%end%>
+      <% if @shipping!=nil %>
+        <div class="col-xs-12">
+          <div class="details">
+            <span>Total shipping cost</span>
+          </div>
+          <div class="price">
+            <div class="col-xs-12">
+              <div class="price">
+                <%=number_to_currency@shipping%>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="col-md-12">
+        <div class="total-price">
           <div class="col-md-12">
-            <div class="price">
+            <div class="total-price">
               _________
             </div>
           </div>
           <div class="col-md-12">
-            <div class="price">
-              <%if order_item.product.category_id=="1"%>
-                <%=number_to_currency retrieve_size_price(order_item.size,order_item.product.id)*order_item.quantity%>
-              <%else%>
-                <%=number_to_currency order_item.product.price*order_item.quantity%>
-              <%end%>
+            <div class="total-price">
+              <%=number_to_currency @total%>
             </div>
           </div>
         </div>
       </div>
-    <%end%>
-    <% if @shipping!=nil %>
-      <div class="col-xs-12">
-        <div class="details">
-          <span>Total shipping cost</span>
-        </div>
+      <div class="pay-button" id ="pay-button">
+        <%= form_tag charges_path do %>
+          <article>
+            <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+            <% end %>
+          </article>
 
-        <div class="price">
-          <div class="col-xs-12">
-            <div class="price">
-              <%=number_to_currency@shipping%>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-
-    <% end %>
-    <div class="col-md-12">
-      <div class="total-price">
-        <div class="col-md-12">
-          <div class="total-price">
-            _________
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="total-price">
-            <%=number_to_currency @total%>
-          </div>
-        </div>
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="pay-button"
+                  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                  data-description="Checkout cart"
+                  data-shipping-address="false"
+                  data-amount= <%=@total100%>
+                  data-locale="auto"></script>
+        <%end%>
       </div>
     </div>
-  </div>
-
-
-  <div class="pay-button" id ="pay-button">
-    <%= form_tag charges_path do %>
-      <article>
-        <% if flash[:error].present? %>
-          <div id="error_explanation">
-            <p><%= flash[:error] %></p>
-          </div>
-        <% end %>
-      </article>
-
-      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="pay-button"
-              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-              data-description="Checkout cart"
-              data-shipping-address="false"
-              data-amount= <%=@total100%>
-              data-locale="auto"></script>
-    <%end%>
   </div>
 </div>

@@ -1,47 +1,60 @@
 <div class="modal-dialog">
-  <div class="modal-content">
-  <div class="modal-header">
-    <h3>Purchase Product</h3>
-  </div>
-
+  <div class="modal-content" id="content">
+    <div class="modal-header">
+      <h3>Shipping Address</h3>
+    </div>
     <% if !@order.order_items.any? {|order_item| !order_item.delivery}%>
 
       <%= form_for @address, :html => {:id => 'address-form'} do |f| %>
-        <div class="modal-body">
-          <div class="field">
-            <%= f.label :name %>
-            <%= f.text_field :name %>
+        <div class="modal-body panel-body">
+          <div class="form-group">
+            <%= f.label :name, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :name, class: "form-control" %>
+            </div>
           </div>
-          <div class="field">
-            <%= f.label :line1 %>
-            <%= f.text_field :line1 %>
+          <div class="form-group">
+            <%= f.label :line1, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :line1, class: "form-control" %>
+            </div>
           </div>
-          <div class="field">
-            <%= f.label :line2 %>
-            <%= f.text_field :line2 %>
+          <div class="form-group">
+            <%= f.label :line2, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :line2, class: "form-control" %>
+            </div>
           </div>
-          <div class="field">
-            <%= f.label :city %>
-            <%= f.text_field :city %>
+          <div class="form-group">
+            <%= f.label :city, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :city, class: "form-control" %>
+            </div>
           </div>
-          <div class="field">
-            <%= f.label :state %>
-            <%= f.text_field :state %>
+          <div class="form-group">
+            <%= f.label :state, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :state, class: "form-control" %>
+            </div>
           </div>
-          <div class="field">
-            <%= f.label :zip %>
-            <%= f.text_field :zip %>
+          <div class="form-group">
+            <%= f.label :zip, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :zip, class: "form-control" %>
+            </div>
           </div>
-          <div class="field">
-            <%= f.label :country %>
-            <%= f.text_field :country %>
+          <div class="form-group">
+            <%= f.label :country, class: "col-md-4 control-label" %>
+            <div class="col-md-8">
+              <%= f.text_field :country, class: "form-control" %>
+            </div>
           </div>
           <%if @order.order_items.any? {|order_item| order_item.delivery && order_item.product.category_id=="3"}%>
             <span>You have indicated that you wish to receive delivery of your items in Singapore. All the items in your cart will be delivered together for a fixed charge of $10.</span>
           <%end%>
         </div>
         <div class="modal-footer">
-          <%= f.submit "Next", :class=>"addToCart col-xs-12",:"data-href" => @order.id, :id=>"shipping" %>
+          <%= f.submit "Next", :class=>"addToCart col-xs-12 btn btn-default",:"data-href" => @order.id, :id=>"shipping" %>
         </div>
       <%end%>
     <% else %>
@@ -52,6 +65,5 @@
         <%= link_to "Continue", order_shipping_path(current_order), class: "btn btn-primary", :id =>"shipping", :"data-href" => @order.id %>
       </div>
     <%end%>
-
   </div>
 </div>

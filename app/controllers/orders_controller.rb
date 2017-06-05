@@ -93,21 +93,19 @@ class OrdersController < ApplicationController
       @total100 = (current_order.total_price * 100)+ (BigDecimal(@shipping)*100)
       @total = (current_order.total_price) + (BigDecimal(@shipping))
       order.total_shipping=@shipping
-      order.order_items.each do |item|
-        item.delivery = false
-        item.save
-      end
     elsif @order.order_items.any? {|order_item| order_item.delivery && order_item.product.category_id=="3"}
       @shipping=10
       @total100 = (current_order.total_price * 100)+ (BigDecimal(@shipping)*100)
       @total = (current_order.total_price) + (BigDecimal(@shipping))
       order.total_shipping=@shipping
-      order.order_items.each do |item|
-        item.delivery = true
-        item.save
+    end
+    if order.save
+      respond_to do |format|
+
+        format.html 
+        #I'm assuming its js request
       end
     end
-    order.save
   end
 
   def tracking
@@ -127,7 +125,7 @@ class OrdersController < ApplicationController
 
       td = tracker.tracking_details.reverse.find{ |tracking_detail| tracking_detail.status == tracker.status }
       message += "#{tracker.carrier} says: #{td.message} in #{td.tracking_location.city}." if td.present?
-      
+
       order=Order.find(params[:order_id])
 
       TrackerUpdateJob.set(wait: 20.seconds).perform_later(order.customer_email, message)

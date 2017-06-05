@@ -101,6 +101,17 @@ class ChargesController < ApplicationController
           item.product.save
         end
       end
+      if @order.order_items.any? {|order_item| !order_item.delivery && order_item.product.category_id=="3"}
+        order.order_items.each do |item|
+          item.delivery = false
+          item.save
+        end
+      elsif @order.order_items.any? {|order_item| order_item.delivery && order_item.product.category_id=="3"}
+        order.order_items.each do |item|
+          item.delivery = true
+          item.save
+        end
+      end
       # Mail.defaults do
       #   delivery_method :smtp, {
       #     :port      => 587,
