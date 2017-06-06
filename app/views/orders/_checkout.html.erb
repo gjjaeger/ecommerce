@@ -10,43 +10,43 @@
           <div class="form-group">
             <%= f.label :name, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :name, class: "form-control" %>
+              <%= f.text_field :name, class: "form-control", id: "name" %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :line1, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :line1, class: "form-control" %>
+              <%= f.text_field :line1, class: "form-control", id: "line1" %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :line2, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :line2, class: "form-control" %>
+              <%= f.text_field :line2, class: "form-control", id: "line2" %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :city, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :city, class: "form-control" %>
+              <%= f.text_field :city, class: "form-control", id: "city" %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :state, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :state, class: "form-control" %>
+              <%= f.text_field :state, class: "form-control", id: "state" %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :zip, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :zip, class: "form-control" %>
+              <%= f.text_field :zip, class: "form-control", id: "zip" %>
             </div>
           </div>
           <div class="form-group">
             <%= f.label :country, class: "col-md-4 control-label" %>
             <div class="col-md-8">
-              <%= f.text_field :country, class: "form-control" %>
+              <%= f.text_field :country, class: "form-control", id: "country" %>
             </div>
           </div>
           <%if @order.order_items.any? {|order_item| order_item.delivery && order_item.product.category_id=="3"}%>
@@ -54,7 +54,7 @@
           <%end%>
         </div>
         <div class="modal-footer">
-          <%= f.submit "Next", :class=>"addToCart col-xs-12 btn btn-default",:"data-href" => @order.id, :id=>"shipping" %>
+          <%= button_tag "Next", :class=>"addToCart col-xs-12 btn btn-default",:"data-href" => @order.id, :id=>"shipping" %>
         </div>
       <%end%>
     <% else %>

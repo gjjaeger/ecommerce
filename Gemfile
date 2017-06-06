@@ -34,7 +34,7 @@ source 'https://rubygems.org'
   gem 'geocoder'
   gem 'bootstrap-select-rails'
   gem 'bootstrap-select-wrapper-rails'
-  
+
 
 
   group :development, :test do

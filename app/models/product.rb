@@ -12,4 +12,7 @@ class Product < ApplicationRecord
   has_many :tags, :through=> :product_tags
   has_many :product_tags
   accepts_nested_attributes_for :product_tags
+  def self.search(search)
+    where("name LIKE ? OR ingredients LIKE ? OR materials LIKE ?", "%#{search}%", "%#{search}%", "%#{search}%") 
+  end
 end

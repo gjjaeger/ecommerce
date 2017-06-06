@@ -94,7 +94,9 @@ class AddressesController < ApplicationController
         order_item=OrderItem.find(item.id)
         order_item.shipment_id=shipment.id
         order_item.save
+
         session[:rates].push([@rate["carrier"],@rate["id"],@rate["delivery_days"],@rate["delivery_date"],@rate["rate"],@rate["shipment_id"]])
+
       end
     end
     if !current_order.order_items.any? {|order_item| order_item.product.category_id=="3"}
@@ -108,7 +110,7 @@ class AddressesController < ApplicationController
       order=Order.find(current_order)
       order.address_id=@address.id
       order.save
-      redirect_to order_shipping_path(current_order)
+      # redirect_to order_shipping_path(current_order)
     end
   end
 

@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
   # GET /categories.json
   def index
     @categories = Category.all
+    fresh_when last_modified: @categories.maximum(:updated_at)
   end
 
   # GET /categories/1
@@ -12,8 +13,11 @@ class CategoriesController < ApplicationController
   def show
     @order_item=current_order.order_items.new
     @categories=Category.all
+    fresh_when last_modified: @categories.maximum(:updated_at)
     @category=Category.find(params[:id])
+    fresh_when @category
     @tags=@category.tags.select("name").group(:name)
+    # fresh_when last_modified: @category.tags.maximum(:updated_at)
 
 
     if params[:id] == '2'

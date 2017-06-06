@@ -1,7 +1,11 @@
 <% @products.each do |product| %>
   <div class="col-md-3 outside-product">
-    <%= link_to product_path(product) do %>
+    <% if admin_signed_in? %>
+      <div class="col-md-12" id="admin-product">
+    <% else %>
       <div class="col-md-12" id="product">
+    <%end%>
+      <%= link_to product_path(product) do %>
         <% if product.featured && product.category_id!="2"%>
           <div class="featured">
             <div class="ribbon">Best Seller</div>
@@ -30,7 +34,7 @@
           <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
           <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
         <% end %>
-      </div>
-    <%end%>
+      <%end%>
+    </div>
   </div>
 <% end %>

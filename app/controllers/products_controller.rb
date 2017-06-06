@@ -21,12 +21,19 @@ class ProductsController < ApplicationController
     restcake=Product.where({category_id: "3"}).limit(8-bsellercake.length())
     @cakes=(bsellercake + restcake).uniq(&:id)
     @categories=Category.all
+    if admin_signed_in?
+      render "index"
+    else
+      render "customer_index"
+    end
   end
 
   # GET /products/1
   # GET /products/1.json
   def show
     @order_item = current_order.order_items.new
+    @product = Product.find(params[:id])
+    fresh_when @product
   end
 
   # GET /products/new
@@ -238,6 +245,7 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
+      byebug;
       params.require(:product).permit(:price, :height, :length, :width, :name, :size, :weight, :stock, :time_needed, :storage_inst, :featured, :description,:params, images_attributes: [:photo, :product_id], materials_attributes: [:id, :name, :product_id, :_destroy], ingredients_attributes: [:id, :name, :quantity, :product_id, :_destroy], sizes_attributes: [:id, :amount, :height, :sku_id, :length, :width, :price, :product_id, :_destroy], tag_ids: [])
     end
 end

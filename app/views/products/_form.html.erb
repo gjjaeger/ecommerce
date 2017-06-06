@@ -1,5 +1,8 @@
 <div class="modal-dialog">
   <div class="modal-content">
+    <div class="modal-header">
+      <h1>Editing</h1>
+    </div>
     <%= bootstrap_form_for @product, remote: true, :html => {style: 'display:inline;', :multipart => true} do |f| %>
       <div class="modal-body">
         <% if @product.errors.any? %>
@@ -15,12 +18,12 @@
         <% end %>
 
         <%= select_tag(:category_id, options_for_select(@categories), :prompt => "Select one!", :id=>"category-select" )%>
-        
+
         <div id="form-specific">
         </div>
         <% if !@product.images.empty? %>
           <%@product.images.each do |image|%>
-            <%= image_tag image.photo.url %>
+            <%= image_tag image.photo.url, :class=>"preview-img" %>
             <%= link_to 'Delete', image, :class=>"btn btn-default", :method=> :delete %>
           <%end%>
         <% end %>
