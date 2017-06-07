@@ -17,7 +17,6 @@
 //= require jquery-ui
 //= require bootstrap
 //= require moment
-//= require bootstrap-datepicker
 //= require bootstrap-datetimepicker
 //= require bootstrap-select
 //= require bootstrap.min
@@ -46,7 +45,7 @@ $(document).on('turbolinks:load', function(){
 
   $('.spinner').hide();
   $('.shipping-spinner').hide();
-
+  // $('.shipping-text-wrapper').show();
   $('.selectpicker').selectpicker({
     size: 'false'
   });
@@ -64,11 +63,11 @@ $(document).on('turbolinks:load', function(){
         $('.spinner').hide();
       });
 
-      var pattern = $(this).val();
-      $('.searchable-container .items').hide();
-      $('.searchable-container .items').filter(function() {
-          return $(this).text().match(new RegExp(pattern, 'i'));
-      }).show();
+      // var pattern = $(this).val();
+      // $('.searchable-container .items').hide();
+      // $('.searchable-container .items').filter(function() {
+      //     return $(this).text().match(new RegExp(pattern, 'i'));
+      // }).show();
   });
 
   function cartFunctions() {
@@ -172,7 +171,16 @@ $(document).on('turbolinks:load', function(){
         updateButtonWithSelect(selectElement, quantityElement);
       }
       else {
-        updateButton(quantityElement);
+        var stock = quantityElement.attr('data-href') ? parseInt(quantityElement.attr('data-href')) : null
+        var quantitySelected = parseInt(quantityElement.val())
+        if (quantitySelected <= stock || stock==null){
+          updateButton(quantityElement);
+        }
+        else {
+          quantityElement.val(quantity-=1);
+          $('.cart-notice').html("<span>Only " + quantityElement.attr('data-href') + " item(s) left in stock</span>")
+        };
+
       };
     });
     $('.add-cart').on('click', function () {
@@ -246,7 +254,7 @@ $(document).on('turbolinks:load', function(){
     max: (id='2' ? 400 : 50),
     values: [ (id='2' ? 5 : 0), (id='2' ? 400 : 50) ],
     slide: function( event, ui ) {
-      $( "#price" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      $( "#price" ).html( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
     },
     stop: function(event, ui) {
       $('.spinner').show();
@@ -266,9 +274,24 @@ $(document).on('turbolinks:load', function(){
       })
     }
   });
-  $( "#price" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
+  $( "#price" ).html( "$" + $( "#slider-3" ).slider( "values", 0 ) +
     " - $" + $( "#slider-3" ).slider( "values", 1 ) );
 
+  $('#filter-button').click(function(){
+    $('.filter').show();
+    var filterWidth = $('.filter').outerWidth(true);
+    var marginLeft = parseInt($('.products-to-show').css("margin-left"));
+    $('.products-to-show').css("margin-left", marginLeft+filterWidth+"px");
+    $(this).hide();
+  });
+
+  $('#close-filter-button').click(function(){
+    $('.filter').hide();
+    $('#filter-button').show();
+    var filterWidth = $('.filter').outerWidth(true);
+    var marginLeft = parseInt($('.products-to-show').css("margin-left"));
+    $('.products-to-show').css("margin-left", marginLeft-filterWidth+"px");
+  });
 
   $('.tag-check-box').click(function(){
     $('.spinner').show();
@@ -327,6 +350,7 @@ $(document).on('turbolinks:load', function(){
     $('#shipping').click(function(event){
       event.preventDefault();
       $('.shipping-spinner').show();
+      $("#product-modal").modal("hide");
       $('.shipping-text-wrapper').show();
       var order_id= $("#shipping").attr('data-href');
       var name = $('input#name').val();

@@ -1,23 +1,40 @@
-<div class="container">
+<div class="category-show">
+  <button class="btn btn-lg simple-button-black" id="filter-button">
+    <span class="button-text-black">
+      Filter Products
+    </span>
+  </button>
   <% if @category.id==2 %>
-    <div class="filter row">
-      <div class="price-filter col-xs-5">
-        <span>
-          <label for = "price">Price range:</label>
-          <input type = "text" id = "price" style = "border:0; color:#b9cd6d; font-weight:bold;">
-        </span>
-        <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
+    <div class="filter col-xs-3">
+      <div class="close-filter col-xs-12">
+        <button class="btn btn-lg simple-button-black" id="close-filter-button">
+          <span class="button-text-black" id="x-text">
+            x
+          </span>
+        </button>
       </div>
-      <div class="tag-filter col-xs-7">
+      <div class="product-title-container">
+        <span class="filter-title">Filter</span>
+      </div>
+      <div class="price-filter col-xs-12">
+        <div class="price-output">
+          <span id="price" ></span>
+        </div>
+        <div class="slider">
+          <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
+        </div>
+      </div>
+      <div class="tag-filter col-xs-12">
+        <span class="filter-title">Categories</span>
         <div class="searchable-container">
           <%@tags.each do |tag|%>
-            <div class="items col-xs-6 col-sm-6 col-md-3 col-lg-3">
+            <div class="items col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <div class="info-block block-info clearfix">
                 <div class="btn-group bizmoduleselect">
                   <div class="bizcontent">
                     <button class='tag-check-box active' id=<%=tag.name%>>
                       <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                      <h5><%=tag.name%></h5>
+                      <h5><%=tag.name%>s</h5>
                     </button>
                   </div>
                 </div>
@@ -30,8 +47,9 @@
   <% end %>
 
 
-
-  <div id="productss"><%=render 'products'%></div>
+  <div class="products-to-show">
+    <div id="productss"><%=render 'products'%></div>
+  </div>
 
 
 </div>

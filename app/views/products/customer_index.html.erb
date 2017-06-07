@@ -1,1 +1,114 @@
-<h1>hello</h1>
+<div class="customer-index">
+  <div class="fullscreen">
+    <%= image_tag("main-image.jpg", :class => "main-image") %>
+    <div class="container main-text-container">
+      <div class="col-xs-12">
+        <span class="main-text">Intricate, beautiful, you</span>
+      </div>
+      <div class="col-xs-12">
+        <button class="btn btn-lg simple-button"><%= link_to category_path(2), :class=>"link_to" do%>
+          <span class="button-text">
+            Explore Collection
+          </span>
+          <%end%>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container product-quality">
+    <div class="company-promise-container col-xs-12">
+      <span class="company-promise">Every item is uniquely handmade using only top-quality materials.</span>
+    </div>
+  </div>
+  <div class="core-competencies container">
+    <div class="outer-competency col-xs-4">
+      <div class="inner-competency">
+        <%= image_tag("tailored-icon.png", :class => "competency-icon") %>
+        <div class="col-xs-12 competency-title-container">
+          <span class="competency-title">Tailored to you</span>
+        </div>
+        <div class="col-xs-12 competency-description-container">
+          <span class="competency-description">Jewelery requires an eye for perfection. All products undergo strict quality testing to ensure your utmost satisfaction</span>
+        </div>
+      </div>
+    </div>
+    <div class="outer-competency col-xs-4">
+      <div class="inner-competency">
+        <%= image_tag("delivery-icon.png", :class => "competency-icon") %>
+        <div class="col-xs-12 competency-title-container">
+          <span class="competency-title">Shipped to your doorstep</span>
+        </div>
+        <div class="col-xs-12 competency-description-container">
+          <span class="competency-description">Comfortably order online and receive your products shipped right to your doorstap. Free shipping for all orders above $200.</span>
+        </div>
+      </div>
+    </div>
+    <div class="outer-competency col-xs-4">
+      <div class="inner-competency">
+        <%= image_tag("warranty-icon.jpeg", :class => "competency-icon") %>
+        <div class="col-xs-12 competency-title-container">
+          <span class="competency-title">1 year warranty</span>
+        </div>
+        <div class="col-xs-12 competency-description-container">
+          <span class="competency-description">Should your purchase not be in line with our quality guarantee, we would be happy to handmake you a replacement and no extra cost.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="categories container">
+    <div class="col-xs-10 col-xs-offset-1 ">
+      <div class="outer-category col-xs-6">
+        <%= link_to "categories/2/?low=0&high=400&tags%5B%5D=Necklace" do%>
+          <div class="inner-category col-xs-12">
+            <div class="hover-background">
+            </div>
+            <%= image_tag("necklaces.jpg", :class => "category-image") %>
+            <div class="category-title-container">
+              <span class="category-title">Necklaces</span>
+            </div>
+
+          </div>
+        <%end%>
+      </div>
+      <div class="outer-category col-xs-6">
+        <%= link_to "categories/2/?low=0&high=400&tags%5B%5D=Bracelet" do%>
+          <div class="inner-category col-xs-12">
+            <div class="hover-background">
+            </div>
+            <%= image_tag("bracelets.jpg", :class => "category-image") %>
+            <div class="category-title-container">
+              <span class="category-title">Bracelets</span>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+    <div class="col-xs-10 col-xs-offset-1 ">
+      <div class="outer-category col-xs-6">
+        <%= link_to "categories/2/?low=0&high=400&tags%5B%5D=Earring" do%>
+          <div class="inner-category col-xs-12">
+            <div class="hover-background">
+            </div>
+            <%= image_tag("earrings.jpg", :class => "category-image") %>
+            <div class="category-title-container">
+              <span class="category-title">Earrings</span>
+            </div>
+          </div>
+        <%end%>
+      </div>
+      <div class="outer-category col-xs-6">
+        <%= link_to "categories/2/?low=0&high=400&tags%5B%5D=Ring" do%>
+          <div class="inner-category col-xs-12">
+            <div class="hover-background">
+            </div>
+            <%= image_tag("rings.jpg", :class => "category-image") %>
+            <div class="category-title-container">
+              <span class="category-title">Rings</span>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+
+</div>

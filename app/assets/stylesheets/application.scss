@@ -19,13 +19,15 @@
  @import "bootstrap";
  @import "devise_bootstrap_views";
  @import "formtastic";
- @import "bootstrap-datepicker";
+ @import "bootstrap-datetimepicker";
  @import "jquery-ui";
  @import "bootstrap-select";
 
+
 *{
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
+  margin:0;
 }
 
 *:focus {
@@ -144,6 +146,7 @@ body {
 .shipping-spinner{
   opacity:0.8;
   background-color:#ece8e8;
+  border-radius: 4px;
   width: 50%;
   height: 50%;
   position: absolute;
@@ -152,7 +155,7 @@ body {
   left: 0;
   right: 0;
   margin: auto;
-  z-index:9999999999999999999999;
+  z-index:99999999999999999999999;
   align-items: center;
   display: flex;
   justify-content: center;

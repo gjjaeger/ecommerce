@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -65,7 +66,11 @@
                 <%end%>
                 <%if current_order_items!=nil && current_order_items.any?%>
                   <div class="checkout-button">
-                    <%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default", id:"checkout-button" %>
+                    <%= link_to order_checkout_path(current_order), remote: true, class: "btn btn-lg simple-button-black", id:"checkout-button" do %>
+                      <span class="button-text-black" id="x-text">
+                        Proceed to checkout
+                      </span>
+                    <%end%>
                   </div>
                 <% end %>
               </ul>
@@ -95,24 +100,24 @@
       <div class="sk-cube sk-cube9"></div>
     </div>
   </div>
-  <div class=" col-xs-12">
-    <div class="shipping-spinner">
-      <div class="cube-grid-wrapper">
-        <div class="sk-cube-grid col-xs-12">
-          <div class="sk-cube sk-cube1"></div>
-          <div class="sk-cube sk-cube2"></div>
-          <div class="sk-cube sk-cube3"></div>
-          <div class="sk-cube sk-cube4"></div>
-          <div class="sk-cube sk-cube5"></div>
-          <div class="sk-cube sk-cube6"></div>
-          <div class="sk-cube sk-cube7"></div>
-          <div class="sk-cube sk-cube8"></div>
-          <div class="sk-cube sk-cube9"></div>
-        </div>
-      </div>
-      <div class="shipping-text-wrapper col-xs-12">
-        <span class="shipping-text">Calculating Shipping Cost...</span>
+
+  <div class="shipping-spinner">
+    <div class="cube-grid-wrapper">
+      <div class="sk-cube-grid">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
       </div>
     </div>
+    <div class="shipping-text-wrapper">
+      <span class="shipping-text">Calculating Shipping Cost...</span>
+    </div>
   </div>
+
 </html>

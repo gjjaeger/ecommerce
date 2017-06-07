@@ -13,7 +13,7 @@ if ($('.order-item').length == 0){
     $('.checkout-button').show()
   }
   else{
-    $('.checkout-button-div').html('<%= link_to "Proceed to Checkout", order_checkout_path(current_order), remote: true, class: "btn btn-default", id:"checkout-button" %>');
+    $('.checkout-button-div').html('<%= link_to order_checkout_path(current_order), remote: true, class: "btn btn-lg simple-button-black", id:"checkout-button" do %><span class="button-text-black" id="x-text">Proceed to checkout</span><%end%>');
   }
 }
 else {

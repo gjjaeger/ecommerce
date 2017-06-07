@@ -87,8 +87,9 @@
             <%= form_for @order_item, remote: true do |f| %>
               <div class="cart-form">
                 <%= f.hidden_field :product_id, value: @product.id %>
+                <div class="cart-notice"></div>
                 <div class="minus-quantity"><span>-</span></div>
-                <%= f.number_field :quantity, :class=>"jewelery-quantity quantity" %>
+                <%= f.number_field :quantity, :class=>"jewelery-quantity quantity", :"data-href" => @product.stock %>
                 <div class="plus-quantity"><span>+</span></div>
                 <%= button_tag(type: 'submit', :class=>"add-cart btn btn-default", :id=>"jewelery-add-cart") do %>
                   <span class="add-cart-text">Add to cart</span>

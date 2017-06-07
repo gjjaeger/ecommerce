@@ -10,13 +10,26 @@ outline: 0;
 outline: none;
 }
 
-#product, #admin-product{
+#admin-product{
   text-align: center;
   border: 1px solid #ece8e8;
   border-radius: 5px;
   padding:0;
   height:350px;
   color:#666;
+}
+
+.outside-product{
+  padding: 20px 25px !important;
+}
+
+#product {
+  position: relative;
+  text-align: center;
+  border: 0px solid black;
+  height:300px;
+  color:#666;
+  padding: 0;
 }
 
 #product-modal{
@@ -79,7 +92,9 @@ outline: none;
 
 
 #product:hover{
-  border: 1px solid #c37600;
+  #product-image{
+    border: 3px solid white;
+  }
 }
 
 .featured{
@@ -130,7 +145,6 @@ outline: none;
   object-fit: cover;
   padding-left:0;
   padding-right: 0;
-  border-radius: 4px 4px 0px 0px;
 }
 
 #jewelery-main-image{
@@ -391,10 +405,29 @@ input:focus{
 }
 
 .product-name{
-  font-size: 24px;
+  font-size: 16px;
   text-transform: uppercase;
   padding-top: 15px;
   padding-bottom: 5px;
+  text-decoration: none;
+  color: #666;
+  line-height: 24px;
+}
+
+.cart-product-name{
+  font-size: 16px;
+}
+
+.cart-product-quantity{
+  font-size: 13px;
+}
+
+.product-price{
+  position: relative;
+  bottom: 0;
+  font-size: 13px;
+  line-height: 24px;
+  color: #666;
 }
 
 .starting-from{
@@ -418,4 +451,148 @@ input:focus{
 
 .minus-quantity:hover, .plus-quantity:hover{
   border: 1px solid #c37600;
+}
+
+
+.fullscreen {
+  display: block; //very importnat reason for the initial white space
+  overflow: hidden; //very important reason for the white space
+  position:relative;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  height:100vh;
+  width:100%;
+  z-index: 2;
+}
+
+.main-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.main-text-container{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.main-text{
+  text-transform: uppercase;
+  font-size: 52px;
+  color: white;
+}
+
+
+
+.link_to {
+  text-decoration: none;
+}
+
+.link_to:hover {
+  text-decoration: none;
+  background: none;
+}
+
+
+.product-quality{
+  display: block;
+  position: relative;
+  float: clear;
+}
+
+.company-promise-container {
+  text-align: center;
+}
+.company-promise{
+  font-size: 32px;
+  font-weight: 300;
+}
+
+.inner-competency {
+  text-align: center;
+}
+
+.competency-icon{
+  height: 80px;
+  width:80px;
+  object-fit: cover;
+}
+
+.competency-title{
+  letter-spacing: 2px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.competency-description{
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.competency-description-container, .competency-title-container{
+  padding-top: 15px;
+}
+
+.inner-category{
+  padding:0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.category-image{
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.outer-category{
+  margin: 0;
+  padding: 15px;
+
+}
+
+.category-title-container{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  display: none;
+  z-index: 4;
+
+}
+
+.category-title{
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-size: 32px;
+  color: white;
+}
+
+.inner-category:hover{
+  .category-title-container{
+    display: block;
+    z-index: 3;
+  }
+  .hover-background {
+    opacity: 0.6;
+  }
+
+}
+
+.hover-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: grey;
+  z-index: 2;
+  opacity: 0;
 }

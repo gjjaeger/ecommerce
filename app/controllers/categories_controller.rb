@@ -13,9 +13,7 @@ class CategoriesController < ApplicationController
   def show
     @order_item=current_order.order_items.new
     @categories=Category.all
-    fresh_when last_modified: @categories.maximum(:updated_at)
     @category=Category.find(params[:id])
-    fresh_when @category
     @tags=@category.tags.select("name").group(:name)
     # fresh_when last_modified: @category.tags.maximum(:updated_at)
 
@@ -39,16 +37,18 @@ class CategoriesController < ApplicationController
       end
       @products2=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 400, @category.id.to_s, 0)
       @products=@products1 & @products2
-    elsif params[:id] == '3'
-      @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)
+    # elsif params[:id] == '3'
+    #   @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)
+    # else
+    #   sizes=Size.where("(price >= ? AND price <= ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 50)
+    #   @products = []
+    #   sizes.each do |size|
+    #     product=Product.find_by({id: size.product_id})
+    #     @products.push(product)
+    #   end
+    #   @products = @products.uniq
     else
-      sizes=Size.where("(price >= ? AND price <= ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 50)
-      @products = []
-      sizes.each do |size|
-        product=Product.find_by({id: size.product_id})
-        @products.push(product)
-      end
-      @products = @products.uniq
+      @products=Product.where("(category_id = ?)", (@category.id).to_s)
     end
   end
 
