@@ -1,7 +1,7 @@
 
 
   <p id="notice"><%= notice %></p>
-
+<div class="product-show">
   <%if @product.category_id=="1"||@product.category_id=="3"%>
     <div class="container">
       <div class="row">
@@ -65,39 +65,68 @@
   <%end%>
   <%if @product.category_id=="2"%>
     <div class="container" id="show-item">
-      <div class="row header-image">
-        <%= image_tag(@product.images.first.photo.url, :id=>"jewelery-main-image") %>
-      </div>
       <div class="row main-details">
-        <div class="col-xs-9">
-          <div class="col-xs-4 col-xs-offset-0">
+        <div class="col-xs-12 col-xs-offset-0">
+          <div class="col-xs-5 col-xs-offset-0">
             <%= image_tag(@product.images.second.photo.url, :class=>"product-show-image") %>
           </div>
-          <div class="col-xs-8 product-details">
-            <div class="col-xs-12 product-title">
-              <span class="title"><%=@product.name%></span>
+          <div class="col-xs-6 col-xs-offset-1 product-details">
+            <div class="col-xs-12 text-left product-show-name-div">
+              <span class="product-show-name"><%=@product.name%></span>
             </div>
-            <div class="col-xs-12 product-description">
-              <span class="description"><%=@product.description%></span>
+            <div class="col-xs-12 product-show-price-div text-left">
+              <span class="product-show-price"><%=number_to_currency @product.price%></span>
+            </div>
+            <div class="col-xs-12 text-left product-show-description-div">
+              <span class="product-show-description"><%=@product.description%></span>
+            </div>
+            <div class="col-xs-12 jewelery-add-cart">
+              <%if @product.category_id=="2"%>
+                <%= form_for @order_item, remote: true do |f| %>
+                  <div class="cart-form">
+                    <%= f.hidden_field :product_id, value: @product.id %>
+                    <div class="cart-notice"></div>
+                    <div class="minus-quantity"><span>-</span></div>
+                    <%= f.number_field :quantity, :class=>"jewelery-quantity quantity", :"data-href" => @product.stock %>
+                    <div class="plus-quantity"><span>+</span></div>
+                    <%= button_tag(type: 'submit', :class=>"add-cart btn btn-default", :id=>"jewelery-add-cart") do %>
+                      <span class="add-cart-text">Add to cart</span>
+                    <%end%>
+                  </div>
+                <%end%>
+              <%end%>
             </div>
           </div>
         </div>
-        <div class="col-xs-3 jewelery-add-cart">
-          <%if @product.category_id=="2"%>
-            <%= form_for @order_item, remote: true do |f| %>
-              <div class="cart-form">
-                <%= f.hidden_field :product_id, value: @product.id %>
-                <div class="cart-notice"></div>
-                <div class="minus-quantity"><span>-</span></div>
-                <%= f.number_field :quantity, :class=>"jewelery-quantity quantity", :"data-href" => @product.stock %>
-                <div class="plus-quantity"><span>+</span></div>
-                <%= button_tag(type: 'submit', :class=>"add-cart btn btn-default", :id=>"jewelery-add-cart") do %>
-                  <span class="add-cart-text">Add to cart</span>
-                <%end%>
-              </div>
-            <%end%>
-          <%end%>
+        <div class="col-xs-12 tabbed-content">
+          <ul class="tabs-list col-xs-12">
+            <li class="active tab-item" id="description-tab">Description</li>
+            <li class="tab-item" id="size-tab">Size & Weight</li>
+            <li class="tab-item" id="materials-tab">Materials</li>
+          </ul>
+          <div class="tabs-list-line">
+          </div>
+          <ul class="tabs-content col-xs-12">
+            <li class="active content-item" id="description-tab-content"><%=@product.description%></li>
+            <li class="content-item" id="size-tab-content">
+              <table class="table table-striped table-bordered">
+                <tbody>
+                  <tr>
+                    <td>Diameter</td>
+                    <td>14cm</td>
+                  </tr>
+                  <tr>
+                    <td>Weight</td>
+                    <td>50g</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li class="content-item" id="materials-tab-content">
+              Materials
+            </li>
         </div>
+
         <div class="col-xs-12 product-materials">
           <div class="col-xs-6 col-xs-offset-3">
             <span class="sub-title" id="material-title">Materials</span>
@@ -138,7 +167,7 @@
       </div>
     </div>
   <%end%>
-
+</div>
 
 
   <div id="product-modal" class="modal"></div>

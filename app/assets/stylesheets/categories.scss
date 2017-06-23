@@ -237,9 +237,8 @@ outline: none;
 }
 
 .filter {
-  position: fixed !important;
+  // position: fixed !important;
   left:0;
-  display: none;
   padding:5px;
   margin-bottom: 20px;
   vertical-align: middle;
@@ -272,7 +271,6 @@ outline: none;
 .tag-filter {
   text-align: center;
   display: inline-block;
-  padding : 20px 0 !important;
 }
 
 .category-show{

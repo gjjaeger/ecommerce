@@ -1,0 +1,37 @@
+/* line 5, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.details {
+  float: left;
+}
+
+/* line 9, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.summary {
+  margin-top: 60px;
+}
+
+/* line 13, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.price {
+  float: right;
+}
+
+/* line 17, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.pay-button {
+  text-align: center;
+}
+
+/* line 21, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.total-price {
+  float: right;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* line 27, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.order-item {
+  padding-bottom: 3vh;
+  font-size: 16px;
+}
+
+/* line 32, /Users/gabrieljaeger/accelerated/rails/ecommerce/app/assets/stylesheets/orders.scss */
+.individual-price {
+  font-style: italic;
+}

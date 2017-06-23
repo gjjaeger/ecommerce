@@ -1,47 +1,74 @@
 <div class="category-show">
-  <button class="btn btn-lg simple-button-black" id="filter-button">
+  <!-- <button class="btn btn-lg simple-button-black" id="filter-button">
     <span class="button-text-black">
       Filter Products
     </span>
-  </button>
+  </button> -->
   <% if @category.id==2 %>
-    <div class="filter col-xs-3">
-      <div class="close-filter col-xs-12">
-        <button class="btn btn-lg simple-button-black" id="close-filter-button">
-          <span class="button-text-black" id="x-text">
-            x
-          </span>
-        </button>
-      </div>
-      <div class="product-title-container">
-        <span class="filter-title">Filter</span>
-      </div>
-      <div class="price-filter col-xs-12">
-        <div class="price-output">
-          <span id="price" ></span>
+    <div class="sidebar col-xs-3">
+      <div class="filter col-xs-12">
+        <!-- <div class="close-filter col-xs-12">
+          <button class="btn btn-lg simple-button-black" id="close-filter-button">
+            <span class="button-text-black" id="x-text">
+              x
+            </span>
+          </button>
+        </div> -->
+        <div class="sidebar-title-container">
+          <span class="sidebar-title">Filter</span>
         </div>
-        <div class="slider">
-          <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
+        <div class="price-filter col-xs-12">
+          <div class="price-output">
+            <span id="price" ></span>
+          </div>
+          <div class="slider">
+            <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
+          </div>
         </div>
-      </div>
-      <div class="tag-filter col-xs-12">
-        <span class="filter-title">Categories</span>
-        <div class="searchable-container">
-          <%@tags.each do |tag|%>
-            <div class="items col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <div class="info-block block-info clearfix">
-                <div class="btn-group bizmoduleselect">
-                  <div class="bizcontent">
-                    <button class='tag-check-box active' id=<%=tag.name%>>
-                      <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                      <h5><%=tag.name%>s</h5>
-                    </button>
+        <div class="tag-filter sidebar-content col-xs-12">
+          <span class="filter-title">Categories</span>
+          <div class="searchable-container">
+            <%@tags.each do |tag|%>
+              <div class="items col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="info-block block-info clearfix">
+                  <div class="btn-group bizmoduleselect">
+                    <div class="bizcontent">
+                      <button class='tag-check-box active' id=<%=tag.name%>>
+                        <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                        <h5><%=tag.name%>s</h5>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+
+      <div class="newest-products sidebar-content col-xs-12">
+        <div class="sidebar-title-container">
+          <span class="sidebar-title">Newest Products</span>
+        </div>
+        <%@newest_products.each do |product|%>
+          <%= link_to product_path(product) do %>
+            <div class="newest-product col-xs-12">
+              <div class="newest-product-image col-xs-5">
+                <%= image_tag(product.images.first.photo.url, :id=>"newest-product-image") %>
+              </div>
+              <div class="newest-product-info col-xs-7">
+                <span class="newest-product-name col-xs-12"><%=product.name%></span>
+                <span class="newest-product-price col-xs-12"><%=number_to_currency product.price%></span>
+              </div>
             </div>
           <%end%>
+        <%end%>
+      </div>
+      <div class="sidebar-content col-xs-12">
+        <div class="sidebar-title-container">
+          <span class="sidebar-title">Return Policy</span>
         </div>
+        <span class="return-policy normal-text">1 year warranty on all items. We will be happy to cover any replacement/repair cost and ask you to only cover the shipping.</span>
       </div>
     </div>
   <% end %>

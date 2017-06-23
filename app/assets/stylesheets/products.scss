@@ -42,19 +42,65 @@ outline: none;
 
 .quantity{
   text-align: center;
+  width: 40px !important;
+}
+
+#newest-product-image{
+  width:100%;
+  height: 60px;
+  object-fit: cover;
+}
+
+.normal-text{
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.newest-product-name, .newest-product-price{
+  padding: 0 !important;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.sidebar-title{
+  line-height: 32px;
+}
+
+.sidebar-title-container{
+  margin-bottom: 10px;
+  padding-left: 5px;
+  border-bottom: 1px solid black;
+}
+
+.newest-product{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sidebar-content {
+  display: inline-block;
+  padding : 20px 0 !important;
+}
+
+.newest-product-name{
+  width: 75%;
 }
 .text-center{
   text-align: center;
 }
 
+.product-show{
+  margin-top: 100px;
+}
+
 .product-show-image{
   width:100%;
-  height:200px;
-  max-height: 250px;
+  height:400px;
+  max-height: 600px;
   object-fit: cover;
   padding-left:0;
   padding-right: 0;
-  border-radius: 4px;
+  border-radius: 0px;
 }
 
 .small-product-show-image{
@@ -197,11 +243,6 @@ outline: none;
   display: none;
 }
 
-.header-image{
-  margin-top: 6vh;
-  margin-bottom: 6vh;
-}
-
 .sub-title{
   font-size: 32px;
   text-align: center;
@@ -328,11 +369,22 @@ input:focus{
 
 
 .jewelery-add-cart, .jam-add-cart{
-  width:50%;
+  width:50% !important;
   border: 1px solid #ece8e8;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 0px;
   padding:3vh;
+}
+
+#jewelery-add-cart{
+  background-color: #47b475;
+  border-radius: 0;
+  border:0;
+}
+
+.add-cart-text{
+  color:white;
+  font-weight: 300;
 }
 
 .carousel{
@@ -389,8 +441,23 @@ input:focus{
 
 }
 
-.product-title{
+.text-center{
   text-align: center;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.product-show-price{
+  color : rgb(71, 180, 117);
+  font-size: 32px;
+  font-weight: 300 !important;
+  line-height: 40px;
+}
+
+.product-show-price-div{
+  margin-bottom: 32px;
 }
 
 .title-underlign{
@@ -412,6 +479,18 @@ input:focus{
   text-decoration: none;
   color: #666;
   line-height: 24px;
+}
+
+.product-show-name{
+  font-size: 24px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  line-height: 32px;
+
+}
+
+.product-show-name-div{
+  margin-bottom: 24px;
 }
 
 .cart-product-name{
@@ -533,6 +612,73 @@ input:focus{
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 24px;
+}
+
+.product-show-description-div{
+  margin-bottom: 32px;
+}
+
+.content-item{
+  display: none;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.active.content-item{
+  display: block !important;
+}
+
+.tabbed-content{
+  margin-top: 48px;
+}
+
+.tabs-content{
+  margin-top: 24px;
+}
+
+.tabs-list{
+  list-style: none;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  width: 100%;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  z-index: 20 !important;
+}
+
+.tabs-list-line{
+  clear: both;
+  border-bottom: 1px solid black;
+  width: 100%;
+  position: absolute;
+  top: 48px;
+  z-index: 1 !important;
+}
+
+.tab-item{
+  font-size: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  width:18%;
+  padding-bottom: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tab-item.active{
+  border-bottom: 1px solid rgb(71, 180, 117) !important;
+
+}
+
+.tabs-list li{
+  display: inline-block;
+}
+
+.product-show-description{
+  font-size: 13px;
 }
 
 .competency-description-container, .competency-title-container{

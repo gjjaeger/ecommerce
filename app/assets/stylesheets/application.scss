@@ -30,6 +30,11 @@
   margin:0;
 }
 
+input:focus::-webkit-input-placeholder { opacity:0; }
+input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+
 *:focus {
 outline: 0;
 outline: none;
@@ -41,6 +46,26 @@ outline: none;
 
 #navbar{
   background-color: white;
+}
+
+// .has-dropdown:after {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   font-size: 11px;
+//   content: "\e64b";
+//   font-family: 'themify';
+//   speak: none;
+//   font-style: normal;
+//   font-weight: normal;
+//   font-variant: normal;
+//   text-transform: none;
+// }
+
+.navbar-nav li a, .navbar-nav li a span{
+  font-size: 13px !important;
+  color: black;
+  font-weight: 600;
 }
 
 ul.dropdown-cart{
@@ -122,18 +147,18 @@ body {
   right:18px;
   width:15px;
   height:15px;
-  line-height: 18px;
-  font-size: 12px;
-  background-color: red;
+  line-height: 14px;
+  font-size: 12px !important;
+  background-color: #47b475;
   border-radius: 100%;
-  color:white;
+  color:white !important;
   text-align: center;
 }
 
 .spinner{
   opacity:0.8;
   background-color:#ece8e8;
-  position: absolute;
+  position: fixed;
   width:100%;
   height:100%;
   top:0px;
@@ -149,7 +174,7 @@ body {
   border-radius: 4px;
   width: 50%;
   height: 50%;
-  position: absolute;
+  position: fixed;
   top:0;
   bottom: 0;
   left: 0;

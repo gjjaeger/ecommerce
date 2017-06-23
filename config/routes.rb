@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :order_items
     resources :orders
   end
+  get 'thanks', to: 'charges#thanks', as: 'thanks'
   resources :orders do
     get "checkout"
     get "shipping"

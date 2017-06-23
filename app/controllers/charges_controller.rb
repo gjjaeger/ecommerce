@@ -11,10 +11,9 @@ class ChargesController < ApplicationController
     address=Address.find(order_object.address_id)
     # Amount in cents
     customer = Stripe::Customer.create(
-      :email => params[:stripeEmail],
+      :email => params[:email],
       :source  => params[:stripeToken]
     )
-
     if current_order.total_shipping > 0
       charge = Stripe::Charge.create(
         :customer    => customer.id,
@@ -23,8 +22,6 @@ class ChargesController < ApplicationController
         :currency    => 'usd'
       )
     end
-
-
     current_order.order_items.each do |item|
       charge = Stripe::Charge.create(
         :customer    => customer.id,
@@ -33,13 +30,12 @@ class ChargesController < ApplicationController
                         else
                           Integer(item.product.price*100*item.quantity)
                         end,
-        :description => params[:stripeEmail],
+        :description => params[:email],
         :currency    => 'usd'
       )
-
       order = Stripe::Order.create(
         :currency => 'usd',
-        :email => params[:stripeEmail],
+        :email => params[:email],
         :items => [
           {
             :type => 'sku',
@@ -86,7 +82,7 @@ class ChargesController < ApplicationController
     # @shippingAddress=Address.create(:line1 => params[:stripeShippingAddressLine1], :city => params[:stripeShippingAddressCity],:country => params[:stripeShippingAddressCountry], :postal_code => params[:stripeShippingAddressZip])
     @order = Order.find(current_order)
     @order.status = "created"
-    @order.customer_email=params[:stripeEmail]
+    @order.customer_email=params[:email]
     # @order.address_id= @shippingAddress.id
     if current_user
       @order.account_id=current_user.account.id
@@ -112,6 +108,7 @@ class ChargesController < ApplicationController
           item.save
         end
       end
+      session[:order_id]=nil
       # Mail.defaults do
       #   delivery_method :smtp, {
       #     :port      => 587,
@@ -134,11 +131,11 @@ class ChargesController < ApplicationController
       #   end
       # end
       SendEmailJob.set(wait: 20.seconds).perform_later(params[:stripeEmail])
-      session[:order_id]=nil
-      redirect_to products_path
+
+      redirect_to thanks_path
     end
   rescue Stripe::CardError => e
     flash[:error] = e.message
-    redirect_to new_charge_path
+    redirect_to new_order_path
   end
 end
