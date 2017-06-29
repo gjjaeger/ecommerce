@@ -33,6 +33,7 @@ source 'https://rubygems.org'
   gem 'geocoder'
   gem 'bootstrap-select-rails'
   gem 'bootstrap-select-wrapper-rails'
+  gem 'will_paginate', '~> 3.1.0'
 
 
 

@@ -37,7 +37,7 @@ class CategoriesController < ApplicationController
         @products1=@category.products.where("(stock > ?)", 0)
       end
       @products2=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 400, @category.id.to_s, 0)
-      @products=@products1 & @products2
+      @productss=(@products1 & @products2)
     # elsif params[:id] == '3'
     #   @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)
     # else
@@ -49,8 +49,9 @@ class CategoriesController < ApplicationController
     #   end
     #   @products = @products.uniq
     else
-      @products=Product.where("(category_id = ?)", (@category.id).to_s)
+      @productss=Product.where("(category_id = ?)", (@category.id).to_s).paginate(:page => params[:page], :per_page => 4)
     end
+    @products=@productss.paginate(:page => params[:page], :per_page => 12)
   end
 
   # GET /categories/new

@@ -1,40 +1,57 @@
-<% @products.each do |product| %>
-  <div class="col-md-3 outside-product">
-    <% if admin_signed_in? %>
-      <div class="col-md-12" id="admin-product">
-    <% else %>
-      <div class="col-md-12" id="product">
-    <%end%>
-      <%= link_to product_path(product) do %>
-        <% if product.featured && product.category_id!="2"%>
-          <div class="featured">
-            <div class="ribbon">Best Seller</div>
+<%if @products.any?%>
+  <% @products.each do |product| %>
+    <div class="col-md-4 outside-product">
+      <div class="col-md-12" id="<%= admin_signed_in? ? 'admin-product' : 'product' %>">
+        <%= link_to product_path(product) do %>
+          <% if product.featured && product.category_id!="2"%>
+            <div class="featured">
+              <div class="ribbon">Best Seller</div>
+            </div>
+          <%end%>
+          <div class="row carousel">
+            <div id="carouselfor<%=product.id%>" class="carousel slide carouselExampleIndicators" data-interval="false" data-ride="carousel">
+              <div class="carousel-inner" role="listbox">
+                <% product.images.each_with_index do |image, index| %>
+                  <div class="carousel-item item <%=index == 0 ? 'active' : '' %>">
+                    <%= image_tag(image.photo.url, :class=>"d-block img-fluid product-image")%>
+                  </div>
+                <% end %>
+              </div>
+              <a class="carousel-control left" href="#carouselfor<%=product.id%>" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control right" href="#carouselfor<%=product.id%>" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
           </div>
-        <%end%>
-        <% if !product.images.empty?%>
-          <%= image_tag(product.images.first.photo.url, :class=>"col-md-12", :id=>"product-image") %>
-        <%end%>
-        <span class="product-name col-xs-12"><%= product.name %></span>
-        <% if product.category_id == "1" %>
-          <span class="product-price col-xs-12"><span class="starting-from">Starting from</span> <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
-        <% else %>
-          <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
-        <% end %>
-        <% if admin_signed_in? %>
-          <div class="row">
-            <% if product.category_id == "2"%>
-              <span class="stock-title">Stock:</span>
-              <span class="stock-amount"><%=product.stock%></span>
-            <%end%>
-          </div>
-        <% end %>
 
-        <% if admin_signed_in? %>
-          <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
-          <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
-          <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
-        <% end %>
-      <%end%>
+          <span class="product-name col-xs-12"><%= product.name %></span>
+          <% if product.category_id == "1" %>
+            <span class="product-price col-xs-12"><span class="starting-from">Starting from</span> <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
+          <% else %>
+            <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
+          <% end %>
+          <% if admin_signed_in? %>
+            <div class="row">
+              <% if product.category_id == "2"%>
+                <span class="stock-title">Stock:</span>
+                <span class="stock-amount"><%=product.stock%></span>
+              <%end%>
+            </div>
+          <% end %>
+
+          <% if admin_signed_in? %>
+            <td><%= link_to "Edit", edit_product_path(product), remote: true, class: "btn btn-default" %></td>
+            <td><%= link_to "Show", product_path(product), remote: true, class: "btn btn-default" %></td>
+            <td><%= link_to "Delete", product_delete_path(product), remote: true, class: "btn btn-danger" %></td>
+          <% end %>
+        <%end%>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+<%else%>
+  <span class="text-center">No Products found. Please alter your search criteria</span>
+<%end%>

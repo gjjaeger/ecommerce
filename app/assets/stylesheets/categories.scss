@@ -220,6 +220,10 @@ outline: none;
   border: 1px solid #efefef !important;
 }
 
+#subscribe-button:hover{
+  border: 1px solid rgb(204, 204, 204)!important;
+}
+
 .button-text-black, .button-text{
   font-size: 14px;
   font-weight: bold;
@@ -274,7 +278,41 @@ outline: none;
 }
 
 .category-show{
-  margin-top: 75px;
+  margin-top: 0px;
+  width: 100%;
+  flex:1;
+  padding: 0 !important;
+}
+
+.topbar{
+  display: block; //very importnat reason for the initial white space
+  overflow: hidden; //very important reason for the white space
+  position:relative;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  height:50vh;
+  width:100%;
+  z-index: 2;
+  margin-bottom: 60px;
+}
+
+.topbar-text-container{
+  vertical-align: middle;
+  line-height: 40vh;
+}
+
+.topbar-text{
+  text-transform: uppercase;
+  font-size: 32px;
+  color: white;
+  vertical-align: middle;
+}
+
+.path-links{
+  text-align: center;
+  color: white;
 }
 
 .items {

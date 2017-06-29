@@ -32,6 +32,8 @@ $(document).on('turbolinks:load', function(){
     //not recognized for some reason
   });
 
+  $('#carouselExampleIndicators').carousel();
+
   $('#cake-modal').on('shown.bs.modal', function() {
     cartFunctions();
     prepareCakeModal();
@@ -481,7 +483,7 @@ $(document).on('turbolinks:load', function(){
     };
   };
 
-  
+
 
 
 

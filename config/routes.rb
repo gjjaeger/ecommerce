@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :order_items
     resources :orders
   end
+  resources :subscriptions, only: [:new, :create]
   get 'thanks', to: 'charges#thanks', as: 'thanks'
   resources :orders do
     get "checkout"

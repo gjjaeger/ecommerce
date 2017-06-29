@@ -1,84 +1,93 @@
-<div class="category-show">
-  <!-- <button class="btn btn-lg simple-button-black" id="filter-button">
-    <span class="button-text-black">
-      Filter Products
-    </span>
-  </button> -->
-  <% if @category.id==2 %>
-    <div class="sidebar col-xs-3">
-      <div class="filter col-xs-12">
-        <!-- <div class="close-filter col-xs-12">
-          <button class="btn btn-lg simple-button-black" id="close-filter-button">
-            <span class="button-text-black" id="x-text">
-              x
-            </span>
-          </button>
-        </div> -->
-        <div class="sidebar-title-container">
-          <span class="sidebar-title">Filter</span>
-        </div>
-        <div class="price-filter col-xs-12">
-          <div class="price-output">
-            <span id="price" ></span>
-          </div>
-          <div class="slider">
-            <div id = "slider-3" class="price-slider" data-href = <%=@category.id%> ></div>
-          </div>
-        </div>
-        <div class="tag-filter sidebar-content col-xs-12">
-          <span class="filter-title">Categories</span>
-          <div class="searchable-container">
-            <%@tags.each do |tag|%>
-              <div class="items col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="info-block block-info clearfix">
-                  <div class="btn-group bizmoduleselect">
-                    <div class="bizcontent">
-                      <button class='tag-check-box active' id=<%=tag.name%>>
-                        <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                        <h5><%=tag.name%>s</h5>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <%end%>
-          </div>
-        </div>
+<div class="category-show col-xs-12">
+  <div class="topbar">
+    <%= image_tag("main-image.jpg", :class => "main-image") %>
+    <div class="container topbar-text-container">
+      <div class="col-xs-6">
+        <span class="topbar-text">Intricate, beautiful, you</span>
       </div>
-
-      <div class="newest-products sidebar-content col-xs-12">
-        <div class="sidebar-title-container">
-          <span class="sidebar-title">Newest Products</span>
+      <div class="col-xs-6 path-links">
+        <a href="<%= request.base_url %>/products" class="link_to">
+          <span class="button-text">
+            Home
+          </span>
+        </a>
+        <span>/</span>
+        <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+          <span class="button-text">
+            Shop
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar col-xs-3">
+    <div class="filter col-xs-12">
+      <div class="sidebar-title-container">
+        <span class="sidebar-title">Price</span>
+      </div>
+      <div class="price-filter col-xs-12">
+        <div class="price-output">
+          <span id="price"></span>
         </div>
-        <%@newest_products.each do |product|%>
-          <%= link_to product_path(product) do %>
-            <div class="newest-product col-xs-12">
-              <div class="newest-product-image col-xs-5">
-                <%= image_tag(product.images.first.photo.url, :id=>"newest-product-image") %>
-              </div>
-              <div class="newest-product-info col-xs-7">
-                <span class="newest-product-name col-xs-12"><%=product.name%></span>
-                <span class="newest-product-price col-xs-12"><%=number_to_currency product.price%></span>
-              </div>
-            </div>
-          <%end%>
-        <%end%>
+        <div class="slider">
+          <div id = "slider-3" class="price-slider" data-href = <%=@category.id%>></div>
+        </div>
       </div>
       <div class="sidebar-content col-xs-12">
         <div class="sidebar-title-container">
-          <span class="sidebar-title">Return Policy</span>
+          <span class="sidebar-title">Categories</span>
         </div>
-        <span class="return-policy normal-text">1 year warranty on all items. We will be happy to cover any replacement/repair cost and ask you to only cover the shipping.</span>
+        <div class="tag-filter searchable-container">
+          <%@tags.each do |tag|%>
+            <div class="items col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="info-block block-info clearfix">
+                <div class="btn-group bizmoduleselect">
+                  <div class="bizcontent">
+                    <button class='tag-check-box active' id=<%=tag.name%>>
+                      <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
+                      <h5><%=tag.name%>s</h5>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <%end%>
+        </div>
       </div>
     </div>
-  <% end %>
 
-
-  <div class="products-to-show">
-    <div id="productss"><%=render 'products'%></div>
+    <div class="newest-products sidebar-content col-xs-12">
+      <div class="sidebar-title-container">
+        <span class="sidebar-title">Newest Products</span>
+      </div>
+      <%@newest_products.each do |product|%>
+        <%= link_to product_path(product) do %>
+          <div class="newest-product col-xs-12">
+            <div class="newest-product-image col-xs-5">
+              <%= image_tag(product.images.first.photo.url, :id=>"newest-product-image") %>
+            </div>
+            <div class="newest-product-info col-xs-7">
+              <span class="newest-product-name col-xs-12"><%=product.name%></span>
+              <span class="newest-product-price col-xs-12"><%=number_to_currency product.price%></span>
+            </div>
+          </div>
+        <%end%>
+      <%end%>
+    </div>
+    <div class="sidebar-content col-xs-12">
+      <div class="sidebar-title-container">
+        <span class="sidebar-title">Return Policy</span>
+      </div>
+      <span class="return-policy normal-text col-xs-12">1 year warranty on all items. We will be happy to cover any replacement/repair cost and ask you to only cover the shipping.</span>
+    </div>
   </div>
-
-
+  <div class="products-to-show col-xs-9">
+    <div id="productss">
+      <%=render 'products'%>
+    </div>
+  </div>
+  <%= will_paginate @products %>
 </div>
+
 
 <div id="product-modal" class="modal"></div>

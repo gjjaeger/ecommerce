@@ -30,6 +30,7 @@ outline: none;
   height:300px;
   color:#666;
   padding: 0;
+  cursor: pointer;
 }
 
 #product-modal{
@@ -48,6 +49,12 @@ outline: none;
 #newest-product-image{
   width:100%;
   height: 60px;
+  object-fit: cover;
+}
+
+.product-image{
+  height: 200px !important;
+  width: 100%;
   object-fit: cover;
 }
 
@@ -95,12 +102,12 @@ outline: none;
 
 .product-show-image{
   width:100%;
-  height:400px;
-  max-height: 600px;
+  height:500px !important;
   object-fit: cover;
   padding-left:0;
   padding-right: 0;
-  border-radius: 0px;
+  border-radius: 0px !important;
+  border: 0px !important;
 }
 
 .small-product-show-image{
@@ -395,15 +402,15 @@ input:focus{
   margin-top: 30px;
 }
 
-#carouselExampleIndicators{
+.carouselExampleIndicators{
   width:80%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .carousel-inner{
-  border-radius: 5px;
-  border: 1px solid #ece8e8;
+  border-radius: 0px;
+  border: 0px solid #ece8e8;
 }
 
 .delivery-title, .pickup-title{
@@ -596,10 +603,49 @@ input:focus{
   text-align: center;
 }
 
-.competency-icon{
-  height: 80px;
-  width:80px;
-  object-fit: cover;
+.icon{
+  font-size: 80px;
+  width: 100%;
+}
+
+#subscribe-button{
+  background-color: #e3f0d4!important;
+  border: 1px solid #efefef !important;
+}
+
+.subscribe-title{
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.subscribe-title-wrapper{
+  margin-bottom: 17px;
+}
+
+.subscribe-description{
+  font-size: 15px;
+  line-height: 30px;
+}
+
+.subscribe-description-wrapper{
+  margin-top: 17px;
+  margin-bottom: 17px;
+}
+
+.subscription-input{
+  width: 250px !important;
+  border-radius: 0!important;
+  display: inline-block !important;
+  height:45px !important;
+}
+
+.subscribe-form{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-input-wrapper{
+  display: inline-block;
 }
 
 .competency-title{
