@@ -95,4 +95,7 @@ Rails.application.configure do
     :authentication => :plain,
   }
   config.active_job.queue_adapter = :delayed_job
+
+  config.serve_static_assets = true
+  config.assets.compile = true
 end

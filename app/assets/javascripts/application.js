@@ -202,29 +202,18 @@ $(document).on('turbolinks:load', function(){
       var cart = $('.cart-dropdown');
       $('#cake-modal').modal("hide");
 
-      if ($(this).attr('id')=="jam-add-cart"){
-        var imgtodrag = $(".product-show-image");
-      }
-      else if ($(this).attr('id')=="jewelery-add-cart") {
-        var imgtodrag = $(".product-show-image");
-      }
-      else if ($(this).attr('id')=="cake-add-cart") {
+      var imgtodrag = $("#product-show-image");
+      var carousel=$(".carousel-inner")
 
-        var imgtodrag = $(".product-show-image");
-      };
       if (imgtodrag) {
         var imgclone = imgtodrag.clone()
             .offset({
-            top: imgtodrag.offset().top,
-            left: imgtodrag.offset().left
+            top: carousel.offset().top,
+            left: carousel.offset().left
         })
-            .css({
-            'opacity': '0.5',
-                'position': 'absolute',
-                'height': '150px',
-                'width': '150px',
-                'z-index': '100'
-        })
+          .removeClass('product-show-image')
+          .addClass('small-dragged-product-show-image')
+
             .appendTo($('body'))
             .animate({
             'top': cart.offset().top + 10,
@@ -348,7 +337,9 @@ $(document).on('turbolinks:load', function(){
     };
 
     var minimumPrice = (getParameterByName('low') ? getParameterByName('low') : 0);
+    localStorage.setItem("lowPrice", minimumPrice);
     var maximumPrice = (getParameterByName('high') ? getParameterByName('high') : 0);
+    localStorage.setItem("highPrice", maximumPrice);
     $( "#slider-3" ).slider({
       range:true,
       min: 0 ,

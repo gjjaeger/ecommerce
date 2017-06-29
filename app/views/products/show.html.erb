@@ -78,7 +78,7 @@
                 <div class="carousel-inner" role="listbox">
                   <% @product.images.each_with_index do |image, index| %>
                     <div class="carousel-item item <%=index == 0 ? 'active' : '' %>">
-                      <%= image_tag(image.photo.url, :class=>"d-block img-fluid product-show-image")%>
+                      <%= image_tag(image.photo.url, :class=>"d-block img-fluid product-show-image", :id=>"product-show-image")%>
                     </div>
                   <% end %>
                 </div>
