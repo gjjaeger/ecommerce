@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  resources :categories do
-    resources :tags
-  end
-  devise_for :admins
   root 'products#index'
+  resources :categories 
+  devise_for :admins
+
   devise_for :users
   resources :users do
     resources :order_items
@@ -17,8 +16,7 @@ Rails.application.routes.draw do
     post "tracking"
   end
   resources :order_items
-  resources :addresses do
-  end
+  resources :addresses
   resources :products do
     get "delete"
     get "delivery"
