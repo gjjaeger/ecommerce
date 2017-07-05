@@ -20,6 +20,31 @@
       </div>
     </div>
   </div>
+  <div class="col-xs-12">
+    <div class="col-xs-6 content-path-links">
+      <a href="<%= request.base_url %>/products" class="link_to">
+        <span class="content-path-text">
+          Home
+        </span>
+      </a>
+      <span class="content-path-text">/</span>
+      <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+        <span class="content-path-text">
+          Shop
+        </span>
+      </a>
+    </div>
+    <div class="dropdown col-xs-6" id="dropdown-sort-toggle-button">
+      <a href="#" class="dropdown-toggle has-dropdown btn btn-lg simple-button-grey" id="sort-by-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="sort-button-text">
+      <span class="sorted-by">Sort By</span><span class="pull-right"><span class="caret sort-caret"></span></span></span></a>
+      <ul class="dropdown-menu sort-by-dropdown"role="menu">
+        <li class="sort-by-option" id="price" data-href="ascending">Price ascending</li>
+        <li class="sort-by-option" id="price" data-href="descending">Price descending</li>
+        <li class="sort-by-option" id="newness" data-href="ascending">Newest ascending</li>
+        <li class="sort-by-option" id="newness" data-href="descending">Newest descending</li>
+      </ul>
+    </div>
+  </div>
   <div class="sidebar col-xs-3">
     <div class="filter col-xs-12">
       <div class="sidebar-title-container">
@@ -40,13 +65,15 @@
         <div class="tag-filter col-xs-12">
           <%@tags.each do |tag|%>
             <div class="input-checkbox">
-              <input type="checkbox" class="tag-check-box" checked id="<%=tag.name%>"><%=tag.name%>s
+              <label class="control control--checkbox"><%=tag.name%>s
+            		<input type="checkbox" class="tag-check-box styled-checkbox" checked id="<%=tag.name%>">
+            		<div class="control__indicator"></div>
+            	</label>
             </div>
           <%end%>
         </div>
       </div>
     </div>
-
     <div class="newest-products sidebar-content col-xs-12">
       <div class="sidebar-title-container">
         <span class="sidebar-title">Newest Products</span>
@@ -73,16 +100,6 @@
     </div>
   </div>
   <div class="products-to-show col-xs-9">
-    <div class="dropdown" id="dropdown-toggle-button">
-      <a href="#" class="dropdown-toggle has-dropdown btn btn-lg simple-button-grey" id="sort-by-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="sort-button-text">
-      <span class="sorted-by">Sort By</span><span class="pull-right"><span class="caret sort-caret"></span></span></span></a>
-      <ul class="dropdown-menu sort-by-dropdown"role="menu">
-        <li class="sort-by-option" id="price" data-href="ascending">Price ascending</li>
-        <li class="sort-by-option" id="price" data-href="descending">Price descending</li>
-        <li class="sort-by-option" id="newness" data-href="ascending">Newest ascending</li>
-        <li class="sort-by-option" id="newness" data-href="descending">Newest descending</li>
-      </ul>
-    </div>
     <div id="productss">
       <%=render 'products'%>
     </div>

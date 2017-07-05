@@ -251,13 +251,6 @@ $(document).on('turbolinks:load', function(){
     });
   };
 
-  $('.tag-check-box').on('click', function(){
-    if ($(this).attr('checked')==="checked"){
-      $(this).attr('checked', false);
-    }
-    else
-      $(this).attr('checked', "checked");
-  });
 
   $('.tab-item').on('click', function(){
     $('.tab-item').removeClass("active");
@@ -354,7 +347,6 @@ $(document).on('turbolinks:load', function(){
     };
 
     if (getParameterByName('sort')&&getParameterByName('order')){
-      debugger;
       var sortedBy = getParameterByName('sort');
       var orderedBy = getParameterByName('order');
       $('#sort-by-dropdown:first-child').html('<span class="sort-button-text"><span class="sorted-by">'+ sortedBy + " " + orderedBy + '</span><span class="pull-right"><span class="caret sort-caret"></span></span></span>');
