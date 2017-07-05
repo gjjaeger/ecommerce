@@ -51,6 +51,22 @@ class CategoriesController < ApplicationController
     else
       @productss=Product.where("(category_id = ?)", (@category.id).to_s).paginate(:page => params[:page], :per_page => 4)
     end
+    if params[:sort].present?
+      if params[:sort] === "price"
+        if params[:order]== "ascending"
+          @productss=@productss.sort_by{|h| h[:price]}
+        elsif params[:order]== "descending"
+          @productss=@productss.sort_by{|h| h[:price]}.reverse!
+        end
+      end
+      if params[:sort] === "newness"
+        if params[:order]== "ascending"
+          @productss=@productss.sort_by{|h| h[:created_at]}
+        elsif params[:order]== "descending"
+          @productss=@productss.sort_by{|h| h[:created_at]}.reverse!
+        end
+      end
+    end
     @products=@productss.paginate(:page => params[:page], :per_page => 12)
   end
 

@@ -107,7 +107,7 @@
               <%if @product.category_id=="2"%>
                 <%= form_for @order_item, remote: true do |f| %>
                   <div class="cart-form">
-                    <%= f.hidden_field :product_id, value: @product.id %>
+                    <%= f.hidden_field :product_id, :class=>"product_id", value: @product.id %>
                     <div class="cart-notice"></div>
                     <div class="minus-quantity"><span>-</span></div>
                     <%= f.number_field :quantity, :class=>"jewelery-quantity quantity", :"data-href" => @product.stock %>

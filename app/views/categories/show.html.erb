@@ -27,7 +27,7 @@
       </div>
       <div class="price-filter col-xs-12">
         <div class="price-output">
-          <span id="price"></span>
+          <span id="pricer"></span>
         </div>
         <div class="slider">
           <div id = "slider-3" class="price-slider" data-href = <%=@category.id%>></div>
@@ -37,19 +37,10 @@
         <div class="sidebar-title-container">
           <span class="sidebar-title">Categories</span>
         </div>
-        <div class="tag-filter searchable-container">
+        <div class="tag-filter col-xs-12">
           <%@tags.each do |tag|%>
-            <div class="items col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <div class="info-block block-info clearfix">
-                <div class="btn-group bizmoduleselect">
-                  <div class="bizcontent">
-                    <button class='tag-check-box active' id=<%=tag.name%>>
-                      <span class="glyphicon glyphicon-ok glyphicon-lg"></span>
-                      <h5><%=tag.name%>s</h5>
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div class="input-checkbox">
+              <input type="checkbox" class="tag-check-box" checked id="<%=tag.name%>"><%=tag.name%>s
             </div>
           <%end%>
         </div>
@@ -82,6 +73,16 @@
     </div>
   </div>
   <div class="products-to-show col-xs-9">
+    <div class="dropdown" id="dropdown-toggle-button">
+      <a href="#" class="dropdown-toggle has-dropdown btn btn-lg simple-button-grey" id="sort-by-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="sort-button-text">
+      <span class="sorted-by">Sort By</span><span class="pull-right"><span class="caret sort-caret"></span></span></span></a>
+      <ul class="dropdown-menu sort-by-dropdown"role="menu">
+        <li class="sort-by-option" id="price" data-href="ascending">Price ascending</li>
+        <li class="sort-by-option" id="price" data-href="descending">Price descending</li>
+        <li class="sort-by-option" id="newness" data-href="ascending">Newest ascending</li>
+        <li class="sort-by-option" id="newness" data-href="descending">Newest descending</li>
+      </ul>
+    </div>
     <div id="productss">
       <%=render 'products'%>
     </div>

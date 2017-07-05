@@ -41,7 +41,7 @@
             <% end %> -->
         <ul class="nav navbar-nav">
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle has-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="shop-dropdown">Shop</span><span class="caret"></span></a>
+            <a href="" class="dropdown-toggle has-dropdown dropdown-button" data-toggle="dropdown" role="button" aria-expanded="false"><span class="shop-dropdown">Shop</span><span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-shop" role="menu">
               <li>
                 <a href="<%= request.base_url %>/categories/2/?low=50&high=350&tags%5B%5D=Necklace">Necklaces</a>
@@ -60,7 +60,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown" id="dropdown-toggle-button">
-            <a href="#" class="dropdown-toggle has-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total"><%= number_to_currency current_order.calculate_total %></span>
+            <a href="#" class="dropdown-toggle has-dropdown dropdown-button" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total"><%= number_to_currency current_order.calculate_total %></span>
             <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.count%></span><span class="caret"></span></span></a>
             <ul class="dropdown-menu dropdown-cart"role="menu">
               <div class="shopping-cart">
