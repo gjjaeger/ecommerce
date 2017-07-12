@@ -104,7 +104,9 @@
       <%=render 'products'%>
     </div>
   </div>
-  <%= will_paginate @products %>
+  <div class="pagination-links">
+    <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
+  </div>
 </div>
 
 

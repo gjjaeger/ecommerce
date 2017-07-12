@@ -35,6 +35,7 @@ source 'https://rubygems.org'
   gem 'bootstrap-select-wrapper-rails'
   gem 'will_paginate', '~> 3.1.0'
   gem 'dotenv-rails'
+  gem 'will_paginate-bootstrap'
 
 
 

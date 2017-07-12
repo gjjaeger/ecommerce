@@ -375,7 +375,7 @@ outline: none;
   margin-top: 0px;
   width: 100%;
   flex:1;
-  padding: 0 !important;
+  padding: 0 0 50px 0 !important;
 }
 
 .topbar{
@@ -422,4 +422,17 @@ outline: none;
 
 .items {
   padding: 2px !important;
+}
+
+.pagination-links{
+  text-align: center;
+}
+
+.pagination li a{
+  color: black !important;
+}
+
+.pagination .active span {
+  background: #2aa1c0 !important;
+  border-color: #2aa1c0 !important;
 }

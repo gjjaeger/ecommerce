@@ -34,6 +34,8 @@ class ProductsController < ApplicationController
   def show
     @order_item = current_order.order_items.new
     @product = Product.includes(:sizes, :ingredients, :materials).find(params[:id])
+    @relatedproducts=Product.where("(category_id = ? AND id != ?)", "2", @product.id).order("RANDOM()").limit(3)
+
     #fresh_when @product prevents cart from working
   end
 

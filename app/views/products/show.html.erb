@@ -64,9 +64,37 @@
     </div>
   <%end%>
   <%if @product.category_id=="2"%>
+  <div class="product-topbar">
+    <%= image_tag("main-image.jpg", :class => "main-image") %>
+    <div class="container product-topbar-text-container">
+      <div class="col-xs-12">
+        <span class="product-topbar-text">Intricate, beautiful, you</span>
+      </div>
+    </div>
+  </div>
     <div class="container" id="show-item">
       <div class="row main-details">
         <div class="col-xs-12 col-xs-offset-0">
+          <div class="content-path-links">
+            <a href="<%= request.base_url %>/products" class="link_to">
+              <span class="content-path-text">
+                Home
+              </span>
+            </a>
+            <span class="content-path-text">/</span>
+            <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+              <span class="content-path-text">
+                Shop
+              </span>
+            </a>
+            <span class="content-path-text">/</span>
+            <%=link_to product_path(@product), :class=>"link_to" do%>
+              <span class="content-path-text">
+                <%=@product.name%>
+              </span>
+            <%end%>
+
+          </div>
           <div class="col-xs-5 col-xs-offset-0">
             <div class="row carousel">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -156,6 +184,41 @@
                 </tbody>
               </table>
             </li>
+          </ul>
+        </div>
+        <div class="col-xs-12 relatedproducts">
+          <span class="relatedproducts-title col-xs-12">You may also like</span>
+          <%@relatedproducts.each do |product|%>
+            <div class="col-md-4 outside-product">
+              <div class="col-md-12">
+                <div class="col-md-12">
+                  <%= link_to product_path(product) do %>
+                    <div class="row carousel">
+                      <div id="carouselfor<%=product.id%>" class="carousel slide carouselExampleIndicators" data-interval="false" data-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                          <% product.images.each_with_index do |image, index| %>
+                            <div class="carousel-item item <%=index == 0 ? 'active' : '' %>">
+                              <%= image_tag(image.photo.url, :class=>"d-block img-fluid product-image")%>
+                            </div>
+                          <% end %>
+                        </div>
+                        <a class="carousel-control left" href="#carouselfor<%=product.id%>" role="button" data-slide="prev">
+                          <span class="glyphicon glyphicon-chevron-left"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control right" href="#carouselfor<%=product.id%>" role="button" data-slide="next">
+                          <span class="glyphicon glyphicon-chevron-right"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                    <span class="product-name col-xs-12"><%= product.name %></span>
+                    <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
+                  </div>
+                </div>
+              <%end%>
+            </div>
+          <%end%>
         </div>
       </div>
     </div>
