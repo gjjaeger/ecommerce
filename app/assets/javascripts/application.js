@@ -15,6 +15,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
+//= require card
 //= require bootstrap
 //= require moment
 //= require bootstrap-datetimepicker
@@ -26,11 +27,12 @@
 
 
 $(document).on('turbolinks:load', function(){
-
   $('#product-modal').on('shown.bs.modal', function() {
     shipping();
     //not recognized for some reason
   });
+
+  shipping();
 
   $('#carouselExampleIndicators').carousel();
 
@@ -57,17 +59,13 @@ $(document).on('turbolinks:load', function(){
     $(this).parent().addClass("open");
   });
 
-  $('.dropdown-button').mouseleave(function(){
-    $(this).parent().removeClass("open");
-  });
+
 
   $('.dropdown-menu').mouseenter(function(){
     $(this).prev(".dropdown-toggle").parent().addClass("open");
   });
 
-  $('.dropdown-menu').mouseleave(function(){
-    $(this).prev(".dropdown-toggle").parent().removeClass("open");
-  });
+
 
   $('#search-form').on('keyup', function() {
       $.get("/categories/"+ id, {low: lowPrice, high: highPrice ,tags: tags }, function() {
@@ -85,11 +83,43 @@ $(document).on('turbolinks:load', function(){
       // }).show();
   });
 
+  function updateOrderItemCheckout(checkoutQuantityVar){
+    var checkoutQuantity = checkoutQuantityVar.val();
+    var order_item_idVar=$('.order_item.id');
+    debugger;
+    var orderItemId=checkoutQuantityVar.closest("input", order_item_idVar).val();
+    $.ajax({
+        url: '/order_items/'+orderItemId,
+        type: 'put',
+        dataType: 'json',
+        data: {order_item: {quantity: checkoutQuantity}},
+        success: function(data) {
+                   checkoutQuantity.blur();
+                   $('#order-total').html($('#order-total').attr("data-href"));
+                 }
+    });
+  };
+
+  $('.checkout-quantity').on('change', function() {
+    updateOrderItemCheckout($(this));
+  });
+  // else if (quantity==0 && quantityElement.selector===".checkout-quantity") {
+  //   $(this).val($('.order_item_quantity').val());
+  // }
+  $('.checkout-plus-quantity').on('click',function(){
+    updateOrderItemCheckout($(this).attr("data-href"));
+  });
+
+  $('.checkout-minus-quantity').on('click',function(){
+    updateOrderItemCheckout($("."+$(this).attr("data-href")));
+  });
+
   function cartFunctions() {
     $('.quantity').val(0);
+    $('.checkout-quantity').val($('.order_item_quantity').val());
 
     var selectElement = $('.selectpicker').length > 0 ? $('.selectpicker') : null ;
-    var quantityElement = $('.quantity').length > 0 ? $('.quantity') : null ;
+    var quantityElement = $('.quantity').length > 0 ? $('.quantity') : $('.checkout-quantity') ;
 
     $('.add-cart').prop('disabled', true);
 
@@ -100,11 +130,9 @@ $(document).on('turbolinks:load', function(){
       else {
         $('.add-cart').prop('disabled', true)
       };
-
     });
 
     function selectCheck(selectElement){
-
       if (selectElement.val()=="") {
         return false;
       }
@@ -114,40 +142,67 @@ $(document).on('turbolinks:load', function(){
 
     };
 
-    $('.quantity').on('input', function(){
-
+    quantityElement.on('input', function(){
       if (selectElement != null){
-        updateButtonWithSelect(selectElement, quantityElement);
+        updateButtonWithSelect(selectElement, $(this));
       }
       else {
-        updateButton(quantityElement);
+        updateButton($(this));
+
       };
     });
 
-    $('.quantity').change(function(){
+    quantityElement.on('keyup', function() {
+      checkStock($(this));
+    });
+
+    quantityElement.change(function(){
       if (selectElement != null){
-        updateButtonWithSelect(selectElement, quantityElement);
+        updateButtonWithSelect(selectElement, $(this));
       }
       else {
-        updateButton(quantityElement);
+        updateButton($(this));
       };
       if ($(this).val()=="") {
-        $(this).val(0);
+        if ($(this).selector===".checkout-quantity"){
+          $(this).val($('.order_item_quantity').val());
+        }
+        else{
+          $(this).val(0);
+        };
       };
-
+      if ($(this).val()==0 && $(this).selector===".checkout-quantity") {
+        $(this).val($('.order_item_quantity').val());
+      };
     });
 
-    function quantityCheck(quantityElement){
-      if (quantityElement.val()<="0") {
-        return false;
+    function quantityCheck(quantityElementVar){
+      if (quantityElementVar.selector===".checkout-quantity"){
+        if (quantityElementVar.val()<="1") {
+          return false;
+        }
+        else if (quantityElementVar.val()=="") {
+          return false;
+        }
+        else {
+          return true;
+        };
       }
-      else if (quantityElement.val()=="") {
-        return false;
+      else{
+        if (quantityElementVar.val()<="0") {
+          return false;
+        }
+        else if (quantityElementVar.val()=="") {
+          return false;
+        }
+        else {
+          return true;
+        };
       }
-      else {
-        return true;
-      };
+
     };
+
+
 
     function updateButtonWithSelect(selectElement, quantityElement){
       if (selectCheck(selectElement)&&quantityCheck(quantityElement)){
@@ -158,8 +213,8 @@ $(document).on('turbolinks:load', function(){
       };
     };
 
-    function updateButton(quantityElement){
-      if (quantityCheck(quantityElement)){
+    function updateButton(quantityElementVar){
+      if (quantityCheck(quantityElementVar)){
         $('.add-cart').prop('disabled', false);
       }
       else {
@@ -168,9 +223,18 @@ $(document).on('turbolinks:load', function(){
     };
 
     $('.minus-quantity').on('click',function(){
+      var checkoutQuantityElement = $(this).attr("data-href") ? $(this).attr("data-href") : null;
+      quantityElement = checkoutQuantityElement ? $('.'+checkoutQuantityElement) : quantityElement;
       var quantity = parseInt(quantityElement.val());
-      if (quantity > 0){
-        quantityElement.val(quantity-1);
+      if (quantityElement.hasClass("checkout-quantity")){
+        if (quantity > 1){
+          quantityElement.val(quantity-1);
+        };
+      }
+      else{
+        if (quantity > 0){
+          quantityElement.val(quantity-1);
+        };
       };
       if (selectElement != null){
         updateButtonWithSelect(selectElement, quantityElement);
@@ -180,34 +244,47 @@ $(document).on('turbolinks:load', function(){
       };
     });
     $('.plus-quantity').on('click',function(){
+      debugger;
+      var checkoutQuantityElement = $(this).attr("data-href") ? $(this).attr("data-href") : null;
+      quantityElement = checkoutQuantityElement ? $('.'+checkoutQuantityElement) : quantityElement;
       var quantity = parseInt(quantityElement.val());
       quantityElement.val(quantity+=1);
       if (selectElement != null){
         updateButtonWithSelect(selectElement, quantityElement);
       }
       else {
-        var stock = quantityElement.attr('data-href') ? parseInt(quantityElement.attr('data-href')) : null
-        var productid=$('.product_id').val();
-        var cartProducts=$('.cart-product-name');
-        var incart=0;
-        for(var i =0; i<cartProducts.length; i++){
-          if ($(cartProducts[i]).attr('data-href')===productid){
-            incart+=parseInt($(cartProducts[i]).next().attr('data-href'));
-          };
-        };
-        var stockleft= stock!=null ? stock-incart : null;
-        $('.cart-product-name').attr('data-href');
-        var quantitySelected = parseInt(quantityElement.val())
-        if (quantitySelected <= stockleft || stockleft==null){
-          updateButton(quantityElement);
-        }
-        else {
-          quantityElement.val(quantity-=1);
-          $('.cart-notice').html("<span>Only " + quantityElement.attr('data-href') + " item(s) left in stock</span>")
-        };
-
+        checkStock(quantityElement);
       };
     });
+    function checkStock(quantityElementVar){
+      var quantity = parseInt(quantityElementVar.val());
+      var stock = quantityElementVar.attr('data-href') ? parseInt(quantityElementVar.attr('data-href')) : null
+      var productid=$('.product_id').val();
+      var cartProducts=$('.cart-product-name');
+      var incart=0;
+      for(var i =0; i<cartProducts.length; i++){
+        if ($(cartProducts[i]).attr('data-href')===productid){
+          incart+=parseInt($(cartProducts[i]).next().attr('data-href'));
+        };
+      };
+      var stockleft= stock!=null ? stock-incart : null;
+      $('.cart-product-name').attr('data-href');
+      var quantitySelected = parseInt(quantityElementVar.val())
+      if (quantitySelected <= stockleft || stockleft==null){
+        updateButton(quantityElement);
+      }
+      else if (quantitySelected >= stockleft){
+        quantityElementVar.val(stockleft);
+        $('.cart-notice').html("<span>Only " + quantityElementVar.attr('data-href') + " item(s) left in stock</span>")
+      }
+      else if (quantity==0 && quantityElementVar.selector===".checkout-quantity") {
+        $(this).val($('.order_item_quantity').val());
+      };
+
+    };
+    if ($('.order-item').length<=0){
+      $('#content').html('<div class="fullscreen"><div class="container main-text-container"><div class="col-xs-12"><span class="">Your Cart is Empty</span></div><div class="col-xs-12"><button class="btn btn-lg simple-button-black"><a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to"><span class="button-text-black">Continue Shopping</span></a></button></div></div></div>');
+    };
     $('.add-cart').on('click', function () {
       var cart = $('.cart-dropdown');
       $('#cake-modal').modal("hide");
@@ -437,6 +514,7 @@ $(document).on('turbolinks:load', function(){
     });
   });
 
+
   function prepareCakeModal() {
     $('.cake-quantity').val(0);
     $('.add-cart').prop('disabled', true);
@@ -470,30 +548,126 @@ $(document).on('turbolinks:load', function(){
     });
   };
 
+  function formchecker(){
+    var isFormValid = true;
+    $("#address-form .required").each(function(){ // Note the :text
+      if ($.trim($(this).val()).length == 0){
+          $(this).addClass("highlight");
+          isFormValid = false;
+      } else {
+          $(this).removeClass("highlight");
+      }
+    });
+    // if (!isFormValid) alert("Please fill in all the required fields (highlighted in red)");
+    return isFormValid;
+  };
+
+
+  function updateCreditCard(){
+    $('#exp-month, #exp-year').on('change', function () {
+        // Set the value of a hidden input field for Card
+        if ($('#exp-month').val().length<=1){
+          var expiryMonth= $('#exp-month').val();
+          expiryMonth = '0' + expiryMonth;
+        };
+
+        $('#expiry').val(expiryMonth + '/' + $('#exp-year').val());
+        // Trigger the "change" event manually
+        var evt = document.createEvent('HTMLEvents');
+        evt.initEvent('change', false, true);
+        document.getElementById('expiry').dispatchEvent(evt);
+    });
+    var card = new Card({
+        // a selector or DOM element for the form where users will
+        // be entering their information
+        form: '#payment-form', // *required*
+        // a selector or DOM element for the container
+        // where you want the card to appear
+        container: '.card-wrapper', // *required*
+
+        formSelectors: {
+            numberInput: 'input#credit-card-number', // optional — default input[name="number"]
+            expiryInput: '#expiry', // optional — default input[name="expiry"]
+            cvcInput: 'input#security-code', // optional — default input[name="cvc"]
+            nameInput: 'input#purchaser_name' // optional - defaults input[name="name"]
+        },
+
+        // width: 100, // optional — default 350px
+        formatting: true, // optional - default true
+
+        // Strings for translation - optional
+        messages: {
+            validDate: 'valid\ndate', // optional - default 'valid\nthru'
+            monthYear: 'mm/yyyy', // optional - default 'month/year'
+        },
+
+        // Default placeholders for rendered fields - optional
+        placeholders: {
+            number: '•••• •••• •••• ••••',
+            name: 'Full Name',
+            expiry: '••/••',
+            cvc: '•••'
+        },
+
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        },
+
+        // if true, will log helpful messages for setting up Card
+        debug: false // optional - default false
+    });
+  };
+
 
   function shipping() {
     $('#shipping').click(function(event){
       event.preventDefault();
-      $('.shipping-spinner').show();
-      $("#product-modal").modal("hide");
-      $('.shipping-text-wrapper').show();
-      var order_id= $("#shipping").attr('data-href');
-      var name = $('input#name').val();
-      var line1 = $('input#line1').val();
-      var line2 = $('input#line2').val();
-      var city = $('input#city').val();
-      var state = $('input#state').val();
-      var zip = $('input#zip').val();
-      var country = $('input#country').val();
-      $.ajax({
-        type: "POST",
-        url: "/addresses",
-        data: { address: { name: name, line1:line1, line2:line2, city:city, state:state, zip:zip, country:country } },
-        success : function(html,status){
-          ajaxCall2();
-        }
+      if (formchecker()){
+        var position = $('.shipping-div').offset();
+        var shippingHeight = $('.shipping-div').outerHeight();
+        var shippingWidth = $('.shipping-div').outerWidth();
+        $('.shipping-spinner').show();
+
+        $('.shipping-spinner').css('height',shippingHeight);
+        $('.shipping-spinner').css('width',shippingWidth);
+        $('.shipping-spinner').css(position);
+        // $("#product-modal").modal("hide");
+        $('.shipping-text-wrapper').show();
+        var order_id= $("#shipping").attr('data-href');
+        var name = $('input#name').val();
+        var line1 = $('input#line1').val();
+        var line2 = $('input#line2').val();
+        var city = $('input#city').val();
+        var state = $('input#state').val();
+        var zip = $('input#zip').val();
+        var country = $('#country').val();
+        $("#address-form").animate({
+          left: "-100%"
+        }, 1000);
+        ajaxCall3();
+        $.ajax({
+          type: "POST",
+          url: "/addresses",
+          data: { address: { name: name, line1:line1, line2:line2, city:city, state:state, zip:zip, country:country } },
+          success : function(html,status){
+            ajaxCall2();
+          }
+        });
+      }
+      else return;
+    });
+
+    $('#final-checkout').click(function(){
+      var id = $("#final-checkout").attr('data-href');
+      $.get("/orders/" + id + "/checkout", function() {
+      })
+      .success( function (data) {
+        var content = $(data).find('#content');
+        $('#content').html(content);
+        $('.spinner').hide();
       });
     });
+
 
     $('#paymentt').click(function(){
       $.get("/orders/new", function() {
@@ -501,6 +675,7 @@ $(document).on('turbolinks:load', function(){
       .success( function (data) {
         products = $(data).find('#payment-form');
         $('.shipping-content').html(products);
+        updateCreditCard();
         $('.spinner').hide();
       });
     });
@@ -510,12 +685,28 @@ $(document).on('turbolinks:load', function(){
       })
       .success(function (data) {
         var shippingData= $(data).find('.shipping-content')
-        $('#content').html(shippingData);
-        $("#product-modal").modal("show");
+        // $('#total-price').html('<%=number_to_currency@shipping%>');
+        $('#order-summary-content').html(shippingData);
+        // $("#product-modal").modal("show");
         $('.shipping-spinner').hide();
         $('.shipping-text-wrapper').hide();
+        $("#address-form :input").prop("disabled", false);
       });
     };
+    function ajaxCall3(){
+      $.get("/orders/new", function() {
+      })
+      .success( function (data) {
+        products = $(data).find('#payment-form');
+        $('#address-form').html(products);
+        $("#address-form :input").prop("disabled", true);
+        $("#address-form").animate({
+          left: "0%"
+        }, 1000);
+        updateCreditCard();
+        $('.spinner').hide();
+      });
+    }
   };
 
 

@@ -14,7 +14,7 @@ class AddressesController < ApplicationController
       :city => params[:address][:city],
       :state => params[:address][:state],
       :zip => params[:address][:zip],
-      :country => IsoCountryCodes.search_by_name((params[:address][:country]).downcase)[0].alpha2,
+      :country => params[:address][:country],
     )
 
     from_address = EasyPost::Address.create(

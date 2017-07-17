@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root 'products#index'
-  resources :categories 
+  resources :categories
   devise_for :admins
 
   devise_for :users
@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'thanks', to: 'charges#thanks', as: 'thanks'
   resources :orders do
     get "checkout"
+    get "cart"
     get "shipping"
     post "tracking"
   end

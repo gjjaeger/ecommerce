@@ -47,37 +47,9 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown" id="dropdown-toggle-button">
-            <a href="#" class="dropdown-toggle has-dropdown dropdown-button" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total" data-href="<%= number_to_currency current_order.calculate_total %>"><%= number_to_currency current_order.calculate_total %></span>
-            <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.count%></span><span class="caret"></span></span></a>
-            <ul class="dropdown-menu dropdown-cart"role="menu">
-              <div class="shopping-cart">
-                <%= render "layouts/shopping_cart" %>
-              </div>
-
-              <div class="empty-cart-div">
-              </div>
-
-              <div class="checkout-button-div">
-              </div>
-
-              <% if current_order_items==nil || !current_order_items.any? %>
-                <li>
-                  <span class="empty-cart">
-                    <p>Your shopping cart is empty.</p>
-                  </span>
-                </li>
-              <%end%>
-              <%if current_order_items!=nil && current_order_items.any?%>
-                <div class="checkout-button">
-                  <%= link_to order_cart_path(current_order), class: "btn btn-lg simple-button-black", id:"checkout-button" do %>
-                    <span class="button-text-black" id="x-text">
-                      Proceed to checkout
-                    </span>
-                  <%end%>
-                </div>
-              <% end %>
-            </ul>
+          <li class="" id="dropdown-toggle-button">
+            <a href="" class="dropdown-button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total"><%= number_to_currency current_order.calculate_total %></span>
+            <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.count%></span></span></a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

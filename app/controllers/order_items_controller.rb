@@ -50,15 +50,15 @@ class OrderItemsController < ApplicationController
   # PATCH/PUT /order_items/1
   # PATCH/PUT /order_items/1.json
   def update
-    # respond_to do |format|
-    #   if @order_item.update(order_item_params)
-    #     format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @order_item }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @order_item.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    respond_to do |format|
+      if @order_item.update(order_item_params)
+        format.html { redirect_to @order_item, notice: 'Order item was successfully updated.' }
+        format.json { render :show, status: :ok, location: @order_item }
+      else
+        format.html { render :edit }
+        format.json { render json: @order_item.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /order_items/1

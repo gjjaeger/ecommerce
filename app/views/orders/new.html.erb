@@ -3,27 +3,29 @@
   <%= form_tag charges_path, method: 'post', id: 'payment-form' do %>
     <%= javascript_include_tag "payment.js" %>
     <div class="payment-form-content">
+      <div class="card-wrapper col-xs-12"></div>
       <span class="payment-errors form-control-feedback"></span>
 
-      <%= email_field_tag :email, 'Your E-Mail Address', :required=>true, class: 'form-control', id:'purchaser_email'%>
+      <%= email_field_tag :email, '', :required=>true, class: 'form-control', id:'purchaser_email', placeholder: 'Your E-Mail Address'%>
 
-      <%= text_field_tag :name, 'Your Full Name', :required=>true, class: 'form-control', id:'purchaser_name'%>
+      <%= text_field_tag :name, '', :required=>true, class: 'form-control', id:'purchaser_name', placeholder: 'Your Full Name'%>
 
       <div class="form-group row payment-form-input">
         <label class="control-label">Credit Card Number</label>
-        <input class="form-control" id="credit-card-number" type="text" data-stripe="number"/>
+        <input class="form-control" id="credit-card-number" type="text" data-stripe="number" required/>
       </div>
 
       <div class="form-group row payment-form-input">
         <label class="control-label">Security Code</label>
-        <input class="form-control" id="security-code" type="text" data-stripe="cvc"/>
+        <input class="form-control" id="security-code" type="text" data-stripe="cvc" required/>
       </div>
 
       <div class="form-group row payment-form-input">
         <label class="control-label">Expiration</label>
-        <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control', data: {stripe: "exp-month"}) %>
-        <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: {stripe: "exp-year"}) %>
+        <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control', data: {stripe: "exp-month"}, id:"exp-month", :required=>true )%>
+        <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: {stripe: "exp-year"}, id: "exp-year", :required=>true) %>
       </div>
+      <%= hidden_field_tag :expiry%>
 
       <div class="text-center">
         <button type="submit" class="btn btn-lg simple-button-black">Submit Payment</button>

@@ -15,11 +15,7 @@
 }
 
 .summary{
-  margin-top: 60px;
-}
-
-.price{
-  float: right;
+  margin-top: 0px;
 }
 
 .pay-button{
@@ -37,6 +33,126 @@
   font-size: 16px;
 }
 
-.individual-price{
-  font-style: italic;
+.payment-errors{
+  width: 100% !important;
+  color: red;
+  clear: both;
+}
+
+.form-control-feedback{
+  position: relative !important;
+}
+
+.shipping-div{
+  padding: 15px 0;
+  background-color: #eee6e6;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.edit_order_item{
+
+  display: inline-block;
+}
+
+.item-center{
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.order_item_checkout_quantity{
+  display: inline-block;
+
+}
+
+.checkout-tab-item{
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold !important;
+  padding-bottom: 24px;
+  text-align: center;
+}
+
+.checkout-table{
+  width: 100%;
+}
+
+.checkout-title-container{
+  text-align: left !important;
+  padding-bottom: 50px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid grey;
+}
+
+.checkout-title-container .btn-container{
+  float: right;
+}
+
+#no-shipping{
+  float: right;
+}
+#order_item_quantity{
+  font-size: 13px !important;
+  padding: 0;
+  line-height: 25px;
+}
+
+.checkout-cart-item-image{
+  width:100px;
+  height: auto;
+  max-height: 70px;
+  object-fit: cover;
+  border-radius: 0px;
+}
+
+.small-column{
+  width:50px;
+}
+
+.small-text{
+  font-size: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.checkout-product-name{
+  vertical-align: middle;
+}
+
+td {
+  text-align: center;
+}
+
+.section-title-container{
+  text-align: center;
+}
+
+.section-title{
+  font-size: 24px !important;
+}
+
+
+.shipping-content{
+
+}
+
+.order-item-row{
+  border-bottom: 0px solid black;
+}
+
+
+.shipping-button-container{
+  width: 275px;
+  margin: 0 auto !important;
+}
+
+.remove-text{
+  color:black;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: underline;
 }

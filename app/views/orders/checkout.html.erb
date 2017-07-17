@@ -1,0 +1,152 @@
+<div class="">
+  <div class="container checkout-content" id="content">
+    <%= form_for @address, :html => {:id => 'address-form', :class => 'col-xs-6'} do |f| %>
+      <div class="section-title-container">
+        <span class="section-title">Shipping Address</span>
+      </div>
+      <div class=" panel-body">
+        <div class="form-group">
+          <div class="col-md-12">
+            <%= f.text_field :name, class: "form-control required", id: "name", placeholder: "Full Name", :required => true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-8">
+            <%= f.text_field :line1, class: "form-control required", id: "line1", placeholder: "Address Line 1", :required=>true %>
+            <p class="help-block">Street address, P.O. box, company name, c/o</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-4">
+            <%= f.text_field :line2, class: "form-control", id: "line2", placeholder: "Address Line 2" %>
+            <p class="help-block">Apartment, suite , unit, building, floor, etc.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-6">
+            <%= f.text_field :city, class: "form-control required", id: "city", placeholder: "City", :required=>true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-6">
+            <%= f.text_field :state, class: "form-control required", id: "state", placeholder: "State / Province / Region", :required=>true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-4">
+            <%= f.text_field :zip, class: "form-control required", id: "zip", placeholder: "Zip / Postal Code", :required=>true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-8">
+            <%= f.country_select(:country, {selected: @address.country, include_blank: 'Select a country', required:true}, {class: "form-control required", id:"country", :required=>true }) %>
+          </div>
+        </div>
+      </div>
+
+      <div class="shipping-button-container">
+        <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"shipping" do %>
+          <span class="button-text-black">
+            Calculate Shipping
+          </span>
+        <%end%>
+      </div>
+    <%end%>
+    <div class="big wrapper col-xs-6" id="order-summary-content">
+      <div class="shipping-content">
+        <div class="section-title-container checkout-title-container">
+          <span class="section-title">Shopping Cart</span>
+          <div class="btn-container">
+            <%= link_to order_cart_path(current_order), class: "btn btn-lg simple-button-black", id:"checkout-button" do %>
+              <span class="button-text-black" id="x-text">
+                Return to Cart
+              </span>
+            <%end%>
+          </div>
+        </div>
+        <table class="checkout-table">
+
+          <tr class="">
+            <th class="small-column"></th>
+            <th class="checkout-tab-item">Name</th>
+            <th class="checkout-tab-item">Size</th>
+            <th class="checkout-tab-item">Unit Price</th>
+            <th class="checkout-tab-item">Qty</th>
+            <th class="checkout-tab-item">Total Price</th>
+            <th class="small-column"></th>
+          </tr>
+
+
+
+            <%@order.order_items.each do |order_item|%>
+              <tr class="order-item-row">
+                <div class="order-item">
+                  <div class="checkout-details">
+                    <td>
+                      <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
+                    </td>
+                    <td>
+                      <span class="checkout-name-container">
+                        <span class="small-text checkout-product-name">
+                          <%=order_item.product.name%>
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="small-text">
+                        <%=order_item.product.size%>cm
+                      </span>
+                    </td>
+                    <td>
+                      <span class="small-text"><%=number_to_currency order_item.product.price%></span>
+                    </td>
+
+                    <td>
+                      <span class="small-text"><%=order_item.quantity%></span>
+                    </td>
+                  </div>
+                  <td>
+                    <span class="total_price_per_product small-text"><%=number_to_currency order_item.product.price*order_item.quantity%></span>
+                  </td>
+                  <td>
+                    <span class="item-right">
+                      <%= link_to "", order_item_path(order_item), :data => {:method => "delete"}, remote: true, :class =>"btn btn-danger  delete_order_item_checkout fa fa-close" %>
+                    </span>
+                  </td>
+                </div>
+              </tr>
+            <%end%>
+            <tr>
+              <td class="shipping-div">
+                <div class="details">
+                  <span>Total shipping cost</span>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="price">
+                  <div class="col-xs-12">
+                    <div class="price" id="shipping-price">
+                      <span id="no-shipping">To be calculated</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <div class="col-md-12">
+              <div class="total-price">
+                <div class="col-md-12">
+                  <div class="total-price" id="total-price">
+                    <%=number_to_currency @total%>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </table>
+      </div>
+    </div>
+    <div id="shipping-content">
+    </div>
+  </div>
+</div>

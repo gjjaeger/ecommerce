@@ -63,6 +63,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    card-rails (0.0.1)
     climate_control (0.1.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -76,6 +77,14 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    countries (2.0.8)
+      i18n_data (~> 0.7.0)
+      money (~> 6.7)
+      sixarm_ruby_unaccent (~> 1.1)
+      unicode_utils (~> 1.4)
+    country_select (3.0.0)
+      countries (~> 2.0)
+      sort_alphabetical (~> 1.0)
     delayed_job (4.1.2)
       activesupport (>= 3.0, < 5.1)
     delayed_job_active_record (4.1.1)
@@ -113,6 +122,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
+    i18n_data (0.7.0)
     iso_country_codes (0.7.7)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
@@ -146,6 +156,8 @@ GEM
     minitest (5.10.1)
     momentjs-rails (2.17.1)
       railties (>= 3.1)
+    money (6.9.0)
+      i18n (>= 0.6.4, < 0.9)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     netrc (0.11.0)
@@ -228,7 +240,10 @@ GEM
       tilt (>= 1.1, < 3)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sixarm_ruby_unaccent (1.1.2)
     slop (3.6.0)
+    sort_alphabetical (1.1.0)
+      unicode_utils (>= 1.2.2)
     spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -256,6 +271,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    unicode_utils (1.4.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.0)
@@ -284,8 +300,10 @@ DEPENDENCIES
   byebug
   cancan
   capybara
+  card-rails
   cocoon
   coffee-rails (~> 4.2)
+  country_select
   delayed_job_active_record
   devise
   devise-bootstrap-views

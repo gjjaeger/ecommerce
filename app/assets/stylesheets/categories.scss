@@ -273,10 +273,6 @@ outline: none;
   border: 1px solid black !important;
 }
 
-#shipping{
-  float: right;
-}
-
 #filter-button{
   margin-left: 25px;
   border: 1px solid black !important;
@@ -435,4 +431,8 @@ outline: none;
 .pagination .active span {
   background: #2aa1c0 !important;
   border-color: #2aa1c0 !important;
+}
+
+.highlight{
+  border-color: red !important;
 }

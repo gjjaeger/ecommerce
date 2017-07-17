@@ -1,5 +1,17 @@
 <div class="big wrapper">
   <div class="shipping-content">
+    <h3>Shipping address</h3>
+    <%= link_to order_checkout_path(current_order), class: "btn btn-lg simple-button-black", id:"checkout-button" do %>
+      <span class="button-text-black" id="x-text">
+        Change Address
+      </span>
+    <%end%>
+    <%=@address.name%>
+    <%=@address.line1%>
+    <%=@address.line2%>
+    <%=@address.city%>
+    <%=@address.zip%>
+    <%=IsoCountryCodes.find(@address.country).name%>
     <div class="modal-header">
       <h3>Summary of your order</h3>
     </div>
@@ -70,25 +82,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="pay-button" id ="pay-button">
-        <div class="btn btn-lg simple-button-black" id="paymentt">Pay</div>
-        <!-- <%= form_tag charges_path do %>
-          <article>
-            <% if flash[:error].present? %>
-              <div id="error_explanation">
-                <p><%= flash[:error] %></p>
-              </div>
-            <% end %>
-          </article>
-
-          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" id="pay-button"
-                  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-                  data-description="Checkout cart"
-                  data-shipping-address="false"
-                  data-amount= <%=@total100%>
-                  data-locale="auto"></script>
-        <%end%> -->
       </div>
     </div>
   </div>

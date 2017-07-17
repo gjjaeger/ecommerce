@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   include ChargesHelper
+
   skip_before_action :verify_authenticity_token
 
   before_action :check_user, only: [:index, :show, :edit, :update, :destroy]
@@ -73,6 +74,12 @@ class OrdersController < ApplicationController
   def checkout
     @address = Address.new()
     @order=Order.find(current_order)
+    render :layout=>'order_layout'
+  end
+
+  def cart
+    @order=Order.find(current_order)
+    render :layout=>'order_layout'
   end
 
   def shipping
@@ -99,10 +106,11 @@ class OrdersController < ApplicationController
       @total = (current_order.total_price) + (BigDecimal(@shipping))
       order.total_shipping=@shipping
     end
+    @address=Address.find_by("id = ?", current_order.address_id)
     if order.save
       respond_to do |format|
 
-        format.html 
+        format.html
         #I'm assuming its js request
       end
     end
