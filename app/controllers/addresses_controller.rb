@@ -49,63 +49,45 @@ class AddressesController < ApplicationController
           :hs_tariff_number => 610910
         )
         customs_items.push(customs_item)
-        parcel = EasyPost::Parcel.create(
-          :width => if(item.product.category_id=="1")
-                      cm_to_inches(retrieve_size_width(item.size, item.product.id))
-                    else
-                      cm_to_inches(item.product.width)
-                    end,
-          :length => if(item.product.category_id=="1")
-                      cm_to_inches(retrieve_size_length(item.size, item.product.id))
-                    else
-                      cm_to_inches(item.product.length)
-                    end,
-          :height => if(item.product.category_id=="1")
-                      cm_to_inches(retrieve_size_height(item.size, item.product.id))
-                    else
-                      cm_to_inches(item.product.height)
-                    end,
-          :weight => if(item.product.category_id=="1")
-                      weight_in_ounces(item.size,item.quantity)
-                    else
-                      weight_in_ounces(item.product.weight,item.quantity)
-                    end
-        )
-        customs_info = EasyPost::CustomsInfo.create(
-          :integrated_form_type => 'form_2976',
-          :customs_certify => true,
-          :customs_signer => 'Gabriele Jaeger',
-          :contents_type => 'merchandise',
-          :contents_explanation => '', # only required when contents_type => 'other'
-          :eel_pfc => 'NOEEI 30.37(a)',
-          :non_delivery_option => 'return',
-          :restriction_type => 'none',
-          :restriction_comments => '',
-          :customs_items => customs_item
-        )
-        shipment = EasyPost::Shipment.create(
-          :to_address => to_address,
-          :from_address => from_address,
-          :parcel => parcel,
-          :customs_info => customs_info
-        )
-        parcels.push({parcel: {length: parcel[:length], width: parcel[:width], height: parcel[:height], weight: parcel[:weight]}})
-        @rate = shipment.lowest_rate()
-        order_item=OrderItem.find(item.id)
-        order_item.shipment_id=shipment.id
-        order_item.save
-
-        session[:rates].push([@rate["carrier"],@rate["id"],@rate["delivery_days"],@rate["delivery_date"],@rate["rate"],@rate["shipment_id"]])
-
       end
     end
-    if !current_order.order_items.any? {|order_item| order_item.product.category_id=="3"}
-      order = EasyPost::Order.create(
-        to_address: to_address,
-        from_address: from_address,
-        shipments: parcels
-      )
-    end
+    parcel = EasyPost::Parcel.create(
+      :width =>cm_to_inches(current_order.order_items.max_by{|h| h.product[:width]}.product.width),
+      :length =>cm_to_inches(current_order.order_items.max_by{|h| h.product[:length]}.product.length),
+      :height =>cm_to_inches(current_order.order_items.sum{|h| h.product[:height]}),
+      :weight =>g_to_ounces(current_order.order_items.sum{|h| h.product[:weight]})
+    )
+    customs_info = EasyPost::CustomsInfo.create(
+      :integrated_form_type => 'form_2976',
+      :customs_certify => true,
+      :customs_signer => 'Gabriele Jaeger',
+      :contents_type => 'merchandise',
+      :contents_explanation => '', # only required when contents_type => 'other'
+      :eel_pfc => 'NOEEI 30.37(a)',
+      :non_delivery_option => 'return',
+      :restriction_type => 'none',
+      :restriction_comments => '',
+      :customs_items => customs_items
+    )
+    shipment = EasyPost::Shipment.create(
+      :to_address => to_address,
+      :from_address => from_address,
+      :parcel => parcel,
+      :customs_info => customs_info
+    )
+    @rates = shipment.rates
+    order = Order.find(current_order)
+    order.shipment_id=shipment.id
+    order.save!
+
+    # if !current_order.order_items.any? {|order_item| order_item.product.category_id=="3"}
+    #   order = EasyPost::Order.create(
+    #     to_address: to_address,
+    #     from_address: from_address,
+    #     shipments: parcels
+    #   )
+    #
+    # end
     if @address.save
       order=Order.find(current_order)
       order.address_id=@address.id

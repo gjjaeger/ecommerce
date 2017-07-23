@@ -25,9 +25,14 @@ class OrderItemsController < ApplicationController
   # POST /order_items.json
   def create
     @order = current_order
-    @item = @order.order_items.new(item_params)
-    @item.save
-    @order.save
+    if @order.order_items.exists?(product_id: item_params[:product_id])
+      @item = @order.order_items.find_by({product_id: item_params[:product_id]})
+      @item.quantity += item_params[:quantity].to_i
+    else
+      @item = @order.order_items.new(item_params)
+    end
+    @item.save!
+    @order.save!
     session[:order_id] = @order.id
     respond_to do |format|
       format.html { redirect_to products_path }

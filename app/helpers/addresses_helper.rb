@@ -3,6 +3,10 @@ module AddressesHelper
     return (BigDecimal(weight*quantity)/28.3495).to_f
   end
 
+  def g_to_ounces(weight)
+    return (BigDecimal(weight)/28.3495).to_f
+  end
+
   def retrieve_size_measurement(size, product_id, type)
     measurement=Size.find_by({amount: size, product_id: product_id}).("#{type}")
     return measurement

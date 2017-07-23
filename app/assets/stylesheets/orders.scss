@@ -2,10 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.details{
-  float:left;
-}
-
 .payment-form-content{
   padding:10px;
 }
@@ -29,8 +25,17 @@
 }
 
 .order-item{
-  padding-bottom: 3vh;
   font-size: 16px;
+}
+
+.title-row{
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
+
+}
+
+tr.title-row>th{
+  margin-bottom: 2em !important;
 }
 
 .payment-errors{
@@ -44,8 +49,9 @@
 }
 
 .shipping-div{
+  clear: both;
   padding: 15px 0;
-  background-color: #eee6e6;
+  background-color: rgb(245,245,245);
   text-align: center;
   margin-top: 30px;
 }
@@ -66,12 +72,12 @@
 }
 
 .checkout-tab-item{
-  font-size: 16px;
+  font-size: 12px;
   line-height: 24px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-weight: bold !important;
-  padding-bottom: 24px;
+  font-weight: 900 !important;
+  color: #959595;
   text-align: center;
 }
 
@@ -79,15 +85,175 @@
   width: 100%;
 }
 
-.checkout-title-container{
-  text-align: left !important;
-  padding-bottom: 50px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid grey;
+.border-bottom{
+  height:1px !important;
+  border-bottom: 1px solid #f2f2f2;
 }
 
-.checkout-title-container .btn-container{
+.order-total-container{
   float: right;
+}
+
+.spacer{
+  height: 20px;
+}
+
+.btn-container{
+  text-align: right;
+  clear: both;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.subtotal-text{
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sub-total, .total-total, .shipping-total{
+  padding: 10px 0 ;
+}
+
+.radio-button-text{
+  padding-left: 10px !important;
+}
+
+.shipping-method-placeholder{
+  display: none;
+}
+
+.spinner-placeholder{
+  width: 100%;
+  height: 150px;
+  clear: both;
+}
+
+.free-shipping-text{
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sub-total-number{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.company-logo-checkout{
+  width:100px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.company-logo-checkout-container{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidecart-text{
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#total-total-text{
+  font-size: 18px;
+}
+
+.small-small-text{
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.sidecart-number{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#continue-shopping, #return-to-cart, .change-address{
+  background-color: rgb(245,245,245) !important;
+  border-color: rgb(239, 239, 239)!important;
+}
+
+#shopping-cart-checkout-title, #address-checkout-title{
+  float: left;
+}
+
+.shipping-address{
+  clear: both;
+}
+
+.shipping-container{
+  clear: both !important;
+  padding-top: 5px !important;
+}
+
+#shipping-method-title{
+  margin-bottom: 20px;
+  float: left;
+}
+
+.bold{
+  font-weight: bold !important;
+  font-size: 15px !important;
+}
+
+.original-price{
+  text-decoration: line-through;
+}
+
+.cart-empty{
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cart-empty-row{
+  padding-bottom: 50px;
+  padding-top: 40px;
+}
+
+#return-to-cart, .change-address{
+  width:150px !important;
+  float: right;
+  margin-bottom: 10px;
+}
+
+.change-address{
+  width: 200px !important;
+}
+
+#continue-shopping span, #return-to-cart span, .change-address span{
+  color: grey !important;
+}
+
+.final-checkout, #submit-payment, #shipping{
+  background-color: #9edcec !important;
+  border-color: rgb(239, 239, 239)!important;
+}
+
+.form-control{
+  border-radius: 1px !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.shipping-text{
+  text-transform: uppercase!important;
+}
+
+.final-checkout:hover, #submit-payment:hover, #shipping:hover{
+  background-color: white !important;
+}
+
+.final-checkout span, #submit-payment span, #shipping span{
+  color: grey !important;
+}
+
+.shipping-spinner{
+  border-radius: 0!important;
 }
 
 #no-shipping{
@@ -108,7 +274,78 @@
 }
 
 .small-column{
-  width:50px;
+  width:75px;
+}
+
+.fa-trash{
+  margin-right: 5px;
+}
+
+.stock-notice{
+  font-size: 12px;
+}
+
+.checkout-progress{
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(149, 149, 149);
+  display: block !important;
+}
+
+.btn-container{
+  display: block !important;
+}
+
+.progress-bar-item{
+  color: rgb(149, 149, 149);
+  height:25px;
+}
+
+.progress-bar-item span{
+  vertical-align: bottom;
+  position: relative;
+  font-size: 12px;
+}
+
+#current-step-item span{
+  color:black;
+  font-size: 16px;
+}
+
+.progress-bar-number{
+  height: 20px !important;
+  vertical-align: top;
+}
+
+.progress-bar-number span, .progress-bar-number i{
+  background-color: grey;
+  font-size: 12px;
+  line-height: 20px;
+  color:white;
+  border-radius: 100%;
+  display: inline-block;
+  height: 20px !important;
+  width: 20px !important;
+  position: relative;
+  vertical-align: top;
+  top:-50%;
+}
+
+.progress-bar-number i{
+  font-size: 21px;
+}
+
+#current-step-number{
+  height: 25px !important;
+  vertical-align: top;
+}
+
+#current-step-number span{
+  background-color: black !important;
+  font-size: 14px;
+  line-height: 25px;
+  height: 25px !important;
+  width: 25px !important;
+
 }
 
 .small-text{
@@ -129,19 +366,21 @@ td {
 
 .section-title-container{
   text-align: center;
+  margin-top: 30px !important;
+  margin-bottom: 30px;
+  clear: both;
 }
 
 .section-title{
-  font-size: 24px !important;
+  font-size: 22px !important;
+  font-weight: bold;
+  text-transform: uppercase;
+
 }
 
 
 .shipping-content{
 
-}
-
-.order-item-row{
-  border-bottom: 0px solid black;
 }
 
 

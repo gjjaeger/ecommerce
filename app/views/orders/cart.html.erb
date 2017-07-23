@@ -1,88 +1,128 @@
   <div class="container checkout-content" id="content">
     <div class="big wrapper col-xs-12" id="order-summary-content">
       <div class="shipping-content">
-        <div class="section-title-container checkout-title-container">
-          <span class="section-title">Shopping Cart</span>
-          <div class="btn-container">
-            <button class="btn btn-lg simple-button-black">
+        <div class="col-xs-12 company-logo-checkout-container">
+          <%= image_tag("necklaces.jpg", :class => "company-logo-checkout") %>
+        </div>
+        <div class="checkout-progress-container">
+          <div class="checkout-progress col-xs-12">
+            <div class="span progress-bar-item col-xs-3 text-center" id="current-step-item"><span>Cart Checkout</span></div>
+            <div class="span progress-bar-item col-xs-3 text-center"><span>Shipping</span></div>
+            <div class="span progress-bar-item col-xs-3 text-center"><span>Payment</span></div>
+            <div class="span progress-bar-item col-xs-3 text-center"><span>Confirmation</span></div>
+          </div>
+          <div class="checkout-progress-count col-xs-12">
+            <div class="span progress-bar-number col-xs-3 text-center" id="current-step-number"><span>1</span></div>
+            <div class="span progress-bar-number col-xs-3 text-center"><span>2</span></div>
+            <div class="span progress-bar-number col-xs-3 text-center"><span>3</span></div>
+            <div class="span progress-bar-number col-xs-3 text-center"><span>4</span></div>
+          </div>
+        </div>
+        <div class="cart-info">
+          <div class="btn-container col-xs-12">
+            <button class="btn btn-lg simple-button-black" id="continue-shopping">
               <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
                 <span class="button-text-black">Continue Shopping</span>
               </a>
             </button>
-            <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"final-checkout" do %>
-              <span class="button-text-black">
-                Proceed to checkout
-              </span>
+            <%if @order.order_items.any?%>
+              <%= button_tag :class=>"btn btn-lg simple-button-black final-checkout",:"data-href" => @order.id, :id=>"final-checkout" do %>
+                <span class="button-text-black">
+                  Proceed to checkout
+                </span>
+              <%end%>
             <%end%>
           </div>
-        </div>
-        <table class="checkout-table">
-          <tr class="">
-            <th class="small-column"></th>
-            <th class="checkout-tab-item">Name</th>
-            <th class="checkout-tab-item">Size</th>
-            <th class="checkout-tab-item">Unit Price</th>
-            <th class="checkout-tab-item">Qty</th>
-            <th class="checkout-tab-item">Total Price</th>
-            <th class="small-column"></th>
-          </tr>
-
-          <%@order.order_items.each do |order_item|%>
-            <tr class="order-item-row" id=<%=order_item.id%>>
-              <div class="order-item">
-                <div class="checkout-details">
-                  <td>
-                    <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
-                  </td>
-                  <td>
-                    <span class="checkout-name-container">
-                      <span class="small-text checkout-product-name">
-                        <%=order_item.product.name%>
-                      </span>
-                    </span>
-                  </td>
-                  <td>
-                    <span class="small-text">
-                      <%=order_item.product.size%>cm
-                    </span>
-                  </td>
-                  <td>
-                    <span class="small-text"><%=number_to_currency order_item.product.price%></span>
-                  </td>
-
-                  <td>
-                    <%= form_for order_item, remote: true, :id=>"checkout-update-item" do |f| %>
-                      <div class="cart-form">
-                        <%= f.hidden_field :product_id, :class=>"product_id", value: order_item.product.id %>
-                        <%= f.hidden_field :order_item_id, :class=>"order_item_id", value: order_item.id %>
-                        <%= f.hidden_field :order_item_quantity, :class=>"order_item_quantity", value: order_item.quantity %>
-                        <div class="cart-notice"></div>
-                        <div class="minus-quantity checkout-minus-quantity" data-href = "<%=order_item.id%>"><span>-</span></div>
-                        <%= f.number_field :quantity, :class=>"jewelery-quantity checkout-quantity small-text #{order_item.id}" , id:order_item.id, :"data-href" => order_item.product.stock, :placeholder=>order_item.quantity %>
-                        <div class="plus-quantity checkout-plus-quantity" data-href = "<%=order_item.id%>"><span>+</span></div>
-                      </div>
-                    <%end%>
-                  </td>
-
-                  <td>
-                    <span class="total_price_per_product small-text"><%=number_to_currency order_item.product.price*order_item.quantity%></span>
-                  </td>
-
-                  <td>
-                    <span class="item-center">
-                      <%= link_to order_item_path(order_item), :data => {:method => "delete"}, remote: true, :class =>"delete_order_item_checkout link_to", :"data-href"=> order_item.id do%>
-                        <span class="remove-text">Remove</span>
-                      <%end%>
-                    </span>
-                  </td>
-                </div>
-              </div>
+          <div class="section-title-container checkout-title-container col-xs-12">
+            <span class="section-title">Shopping Cart</span>
+          </div>
+          <table class="checkout-table">
+            <tr class="title-row">
+              <th class="small-column"></th>
+              <th class="checkout-tab-item">Name</th>
+              <th class="checkout-tab-item">Size</th>
+              <th class="checkout-tab-item">Unit Price</th>
+              <th class="checkout-tab-item">Qty</th>
+              <th class="checkout-tab-item">Total Price</th>
+              <th class="small-column"></th>
             </tr>
-          <%end%>
+            <tr class="spacer"></tr>
+            <div class="order-item-rows">
+              <%if @order.order_items.any?%>
+                <%@order.order_items.each do |order_item|%>
+                  <tr class="order-item-row" id=<%=order_item.id%>>
+                    <div class="order-item">
+                      <div class="checkout-details">
+                        <td>
+                          <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
+                        </td>
+                        <td>
+                          <span class="checkout-name-container">
+                            <span class="small-text checkout-product-name">
+                              <%=order_item.product.name%>
+                            </span>
+                          </span>
+                        </td>
+                        <td>
+                          <span class="small-text">
+                            <%=order_item.product.size%>cm
+                          </span>
+                        </td>
+                        <td>
+                          <span class="small-text"><%=number_to_currency order_item.product.price%></span>
+                        </td>
 
-        </table>
-        <div class="shipping-div">
-          <span class="free-shipping-text">Free Shipping on all orders above $200</span>
+                        <td>
+                          <%= form_for order_item, remote: true, :id=>"checkout-update-item" do |f| %>
+                            <div class="cart-form">
+                              <%= f.hidden_field :product_id, :class=>"product_id", value: order_item.product.id %>
+                              <%= f.hidden_field :order_item_id, :class=>"order_item_id", value: order_item.id %>
+                              <%= f.hidden_field :order_item_quantity, :class=>"order_item_quantity", value: order_item.quantity %>
+                              <div class="cart-notice"></div>
+                              <div class="minus-quantity checkout-minus-quantity" data-href = "<%=order_item.id%>"><span>-</span></div>
+                              <%= f.number_field :quantity, :class=>"jewelery-quantity checkout-quantity small-text #{order_item.id}" , id:order_item.id, :"data-href" => order_item.product.stock, :placeholder=>order_item.quantity %>
+                              <div class="plus-quantity checkout-plus-quantity" data-href = "<%=order_item.id%>"><span>+</span></div>
+                            </div>
+                          <%end%>
+                        </td>
+
+                        <td>
+                          <span class="total_price_per_product small-text <%=order_item.id%>"><%=number_to_currency order_item.product.price*order_item.quantity%></span>
+                        </td>
+
+                        <td>
+                          <span class="item-center">
+                            <%= link_to order_item_path(order_item), :data => {:method => "delete"}, remote: true, :class =>"delete_order_item_checkout link_to", :"data-href"=> order_item.id do%>
+                              <span class="remove-text"><i class="fa fa-trash" aria-hidden="true"></i><span class="remove-text">Remove</span></span>
+                            <%end%>
+                          </span>
+                        </td>
+                      </div>
+                    </div>
+                  </tr>
+                  <tr class="spacer"></tr>
+                <%end%>
+              <%else%>
+                <tr><td colspan="7" class="cart-empty-row"><span class="cart-empty">Your Cart is Empty</span></td></tr>
+              <%end%>
+            </div>
+          </table>
+          <div class="border-bottom"></div>
+          <div class="sub-total col-xs-12">
+            <span class="col-xs-3 col-xs-offset-9">
+              <span class="subtotal-text">
+                Subtotal
+              </span>
+              <span class="order-total-container">
+                <span class="sub-total-number">
+                  <%= number_to_currency current_order.calculate_total %>
+                </span>
+              </span>
+            </span>
+          </div>
+          <div class="shipping-div">
+            <span class="free-shipping-text">Free Shipping on all orders above $200</span>
+          </div>
         </div>
       </div>
     </div>

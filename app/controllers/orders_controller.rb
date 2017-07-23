@@ -83,28 +83,28 @@ class OrdersController < ApplicationController
   end
 
   def shipping
+    shipment=EasyPost::Shipment.retrieve(current_order.shipment_id)
+    @rates=shipment.rates
+    @lowest_rate=@rates.min_by{|h| h.rate}.rate
     @order=current_order
     order = Order.find(current_order)
     if !@order.order_items.any? {|order_item| order_item.product.category_id=="3" }
-      rates = session[:rates]
       totalship = 0
-      rates.each do |rate|
-        totalship+=BigDecimal(rate[4])
+      if current_order.total_price >= 200
+        totalship= params[:selected_rate] ? (@rates.select {|e| e.id == params[:selected_rate]}[0].rate.to_f)-(@lowest_rate.to_f) : @rates.min_by{|h| h[:rate]}.rate
+      else
+        totalship= params[:selected_rate] ? @rates.select {|e| e.id == params[:selected_rate]}[0].rate : @rates.min_by{|h| h[:rate]}.rate
       end
-      @shipping=totalship
-      @total100 = (current_order.total_price * 100) + (BigDecimal(@shipping)*100)
-      @total = (current_order.total_price) + (BigDecimal(@shipping))
+      if params[:selected_rate]
+        @shipping=((current_order.total_price)>=200 && @rates.select {|e| e.id == params[:selected_rate]}[0].rate==@lowest_rate) ? 0 : totalship
+      else
+        @shipping=((current_order.total_price)>=200 ? 0 : totalship)
+      end
+      @total100 = (current_order.total_price * 100) + ((@shipping.to_f)*100)
+      @total = (current_order.total_price) + ((@shipping.to_f))
       order.total_shipping=totalship
-    elsif @order.order_items.any? {|order_item| !order_item.delivery && order_item.product.category_id=="3"}
-      @shipping=0
-      @total100 = (current_order.total_price * 100)+ (BigDecimal(@shipping)*100)
-      @total = (current_order.total_price) + (BigDecimal(@shipping))
-      order.total_shipping=@shipping
-    elsif @order.order_items.any? {|order_item| order_item.delivery && order_item.product.category_id=="3"}
-      @shipping=10
-      @total100 = (current_order.total_price * 100)+ (BigDecimal(@shipping)*100)
-      @total = (current_order.total_price) + (BigDecimal(@shipping))
-      order.total_shipping=@shipping
+      order.selected_rate = params[:selected_rate] ? params[:selected_rate] : @rates.min_by{|h| h[:rate]}.id
+      order.save!
     end
     @address=Address.find_by("id = ?", current_order.address_id)
     if order.save

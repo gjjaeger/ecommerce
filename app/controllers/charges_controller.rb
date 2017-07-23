@@ -59,17 +59,16 @@ class ChargesController < ApplicationController
           }
         },
       )
-      if !current_order.order_items.any? {|order_item| order_item.product.category_id=="3" }
-        shipment=EasyPost::Shipment.retrieve(item.shipment_id)
-        purchased=shipment.buy(rate: shipment.lowest_rate())
-        label = shipment.label(file_format:"PDF")
-        tracker=purchased[:tracker]
-        trackerObject = EasyPost::Tracker.create({
-          tracking_code: "EZ1000000001" #tracker[:id]
-        })
-        EasyPost::Webhook.create({url: "http://4f3dd57b.ngrok.io/orders/"+(order_object.id).to_s+"/tracking"})
-        @shipment = Shipment.create(:recipient => address.name, :tracker_code => tracker[:tracking_code], :carrier => tracker[:carrier], :est_delivery_date => tracker[:est_delivery_date], :order_item_id => item.id, :shipment_id => shipment.id, :public_url => tracker[:public_url])
-      end
+      shipment=EasyPost::Shipment.retrieve(current_order.shipment_id)
+      debugger;
+      purchased=shipment.buy(rate: shipment.rates.select {|e| e.id == current_order.selected_rate}[0])
+      label = shipment.label(file_format:"PDF")
+      tracker=purchased[:tracker]
+      trackerObject = EasyPost::Tracker.create({
+        tracking_code: "EZ1000000001" #tracker[:id]
+      })
+      EasyPost::Webhook.create({url: "http://4f3dd57b.ngrok.io/orders/"+(order_object.id).to_s+"/tracking"})
+      @shipment = Shipment.create(:recipient => address.name, :tracker_code => tracker[:tracking_code], :carrier => tracker[:carrier], :est_delivery_date => tracker[:est_delivery_date], :order_item_id => item.id, :shipment_id => shipment.id, :public_url => tracker[:public_url])
     end
 
     # session[:rates].each do |rate|

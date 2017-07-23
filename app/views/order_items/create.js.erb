@@ -1,25 +1,8 @@
-if ($('.empty-cart-div').length>0){
-  $('.empty-cart-div').html("")
-}
 
-if ($('.empty-cart').length>0){
-  $('.empty-cart').html("")
-}
-
-if ($('.order-item').length == 0){
-
-  $(".shopping-cart").html("<%= escape_javascript(render 'order_item', :locals => {item: @item}) %>");
-  if ($('.checkout-button').length!=0){
-    $('.checkout-button').show()
-  }
-  else{
-    $('.checkout-button-div').html('<%= link_to order_cart_path(current_order), class: "btn btn-lg simple-button-black", id:"checkout-button" do %><span class="button-text-black" id="x-text">Proceed to checkout</span><%end%>');
-  }
-}
-else {
-  $("<%= escape_javascript(render 'order_item', :locals => {item: @item}) %>").appendTo(".shopping-cart");
-
-};
-$('#order-total').html("<%= number_to_currency current_order.calculate_total %>");
-$('.item-count').html("<%=current_order.order_items.count%>");
-$("#product-modal").modal("hide");
+  $('.dropdown-button-container').load(location.href + ' #dropdown-toggle-button', function(){
+    $(".dropdown-toggle").dropdown();
+    $('#dropdown-toggle-button').addClass("open");
+    $('.dropdown-button').mouseenter(function(){
+      $(this).parent().addClass("open");
+    });
+  });

@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <link rel="stylesheet" href="https://cdn.hippicons.com/css/hippicons-min.css">
     <script src="https://use.fontawesome.com/4430b10b2e.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -46,10 +47,10 @@
             <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring"><span class="shop-dropdown">Shop</span></span></a>
           </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right dropdown-button-container">
           <li class="dropdown" id="dropdown-toggle-button">
-            <a href="#" class="dropdown-toggle has-dropdown dropdown-button" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown"><span id="order-total" data-href="<%= number_to_currency current_order.calculate_total %>"><%= number_to_currency current_order.calculate_total %></span>
-            <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.count%></span><span class="caret"></span></span></a>
+            <a href="#" class="dropdown-toggle has-dropdown dropdown-button" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown" id="order-total-container">
+            <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.sum(:quantity)%></span><span class="caret"></span></span></a>
             <ul class="dropdown-menu dropdown-cart"role="menu">
               <div class="shopping-cart">
                 <%= render "layouts/shopping_cart" %>
@@ -124,5 +125,5 @@
       <span class="shipping-text">Calculating Shipping Cost...</span>
     </div>
   </div>
-
+  
 </html>

@@ -5,6 +5,10 @@
 @import "bootstrap";
 @import "devise_bootstrap_views";
 
+$dark-blue: #0e647d;
+$light-blue: #9edcec;
+
+
 *:focus {
 outline: 0;
 outline: none;
@@ -438,7 +442,7 @@ input:focus{
 }
 
 #jewelery-add-cart{
-  background-color: #47b475;
+  background-color: $dark-blue;
   border-radius: 0;
   border:0;
 }
@@ -511,7 +515,7 @@ input:focus{
 }
 
 .product-show-price{
-  color : rgb(71, 180, 117);
+  color : $dark-blue;
   font-size: 32px;
   font-weight: 300 !important;
   line-height: 40px;
@@ -554,12 +558,40 @@ input:focus{
   margin-bottom: 24px;
 }
 
-.cart-product-name{
-  font-size: 16px;
+#cart-product-name{
+  font-size: 14px !important;
+  font-weight: bold !important;
+  float: left;
 }
 
-.cart-product-quantity{
+#cart-product-price{
+  float: right;
   font-size: 13px;
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+#cart-product-quantity{
+  width:100%;
+  float: left;
+  text-align: left;
+  font-size: 10px !important;
+  color: #666;
+}
+
+#cart-product-size{
+  float: left;
+  text-align: left;
+  font-size: 10px !important;
+  color: #666;
+}
+
+.last-row{
+  width:100%;
+  float: right;
+  text-align: left;
+  font-size: 10px !important;
+  color: #666;
 }
 
 .product-price{
@@ -769,7 +801,7 @@ input:focus{
 }
 
 .tab-item.active{
-  border-bottom: 1px solid rgb(71, 180, 117) !important;
+  border-bottom: 1px solid $light-blue !important;
 
 }
 

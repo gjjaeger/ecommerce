@@ -1,25 +1,40 @@
 <% if current_order_items!=nil && current_order_items.any? %>
-  <% current_order_items.each do |item| %>
-    <li>
-      <span class="order-item">
-        <%=link_to product_path(item.product), :class=>"" do%>
-          <span class="item-left">
-            <%= image_tag(item.product.images.first.photo.url, :class=> "cart-item-image") %>
-            <span class="item-info">
-              <span class="cart-product-name", data-href = <%=item.product.id%>><%= item.product.name%> <%if item.product.category_id=="1"%><%= item.size %>g<%end%></span>
-              <span class="cart-product-quantity", data-href=<%=item.quantity%>><%=item.quantity%> x <%=number_to_currency (if item.product.price!=nil
-                item.product.price
-              else
-                retrieve_size_price(item.size, item.product.id)
-              end)%></span>
-
+  <div class="order-items-list">
+    <% current_order_items.each do |item| %>
+      <li>
+        <span class="order-item" id="order-item">
+          <%=link_to product_path(item.product), :class=>"" do%>
+            <span class="col-xs-12 shopping-cart-row">
+              <%= image_tag(item.product.images.first.photo.url, :class=> "cart-item-image") %>
+              <span class="item-info">
+                <span class="cart-product-name", id="cart-product-name", data-href = <%=item.product.id%>><%= item.product.name%></span>
+                <span class="cart-product-price", id="cart-product-price", data-href=<%=item.quantity%>>
+                  <%=number_to_currency item.product.price*item.quantity%>
+                </span>
+                <span id="cart-product-quantity">Qty.: <%=item.quantity%></span>
+                <span class="last-row">
+                  <span id="cart-product-size">Size: <%=item.product.length%>cm</span>
+                  <%= link_to order_item_path(item), :data => {:method => "delete"}, remote: true, :class =>"delete_order_item" do%>
+                    <span class="remove-text"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                  <%end%>
+              </span>
             </span>
+          <% end %>
+          <span class="item-right">
+
           </span>
-        <% end %>
-        <span class="item-right">
-          <%= link_to "", order_item_path(item), :data => {:method => "delete"}, remote: true, :class =>"btn btn-danger  delete_order_item fa fa-close"%>
         </span>
-      </span>
-    </li>
-  <%end%>
+      </li>
+    <%end%>
+  </div>
+  <div class="total-and-shipping col-xs-12">
+    <span class="total-container col-xs-12">
+      <span class="total-cart-text">Total:</span>
+      <span class="total-cart-number"><%=number_to_currency current_order.calculate_total%></span>
+    </span>
+    <span class="shipping-container col-xs-12">
+      <span class="shipping-cart-text">Shipping:</span>
+      <span class="shipping-cart-number"><%if current_order.calculate_total>= 200%>Free<%else%>Calculated at Checkout<%end%></span>
+    </span>
+  </div>
 <%end%>

@@ -6,6 +6,8 @@
 @import "bootstrap";
 @import "devise_bootstrap_views";
 
+$light-blue: #9edcec;
+
 *:focus {
 outline: 0;
 outline: none;
@@ -47,7 +49,7 @@ outline: none;
 .price-slider .ui-slider-range {
   border: 0;
   border-radius: 10;
-  background: #a8aa77;
+  background: #9edcec;
 }
 
 .price-slider.ui-slider .ui-slider-range {
@@ -221,7 +223,7 @@ outline: none;
 
 /* Checked state */
 .control input:checked ~ .control__indicator {
-	background: #2aa1c0;
+	background: $light-blue;
 }
 
 /* Hover state whilst checked */
@@ -429,8 +431,8 @@ outline: none;
 }
 
 .pagination .active span {
-  background: #2aa1c0 !important;
-  border-color: #2aa1c0 !important;
+  background: $light-blue !important;
+  border-color: $light-blue !important;
 }
 
 .highlight{

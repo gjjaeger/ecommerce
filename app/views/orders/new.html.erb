@@ -1,4 +1,4 @@
-
+<img class="securePayment" src="//st0.mngbcn.com/images/checkout/SecurePayment.jpg">
 <div id="whole-form">
   <%= form_tag charges_path, method: 'post', id: 'payment-form' do %>
     <%= javascript_include_tag "payment.js" %>
@@ -6,29 +6,32 @@
       <div class="card-wrapper col-xs-12"></div>
       <span class="payment-errors form-control-feedback"></span>
 
-      <%= email_field_tag :email, '', :required=>true, class: 'form-control', id:'purchaser_email', placeholder: 'Your E-Mail Address'%>
-
-      <%= text_field_tag :name, '', :required=>true, class: 'form-control', id:'purchaser_name', placeholder: 'Your Full Name'%>
-
-      <div class="form-group row payment-form-input">
-        <label class="control-label">Credit Card Number</label>
-        <input class="form-control" id="credit-card-number" type="text" data-stripe="number" required/>
+      <div class="form-group payment-form-input col-xs-6">
+        <%= email_field_tag :email, '', :required=>true, class: 'form-control col-xs-6', id:'purchaser_email', placeholder: 'Your E-Mail Address'%>
+      </div>
+      <div class="form-group payment-form-input col-xs-6">
+        <%= text_field_tag :name, '', :required=>true, class: 'form-control', id:'purchaser_name', placeholder: 'Cardholder Full Name'%>
+      </div>
+      <div class="form-group payment-form-input col-xs-8">
+        <input class="form-control" id="credit-card-number" type="text" data-stripe="number" placeholder="Credit Card Number" required />
       </div>
 
-      <div class="form-group row payment-form-input">
-        <label class="control-label">Security Code</label>
-        <input class="form-control" id="security-code" type="text" data-stripe="cvc" required/>
+      <div class="form-group payment-form-input  col-xs-4">
+        <input class="form-control" id="security-code" type="text" data-stripe="cvc" placeholder="Security Code" required/>
       </div>
 
-      <div class="form-group row payment-form-input">
-        <label class="control-label">Expiration</label>
-        <%= select_month(Date.today, {add_month_numbers: true},  class: 'form-control', data: {stripe: "exp-month"}, id:"exp-month", :required=>true )%>
-        <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: {stripe: "exp-year"}, id: "exp-year", :required=>true) %>
+      <div class="form-group payment-form-input col-xs-12">
+        <div class="expiry-month col-xs-6">
+          <%= select_month(Date.today, {add_month_numbers: true}, class: 'form-control', data: {stripe: "exp-month"}, id:"exp-month", :required=>true)%>
+        </div>
+        <div class="expiry-month col-xs-6">
+          <%= select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: {stripe: "exp-year"}, id: "exp-year", :required=>true) %>
+        </div>
       </div>
       <%= hidden_field_tag :expiry%>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-lg simple-button-black">Submit Payment</button>
+        <button type="submit" class="btn btn-lg simple-button-black" id="submit-payment"><span>Submit Payment</span></button>
       </div>
     </div>
   <% end %>
