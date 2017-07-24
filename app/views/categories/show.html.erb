@@ -36,19 +36,19 @@
     </div>
     <div class="dropdown col-xs-6" id="dropdown-sort-toggle-button">
       <a href="#" class="dropdown-toggle has-dropdown btn btn-lg simple-button-grey" id="sort-by-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="sort-button-text">
-      <span class="sorted-by">Sort By</span><span class="pull-right"><span class="caret sort-caret"></span></span></span></a>
+      <span class="sorted-by small-text">Sort By</span><span class="pull-right"><i class='hi hi-angle-down sort-caret'></i></span></span></a>
       <ul class="dropdown-menu sort-by-dropdown"role="menu">
-        <li class="sort-by-option" id="price" data-href="ascending">Price ascending</li>
-        <li class="sort-by-option" id="price" data-href="descending">Price descending</li>
-        <li class="sort-by-option" id="newness" data-href="ascending">Newest ascending</li>
-        <li class="sort-by-option" id="newness" data-href="descending">Newest descending</li>
+        <li class="sort-by-option small-text" id="price" data-href="ascending">Price ascending</li>
+        <li class="sort-by-option small-text" id="price" data-href="descending">Price descending</li>
+        <li class="sort-by-option small-text" id="newness" data-href="ascending">Newest ascending</li>
+        <li class="sort-by-option small-text" id="newness" data-href="descending">Newest descending</li>
       </ul>
     </div>
   </div>
   <div class="sidebar col-xs-3">
     <div class="filter col-xs-12">
       <div class="sidebar-title-container">
-        <span class="sidebar-title">Price</span>
+        <span class="sidebar-title small-text">Price</span>
       </div>
       <div class="price-filter col-xs-12">
         <div class="price-output">
@@ -60,12 +60,12 @@
       </div>
       <div class="sidebar-content col-xs-12">
         <div class="sidebar-title-container">
-          <span class="sidebar-title">Categories</span>
+          <span class="sidebar-title small-text">Categories</span>
         </div>
         <div class="tag-filter col-xs-12">
           <%@tags.each do |tag|%>
             <div class="input-checkbox">
-              <label class="control control--checkbox"><%=tag.name%>s
+              <label class="control control--checkbox small-text"><%=tag.name%>s
             		<input type="checkbox" class="tag-check-box styled-checkbox" checked id="<%=tag.name%>">
             		<div class="control__indicator"></div>
             	</label>
@@ -76,7 +76,7 @@
     </div>
     <div class="newest-products sidebar-content col-xs-12">
       <div class="sidebar-title-container">
-        <span class="sidebar-title">Newest Products</span>
+        <span class="sidebar-title small-text">Newest Products</span>
       </div>
       <%@newest_products.each do |product|%>
         <%= link_to product_path(product) do %>
@@ -85,8 +85,8 @@
               <%= image_tag(product.images.first.photo.url, :id=>"newest-product-image") %>
             </div>
             <div class="newest-product-info col-xs-7">
-              <span class="newest-product-name col-xs-12"><%=product.name%></span>
-              <span class="newest-product-price col-xs-12"><%=number_to_currency product.price%></span>
+              <span class="newest-product-name col-xs-12 small-text"><%=product.name%></span>
+              <span class="newest-product-price col-xs-12 small-text"><%=number_to_currency product.price%></span>
             </div>
           </div>
         <%end%>
@@ -94,7 +94,7 @@
     </div>
     <div class="sidebar-content col-xs-12">
       <div class="sidebar-title-container">
-        <span class="sidebar-title">Return Policy</span>
+        <span class="sidebar-title small-text">Return Policy</span>
       </div>
       <span class="return-policy normal-text col-xs-12">1 year warranty on all items. We will be happy to cover any replacement/repair cost and ask you to only cover the shipping.</span>
     </div>
@@ -104,7 +104,7 @@
       <%=render 'products'%>
     </div>
   </div>
-  <div class="pagination-links">
+  <div class="pagination-links small-text">
     <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
   </div>
 </div>

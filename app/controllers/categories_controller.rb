@@ -49,7 +49,7 @@ class CategoriesController < ApplicationController
     #   end
     #   @products = @products.uniq
     else
-      @productss=Product.where("(category_id = ?)", (@category.id).to_s).paginate(:page => params[:page], :per_page => 4)
+      @productss=Product.where("(category_id = ?)", ((@category.id).to_s))
     end
     if params[:sort].present?
       if params[:sort] === "price"
@@ -67,7 +67,7 @@ class CategoriesController < ApplicationController
         end
       end
     end
-    @products=@productss.paginate(:page => params[:page], :per_page => 12)
+    @products=@productss.paginate(:page => params[:page], :per_page => 6)
   end
 
   # GET /categories/new

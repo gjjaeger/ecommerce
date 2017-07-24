@@ -28,7 +28,7 @@
             <%if @order.order_items.any?%>
               <%= button_tag :class=>"btn btn-lg simple-button-black final-checkout",:"data-href" => @order.id, :id=>"final-checkout" do %>
                 <span class="button-text-black">
-                  Proceed to checkout
+                  Proceed to checkout<i class='hi hi-angle-right proceed-icon'></i>
                 </span>
               <%end%>
             <%end%>

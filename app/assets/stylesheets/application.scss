@@ -25,7 +25,9 @@
  @import "card";
 
 $grey: #808080;
+$light-blue: #9edcec;
 $light-grey: #f5f5f5;
+$dark-blue: #0e647d;
 
 *{
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -110,6 +112,7 @@ ul.dropdown-cart{
 #checkout-button{
   clear: both;
   border-color: $grey !important;
+  margin-bottom: 10px;
 }
 
 #checkout-button:hover{
@@ -117,7 +120,7 @@ ul.dropdown-cart{
 }
 
 #x-text{
-  color: grey !important;
+  color: black !important;
 }
 
 .total-cart-text, .shipping-cart-text, .total-cart-number, .shipping-cart-number{
@@ -229,9 +232,52 @@ body {
   height:100%;
   top:0px;
   left:0px;
-  z-index:9999999999999999999999;
+  z-index:99999999999999;
   display: flex;
   align-items: center;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid grey;
+  background-color: white;
+  width: 100%;
+  z-index: 999999999999999999999999999999;
+}
+
+.proceed-icon{
+  padding-left: 10px;
+}
+
+.footer-div{
+  text-align: center;
+}
+
+.address, .email-address{
+  padding: 0px 20px;
+}
+
+.address-text, .email-address-text{
+  padding-left: 10px;
+}
+
+.copyright{
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+}
+
+.made-by{
+  position: absolute;
+  left: 5px;
+  bottom: 0;
+  color: grey;
+}
+
+.email-link:hover{
+  text-decoration: none;
+  background-color: transparent;
 }
 
 .shipping-spinner{
@@ -244,7 +290,7 @@ body {
   top:0;
   left: 0;
   margin: 0;
-  z-index:99999999999999999999999;
+  z-index:999999999999;
   align-items: center;
   display: flex;
   justify-content: center;
@@ -637,10 +683,14 @@ body{
   position: absolute;
   background-color: white;
   align-items: center;
-  z-index: 1000000000000;
+  z-index: 1000000000;
   display: flex;
   justify-content: center;
   text-align: center;
+}
+
+.navbar-logo{
+  height: 0 !important;
 }
 
 .sk-circle-wrapper{

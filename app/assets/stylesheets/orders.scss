@@ -249,7 +249,7 @@ tr.title-row>th{
 }
 
 .final-checkout span, #submit-payment span, #shipping span{
-  color: grey !important;
+  color: black !important;
 }
 
 .shipping-spinner{
@@ -348,8 +348,13 @@ tr.title-row>th{
 
 }
 
+.securePayment{
+  height: auto;
+  width: 100px;
+}
+
 .small-text{
-  font-size: 12px;
+  font-size: 12px !important;
   line-height: 24px;
   text-transform: uppercase;
   letter-spacing: 2px;
