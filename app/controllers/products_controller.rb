@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
     restjam=Product.where({category_id: "1"}).limit(8-bsellerjam.length())
     @jams=(bsellerjam + restjam).uniq(&:id)
     bsellerjewelery=Product.where("(category_id = ? AND featured = ?)", "2", true).limit(3)
-    restjewelery=Product.where("(category_id = ? )", "2").limit(8-bsellerjewelery.length())
+    restjewelery=Product.where("(category_id = ? )", "2")
     @jewelery=(bsellerjewelery + restjewelery).uniq(&:id)
     bsellercake=Product.where({category_id: "3", featured:true}).limit(3)
     restcake=Product.where({category_id: "3"}).limit(8-bsellercake.length())
