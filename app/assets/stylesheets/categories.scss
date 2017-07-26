@@ -181,6 +181,7 @@ outline: none;
 
 .newest-product-info{
   color: grey;
+  padding-right: 0 !important;
 }
 
 .pagination li span, .pagination li a{
@@ -262,6 +263,10 @@ outline: none;
 
 .newest-product-image{
   padding: 0 !important;
+}
+
+.newest-product{
+  padding-right: 0 !important;
 }
 
 /* Checkbox tick */
@@ -348,8 +353,8 @@ outline: none;
 .filter {
   // position: fixed !important;
   left:0;
-  padding:5px;
-  margin-bottom: 20px;
+  padding:0px;
+  margin-bottom: 0px;
   vertical-align: middle;
 }
 

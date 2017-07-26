@@ -598,9 +598,6 @@ $(document).on('turbolinks:load', function(){
 
   $('.delete_order_item_checkout').bind('ajax:success', function() {
     $('.cart-info').load(location.href + ' .cart-info', function(){
-      if ($('.order-item').length<=0){
-        $('.order-item-rows').html('<tr><td colspan="7">Your Cart is Empty</td></tr>');
-      };
       shipping();
     });
   });

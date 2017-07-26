@@ -237,6 +237,10 @@ body {
   align-items: center;
 }
 
+.nav li a:hover{
+  background-color: $light-blue;
+}
+
 footer{
   position: fixed;
   bottom: 0;
