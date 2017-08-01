@@ -915,10 +915,13 @@ body{
   }
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 994px) {
   .relatedproducts{
     display: none;
   }
+};
+
+@media screen and (max-width: 980px) {
 
   .delete_order_item{
     text-align: right;
