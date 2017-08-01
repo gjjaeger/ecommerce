@@ -28,7 +28,7 @@
             <%if @order.order_items.any?%>
               <%= button_tag :class=>"btn btn-lg simple-button-black final-checkout",:"data-href" => @order.id, :id=>"final-checkout" do %>
                 <span class="button-text-black">
-                  Proceed to checkout<i class='hi hi-angle-right proceed-icon'></i>
+                  Proceed to checkout
                 </span>
               <%end%>
             <%end%>
@@ -103,7 +103,7 @@
                   <tr class="spacer"></tr>
                 <%end%>
               <%else%>
-                <tr><td colspan="7" class="cart-empty-row"><span class="cart-empty">Your Cart is Empty</span></td></tr>
+                <tr><td colspan="7" class="cart-empty-"><span class="cart-empty">Your Cart is Empty</span></td></tr>
               <%end%>
             </div>
           </table>

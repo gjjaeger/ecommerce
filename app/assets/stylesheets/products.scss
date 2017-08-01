@@ -512,10 +512,6 @@ input:focus{
   font-size: 56px;
 }
 
-.product-details{
-
-}
-
 .text-center{
   text-align: center;
 }
@@ -769,6 +765,8 @@ input:focus{
 
 .active.content-item{
   display: block !important;
+  position: relative;
+  height: auto;
 }
 
 .tabbed-content{
@@ -819,7 +817,6 @@ input:focus{
 
 .tab-item.active{
   border-bottom: 1px solid $dark-blue !important;
-
 }
 
 .tabs-list li{

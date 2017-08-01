@@ -1,7 +1,7 @@
 <%if @products.any?%>
   <% @products.each do |product| %>
-    <div class="col-md-4 outside-product">
-      <div class="col-md-12" id="<%= admin_signed_in? ? 'admin-product' : 'product' %>">
+    <div class="col-xs-4 outside-product">
+      <div class="col-xs-12" id="<%= admin_signed_in? ? 'admin-product' : 'product' %>">
         <%= link_to product_path(product) do %>
           <% if product.featured && product.category_id!="2"%>
             <div class="featured">

@@ -1,5 +1,5 @@
 <div class="">
-  <div class="checkout-content">
+  <div class="container checkout-content" id="content">
     <div class="col-xs-12 company-logo-checkout-container">
       <%= image_tag("necklaces.jpg", :class => "company-logo-checkout") %>
     </div>
@@ -68,7 +68,7 @@
       <div class="shipping-button-container">
         <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"shipping" do %>
           <span class="button-text-black">
-            Calculate Shipping<i class='hi hi-angle-right proceed-icon'></i>
+            Calculate Shipping
           </span>
         <%end%>
       </div>
@@ -144,7 +144,7 @@
                 <%if current_order.calculate_total >= 200%>
                   <%=number_to_currency 0%>
                 <%else%>
-                  <span class="small-small-text" id="shipping-cost-number">
+                  <span classid="shipping-cost-number">
                     Please Provide your Address
                   </span>
                 <%end%>

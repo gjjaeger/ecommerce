@@ -190,12 +190,9 @@ outline: none;
 
 .sort-by-dropdown, #sort-by-dropdown{
   border-radius: 0 !important;
-  width: 250px;
-  position: relative;
-  left: 95% !important;
-  right: auto !important;
+  width: 175px;
   text-align: center !important;
-  transform: translate(-95%, 0) !important;
+  text-align: right;
 }
 
 #dropdown-sort-toggle-button{

@@ -73,7 +73,7 @@
     </div>
   </div>
     <div class="container" id="show-item">
-      <div class="row main-details">
+      <div class="main-details">
         <div class="col-xs-12 col-xs-offset-0">
           <div class="content-path-links">
             <a href="<%= request.base_url %>/products" class="link_to">
@@ -102,7 +102,7 @@
               </div>
             <% end %>
           </div>
-          <div class="col-xs-4 col-xs-offset-0">
+          <div class="col-xs-4 col-xs-offset-0 big-image">
             <div class="row carousel">
               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false">
                 <div class="carousel-inner" role="listbox">
@@ -139,7 +139,7 @@
             <div class="col-xs-12 tabbed-content">
               <ul class="tabs-list col-xs-12">
                 <li class="active tab-item col-xs-4" id="description-tab">Description</li>
-                <li class="tab-item col-xs-4" id="size-tab">Size & Weight</li>
+                <li class="tab-item col-xs-4" id="size-tab">Dimensions</li>
                 <li class="tab-item col-xs-4" id="materials-tab">Materials</li>
               </ul>
               <div class="tabs-list-line">
@@ -159,6 +159,29 @@
               </ul>
             </div>
           </div>
+        </div>
+
+        <div class="col-xs-12 small-screen-tabbed-content">
+          <ul class="tabs-list col-xs-12">
+            <li class="active tab-item col-xs-4" id="small-description-tab">Description</li>
+            <li class="tab-item col-xs-4" id="small-size-tab">Dimensions</li>
+            <li class="tab-item col-xs-4" id="small-materials-tab">Materials</li>
+          </ul>
+          <div class="tabs-list-line">
+          </div>
+          <ul class="tabs-content">
+            <li class="active content-item" id="small-description-tab-content"><%=@product.description%></li>
+            <li class="content-item" id="small-size-tab-content">
+              <span class="small-text">Diameter: 15cm</span></br>
+              <span class="small-text">Weight: 50g</span></br>
+              <span class="small-text">Length: 30cm</span>
+            </li>
+            <li class="content-item" id="small-materials-tab-content">
+              <%@product.materials.each do |material|%>
+                <span class="small-text"><%=material.name%></span></br>
+              <%end%>
+            </li>
+          </ul>
         </div>
 
         <div class="col-xs-12 relatedproducts">

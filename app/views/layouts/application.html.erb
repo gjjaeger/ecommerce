@@ -29,7 +29,7 @@
 
   <body>
     <header>
-      <nav class="collapse navbar-collapse navbar-fixed-top" id="navbar">
+      <nav class="navbar-fixed-top" id="navbar">
         <ul class="nav navbar-nav">
           <li><%= link_to products_path do%><span class="small-text">Home</span><%end%></li>
           <%if admin_signed_in?%>
@@ -51,7 +51,7 @@
           <li class="dropdown" id="dropdown-toggle-button">
             <a href="#" class="dropdown-toggle has-dropdown dropdown-button" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown" id="order-total-container">
             <span class="glyphicon glyphicon-shopping-cart"></span><span class="item-count"><%=current_order.order_items.sum(:quantity)%></span><i class='hi hi-angle-down'></i></span></a>
-            <ul class="dropdown-menu dropdown-cart"role="menu">
+            <ul class="dropdown-menu no-collapse dropdown-cart"role="menu">
               <div class="shopping-cart">
                 <%= render "layouts/shopping_cart" %>
               </div>
@@ -65,7 +65,7 @@
               <% if current_order_items==nil || !current_order_items.any? %>
                 <li>
                   <span class="empty-cart">
-                    <p>Your shopping cart is empty.</p>
+                    <span class="small-text">Your shopping cart is empty.</span>
                   </span>
                 </li>
               <%end%>
