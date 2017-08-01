@@ -919,6 +919,12 @@ body{
   .relatedproducts{
     display: none;
   }
+  .small-screen-tabbed-content{
+    margin-bottom: 200px;
+  }
+  #show-item{
+    margin-bottom: 150px !important;
+  }
 };
 
 @media screen and (max-width: 980px) {
@@ -941,10 +947,6 @@ body{
 
   .dropdowns-first-row,.dropdowns-second-row{
     display: inline;
-  }
-
-  .small-screen-tabbed-content{
-    margin-bottom: 200px;
   }
 
   .dropdown-button{
