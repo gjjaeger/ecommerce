@@ -457,7 +457,16 @@ $(document).on('turbolinks:load', function(){
         if (getParameterByName('sort')&&getParameterByName('order')){
           var sortedBy = getParameterByName('sort');
           var orderedBy = getParameterByName('order');
-          $('#sort-by-dropdown:first-child').html('<span class="sort-button-text"><span class="sorted-by small-text">'+ sortedBy + " " + orderedBy + '</span><span class="pull-right"><i class="hi hi-angle-down sort-caret"></i></span></span>');
+          if (sortedBy[0] === "price" && orderedBy[0] === "ascending"){
+            var sortbytext = "$-$$$";
+          }
+          else if (sortedBy[0] === "price" && orderedBy[0] === "descending"){
+            var sortbytext = "$$$-$";
+          }
+          else if (sortedBy[0] === "newness" && orderedBy[0] === "ascending"){
+            var sortbytext = "newest";
+          };
+          $('#sort-by-dropdown:first-child').html('<span class="sort-button-text"><span class="sorted-by small-text">'+ sortbytext + '</span><span class="pull-right"><i class="hi hi-angle-down sort-caret"></i></span></span>');
         };
 
         var minimumPrice = (getParameterByName('low') ? getParameterByName('low') : 0);

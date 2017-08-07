@@ -694,7 +694,19 @@ body{
 }
 
 .navbar-logo{
-  height: 0 !important;
+  width:100px;
+}
+
+.navbar-center{
+
+  position: absolute;
+  left: 50%;
+  margin-left: -50px !important;  /* 50% of your logo width */
+  display: block;
+}
+
+.logo-link{
+  padding: 0 !important;
 }
 
 .sk-circle-wrapper{
@@ -829,6 +841,14 @@ body{
   display: inline-block;
 }
 
+
+.pricer-dropdown, .category-dropdown, .sorter-dropdown{
+  width: 100%;
+  padding: 15px;
+
+  border-radius: 0;
+}
+
 .navbar-fixed-top .navbar-right{
   position: absolute;
   right: 0;
@@ -865,6 +885,14 @@ body{
 .small-screen-tabbed-content{
   margin-top: 50px;
   display:none;
+}
+
+.small-screen-dropdown-menu{
+  display: none;
+}
+
+.dropdown-menu-button{
+  width: 40px !important;
 }
 
 @media screen and (max-width: 1200px) {
@@ -965,6 +993,14 @@ body{
   }
   #dropdown-price-toggle-button, #dropdown-categories-toggle-button{
     display: inline-block;
+  }
+
+  .dropdown-menu-nav{
+    width:100%;
+  }
+  .dropdown-menu-nav li{
+    width:100%;
+    border-bottom: 1px solid $light-grey;
   }
   .products-to-show{
     width: 100%;
@@ -1091,7 +1127,7 @@ body{
 
   .dropdown-container{
     width:100%;
-    padding: 10px 0;
+    padding-top: 20px;
   }
 
   #dropdown-sort-toggle-button{
@@ -1100,6 +1136,15 @@ body{
 
   .dropdowns-first-row,.dropdowns-second-row{
     padding: 0px 0;
+  }
+  .small-screen-dropdown-menu{
+    display: inline-block;
+  }
+  .home-navbar-button{
+    display: none;
+  }
+  .shop-navbar-button{
+    display: none;
   }
 }
 
