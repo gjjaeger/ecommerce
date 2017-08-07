@@ -11,12 +11,14 @@
 // about supported directives.
 //
 //= require bootstrap-sprockets
+
+
+//= require card
+//= require bootstrap
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
-//= require card
-//= require bootstrap
 //= require moment
 //= require bootstrap-datetimepicker
 //= require bootstrap-select
@@ -31,6 +33,11 @@ $(document).on('turbolinks:load', function(){
   var dropdownSlider = $( "#dropdown-slider" );
   $(window).resize(function(){
     sizeChecker();
+  });
+
+  $('.dropdown-toggle').click(function(e) {
+    e.preventDefault();
+    e.stopPropagation();
   });
 
   var bigPicture=$('.product-show-image').innerHeight();
@@ -86,16 +93,8 @@ $(document).on('turbolinks:load', function(){
   $(".dropdown-toggle").dropdown();
 
   $('.dropdown-button').mouseenter(function(){
-    $(this).parent().addClass("open");
-  });
-
-
-
-  $('.dropdown-menu').mouseenter(function(){
-    $(this).prev(".dropdown-toggle").parent().addClass("open");
-  });
-
-
+    $(this).parent().dropdown("toggle");
+  }); 
 
   $('#search-form').on('keyup', function() {
       $.get("/categories/"+ id, {low: lowPrice, high: highPrice ,tags: tags }, function() {

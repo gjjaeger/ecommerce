@@ -1103,6 +1103,10 @@ body{
   .small-screen-tabbed-content{
     margin-bottom: 300px !important;
   }
+
+  .product-topbar-text{
+    font-size: 24px;
+  }
 };
 
 @media screen and (max-width: 535px) {
@@ -1154,5 +1158,17 @@ body{
   }
   .small-screen-tabbed-content{
     margin-bottom: 150px;
+  }
+};
+
+@media screen and (max-width: 420px) {
+  .product-topbar-text{
+    font-size: 14px;
+  }
+  .tab-item, .content-item{
+    font-size: 10px;
+  }
+  .small-screen-tabbed-content{
+    padding: 0;
   }
 };
