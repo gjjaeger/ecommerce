@@ -25,18 +25,11 @@
                 <span class="button-text-black">Continue Shopping</span>
               </a>
             </button>
-            <%if @order.order_items.any?%>
-              <%= button_tag :class=>"btn btn-lg simple-button-black final-checkout",:"data-href" => @order.id, :id=>"final-checkout" do %>
-                <span class="button-text-black">
-                  Proceed to checkout
-                </span>
-              <%end%>
-            <%end%>
           </div>
           <div class="section-title-container checkout-title-container col-xs-12">
             <span class="section-title">Shopping Cart</span>
           </div>
-          <table class="checkout-table">
+          <table class="cart-table">
             <tr class="title-row">
               <th class="small-column"></th>
               <th class="checkout-tab-item">Name</th>
@@ -50,16 +43,74 @@
             <div class="order-item-rows">
               <%if @order.order_items.any?%>
                 <%@order.order_items.each do |order_item|%>
+                  <tr class="between-product-spacer"></tr>
+                  <tr class="product-info-row">
+                    <td>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                      <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
+                    </td>
+                    <td colspan="2" class="very-small-screen-product-name-size">
+                      <span class="checkout-name-container block">
+                        <span class="small-text checkout-product-name">
+                          <%=order_item.product.name%>
+                        </span>
+                      </span>
+                      <span class="very-small-screen-size-and-price block">
+                        <span class="small-screen-size-container inline text-left">
+                          <span class="small-text" id="very-small-screen-size">
+                            Size: <%=order_item.product.size%>cm
+                          </span>
+                        </span>
+                        <span class="small-screen-unit-price-container block text-left">
+                          <span class="small-text" id="very-small-screen-price">
+                            Price: <%=number_to_currency order_item.product.price%>
+                          </span>
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr class="same-product-spacer"></tr>
+                  <tr class="quantity-and-total-row">
+                    <td class="small-column"></td>
+                    <td class="checkout-tab-item">Name</td>
+                    <td class="checkout-tab-item">Size</td>
+                    <td class="checkout-tab-item">Unit Price</td>
+                    <td class="checkout-tab-item">Qty</td>
+                    <td class="checkout-tab-item">Total Price</td>
+                    <td class="small-column"></td>
+                  </tr>
                   <tr class="order-item-row" id=<%=order_item.id%>>
                     <div class="order-item">
                       <div class="checkout-details">
-                        <td>
+                        <td class="image-and-info-column">
                           <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
+
                         </td>
-                        <td>
+                        <td class="product-info-column">
                           <span class="checkout-name-container">
                             <span class="small-text checkout-product-name">
                               <%=order_item.product.name%>
+                            </span>
+                          </span>
+                          <span class="small-screen-size-container">
+                            <span class="small-text" id="very-small-screen-size">
+                              Size: <%=order_item.product.size%>cm
+                            </span>
+                          </span>
+                          <span class="small-screen-unit-price-container">
+                            <span class="small-text" id="very-small-screen-price">
+                              Unit Price: <%=number_to_currency order_item.product.price%>
                             </span>
                           </span>
                         </td>
@@ -100,6 +151,7 @@
                       </div>
                     </div>
                   </tr>
+                  <tr class="between-product-spacer"></tr>
                   <tr class="spacer"></tr>
                 <%end%>
               <%else%>
@@ -109,16 +161,23 @@
           </table>
           <div class="border-bottom"></div>
           <div class="sub-total col-xs-12">
-            <span class="col-xs-3 col-xs-offset-9">
-              <span class="subtotal-text">
-                Subtotal
-              </span>
-              <span class="order-total-container">
-                <span class="sub-total-number">
-                  <%= number_to_currency current_order.calculate_total %>
-                </span>
+            <span class="subtotal-text">
+              Subtotal
+            </span>
+            <span class="order-total-container">
+              <span class="sub-total-number">
+                <%= number_to_currency current_order.calculate_total %>
               </span>
             </span>
+          </div>
+          <div class="btn-container col-xs-12">
+            <%if @order.order_items.any?%>
+              <%= button_tag :class=>"btn btn-lg simple-button-black final-checkout",:"data-href" => @order.id, :id=>"final-checkout" do %>
+                <span class="button-text-black">
+                  Proceed to checkout
+                </span>
+              <%end%>
+            <%end%>
           </div>
           <div class="shipping-div">
             <span class="free-shipping-text">Free Shipping on all orders above $200</span>

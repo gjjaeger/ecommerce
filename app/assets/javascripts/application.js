@@ -35,11 +35,6 @@ $(document).on('turbolinks:load', function(){
     sizeChecker();
   });
 
-  $('.dropdown-toggle').click(function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  });
-
   var bigPicture=$('.product-show-image').innerHeight();
   $('.preview-images').innerHeight(bigPicture);
 
@@ -91,10 +86,7 @@ $(document).on('turbolinks:load', function(){
   localStorage.setItem("lowPrice", 0);
   localStorage.setItem("highPrice", 400);
   $(".dropdown-toggle").dropdown();
-
-  $('.dropdown-button').mouseenter(function(){
-    $(this).parent().dropdown("toggle");
-  }); 
+  $(".dropdown-toggle-cart").dropdown();
 
   $('#search-form').on('keyup', function() {
       $.get("/categories/"+ id, {low: lowPrice, high: highPrice ,tags: tags }, function() {
@@ -146,12 +138,9 @@ $(document).on('turbolinks:load', function(){
 
   function cartFunctions() {
     $('.delete_order_item').bind('ajax:success', function() {
-      $('.dropdown-button-container').load(location.href + ' #dropdown-toggle-button', function(){
-        $(".dropdown-toggle").dropdown();
-        $('#dropdown-toggle-button').addClass("open");
-        $('.dropdown-button').mouseenter(function(){
-          $(this).parent().addClass("open");
-        });
+      $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+        $(".dropdown-toggle-cart").dropdown();
+        $('#dropdown-cart-button').addClass("open");
       });
     });
     // $('.quantity').val(0);
@@ -692,12 +681,9 @@ $(document).on('turbolinks:load', function(){
 
   //order-item create.js
   $('.add-cart').closest('form').bind('ajax:success', function() {
-    $('.dropdown-button-container').load(location.href + ' #dropdown-toggle-button', function(){
-      $(".dropdown-toggle").dropdown();
-      $('#dropdown-toggle-button').addClass("open");
-      $('.dropdown-button').mouseenter(function(){
-        $(this).parent().addClass("open");
-      });
+    $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+      $(".dropdown-toggle-cart").dropdown();
+      $('#dropdown-cart-button').addClass("open");
       cartFunctions();
     });
     $('.add-cart').prop("disabled", false);
@@ -752,7 +738,7 @@ $(document).on('turbolinks:load', function(){
       $.get("/orders/" + id + "/checkout", function() {
       })
       .success( function (data) {
-        var content = $(data).find('.checkout-content');
+        var content = $(data).find('.shipping-page');
         $('#content').html(content);
         $('.spinner').hide();
         shipping();

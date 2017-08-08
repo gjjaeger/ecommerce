@@ -14,14 +14,14 @@
                 <span id="cart-product-quantity">Qty.: <%=item.quantity%></span>
                 <span class="last-row">
                   <span id="cart-product-size">Size: <%=item.product.length%>cm</span>
-                  <%= link_to order_item_path(item), :data => {:method => "delete"}, remote: true, :class =>"delete_order_item" do%>
+                  <%=link_to order_item_path(item), :data => {:method => "delete"}, remote: true, :class =>"delete_order_item" do%>
                     <span class="remove-text"><i class="fa fa-trash" aria-hidden="true"></i></span>
                   <%end%>
+                </span>
               </span>
             </span>
           <% end %>
           <span class="item-right">
-
           </span>
         </span>
       </li>

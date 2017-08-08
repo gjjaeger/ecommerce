@@ -1,10 +1,7 @@
 $('.delete_order_item').bind('ajax:success', function() {
-  $('.dropdown-button-container').load(location.href + ' #dropdown-toggle-button', function(){
-    $(".dropdown-toggle").dropdown();
-    $('#dropdown-toggle-button').addClass("open");
-    $('.dropdown-button').mouseenter(function(){
-      $(this).parent().addClass("open");
-    });
+  $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+    $(".dropdown-toggle-cart").dropdown();
+    $('#dropdown-cart-button').addClass("open");
   });
 });
 

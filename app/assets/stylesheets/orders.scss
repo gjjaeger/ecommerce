@@ -1,6 +1,10 @@
 // Place all the styles related to the Orders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+$grey: #808080;
+$light-blue: #9edcec;
+$light-grey: #f5f5f5;
+$dark-blue: #0e647d;
 
 .payment-form-content{
   padding:10px;
@@ -76,12 +80,12 @@ tr.title-row>th{
   line-height: 24px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-weight: 900 !important;
+  font-weight: 300 !important;
   color: #959595;
   text-align: center;
 }
 
-.checkout-table{
+.checkout-table,.cart-table{
   width: 100%;
 }
 
@@ -94,7 +98,7 @@ tr.title-row>th{
   float: right;
 }
 
-.spacer{
+.spacer, .same-product-spacer, .between-product-spacer{
   height: 20px;
 }
 
@@ -103,6 +107,8 @@ tr.title-row>th{
   clear: both;
   padding-top: 20px;
   padding-bottom: 20px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 
 .subtotal-text{
@@ -138,6 +144,7 @@ tr.title-row>th{
 .sub-total-number{
   font-size: 20px;
   font-weight: bold;
+  padding-left: 15px;
 }
 
 .company-logo-checkout{
@@ -156,6 +163,7 @@ tr.title-row>th{
   font-size: 13px;
   font-weight: bold;
   text-transform: uppercase;
+  text-align: left;
 }
 
 #total-total-text{
@@ -363,6 +371,11 @@ tr.title-row>th{
 
 .checkout-product-name{
   vertical-align: middle;
+}
+
+#navbar{
+  background-color: white !important;
+  border-bottom: 1px solid $light-grey !important;
 }
 
 td {

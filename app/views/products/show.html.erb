@@ -147,13 +147,13 @@
               <ul class="tabs-content">
                 <li class="active content-item" id="description-tab-content"><%=@product.description%></li>
                 <li class="content-item" id="size-tab-content">
-                  <span class="small-text">Diameter: 15cm</span></br>
-                  <span class="small-text">Weight: 50g</span></br>
-                  <span class="small-text">Length: 30cm</span>
+                  <span class="small-text capitalize">Diameter: 15cm</span></br>
+                  <span class="small-text capitalize">Weight: 50g</span></br>
+                  <span class="small-text capitalize">Length: 30cm</span>
                 </li>
                 <li class="content-item" id="materials-tab-content">
                   <%@product.materials.each do |material|%>
-                    <span class="small-text"><%=material.name%></span></br>
+                    <span class="small-text capitalize"><%=material.name%></span></br>
                   <%end%>
                 </li>
               </ul>
@@ -172,13 +172,13 @@
           <ul class="tabs-content">
             <li class="active content-item" id="small-description-tab-content"><%=@product.description%></li>
             <li class="content-item" id="small-size-tab-content">
-              <span class="small-text">Diameter: 15cm</span></br>
-              <span class="small-text">Weight: 50g</span></br>
-              <span class="small-text">Length: 30cm</span>
+              <span class="small-text capitalize">Diameter: 15cm</span></br>
+              <span class="small-text capitalize">Weight: 50g</span></br>
+              <span class="small-text capitalize">Length: 30cm</span>
             </li>
             <li class="content-item" id="small-materials-tab-content">
               <%@product.materials.each do |material|%>
-                <span class="small-text"><%=material.name%></span></br>
+                <span class="small-text capitalize"><%=material.name%></span></br>
               <%end%>
             </li>
           </ul>
