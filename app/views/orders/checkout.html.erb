@@ -1,8 +1,5 @@
 <div class="">
   <div class="shipping-page">
-    <div class="col-xs-12 company-logo-checkout-container">
-      <%= image_tag("necklaces.jpg", :class => "company-logo-checkout") %>
-    </div>
     <div class="checkout-progress-container">
       <div class="checkout-progress col-xs-12">
         <%= link_to order_cart_path(current_order), class: "", id:"" do %>
@@ -68,13 +65,13 @@
       <div class="shipping-button-container">
         <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"shipping" do %>
           <span class="button-text-black">
-            Calculate Shipping
+            Continue
           </span>
         <%end%>
       </div>
     <%end%>
     <div class="big wrapper col-xs-6" id="order-summary-content">
-      <div class="shipping-content">
+      <div class="cart-content">
         <div class="section-title-container checkout-title-container">
           <span class="section-title" id="shopping-cart-checkout-title">Shopping Cart</span>
         </div>
@@ -174,6 +171,8 @@
       </div>
     </div>
     <div id="shipping-content">
+    </div>
+    <div id="payment-form-placeholder">
     </div>
   </div>
 </div>

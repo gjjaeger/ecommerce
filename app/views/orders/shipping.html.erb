@@ -110,48 +110,88 @@
         </span>
       </div>
     </div>
-    <div class="section-title-container checkout-title-container">
-      <span class="section-title" id="shipping-method-title">Shipping methods</span>
-    </div>
-    <%@rates.each do|rate|%>
-      <div class="col-xs-12">
-        <%= radio_button_tag 'rate', rate[:id], rate[:rate]==@lowest_rate ? true : false, class:"rate-radio", :"data-href"=>current_order.id%>
-        <span class="small-text radio-button-text"><%=rate[:service]%> <%=rate[:courier]%> <%=rate[:delivery_days]%> <%if current_order.total_price >= 200 && rate[:rate]==@lowest_rate%><span class="small-text bold">free </span><span class="original-price small-text">(<%=number_to_currency rate[:rate]%>)</span><%elsif current_order.total_price >= 200 && rate[:rate]!=@lowest_rate%><span class="small-text bold"><%=number_to_currency (rate[:rate].to_f-@lowest_rate.to_f)%> </span><span class="original-price small-text">(<%=number_to_currency rate[:rate]%>)</span><%else%><span class="small-text bold"><%=number_to_currency rate[:rate]%></span><%end%></span>
-      </div>
-    <%end%>
-
-    <div class="shipping-container">
+    <div class="shipping-method-address-container">
       <div class="section-title-container checkout-title-container">
-        <span class="section-title" id="address-checkout-title">Shipping address</span>
+        <span class="section-title" id="shipping-method-title">Shipping methods</span>
       </div>
-      <%= link_to order_checkout_path(current_order), class: "btn btn-lg simple-button-black change-address", id:"final-checkout" do %>
-        <span class="button-text-black">
-          Change Address
-        </span>
+      <%@rates.each do|rate|%>
+        <div class="col-xs-12">
+          <%= radio_button_tag 'rate', rate[:id], rate[:rate]==@lowest_rate ? true : false, class:"rate-radio", :"data-href"=>current_order.id%>
+          <span class="small-text radio-button-text"><%=rate[:service]%> <%=rate[:courier]%> <%=rate[:delivery_days]%> <%if current_order.total_price >= 200 && rate[:rate]==@lowest_rate%><span class="small-text bold">free </span><span class="original-price small-text">(<%=number_to_currency rate[:rate]%>)</span><%elsif current_order.total_price >= 200 && rate[:rate]!=@lowest_rate%><span class="small-text bold"><%=number_to_currency (rate[:rate].to_f-@lowest_rate.to_f)%> </span><span class="original-price small-text">(<%=number_to_currency rate[:rate]%>)</span><%else%><span class="small-text bold"><%=number_to_currency rate[:rate]%></span><%end%></span>
+        </div>
       <%end%>
-      <div class="shipping-address">
-        <span class="small-text">
-          <%=@address.name%>
-        </span>
-        <br>
-        <span class="small-text">
-          <%=@address.line1%>
-        </span>
-        <span class="small-text">
-          <%=@address.line2%>
-        </span>
-        <br>
-        <span class="small-text">
-          <%=@address.city%>
-        </span>
-        <br>
-        <span class="small-text">
-          <%=@address.zip%>
-        </span>
-        <br>
-        <span class="small-text">
-          <%=IsoCountryCodes.find(@address.country).name%>
-        </span>
+      <div class="totals">
+        <div class="sub-total col-xs-12">
+          <span class="col-xs-8 col-xs-offset-4">
+            <span class="sidecart-text">
+              Subtotal
+            </span>
+            <span class="order-total-container">
+              <span class="sidecart-number">
+                <%= number_to_currency current_order.calculate_total %>
+              </span>
+            </span>
+          </span>
+        </div>
+        <div class="shipping-total col-xs-12">
+          <span class="col-xs-8 col-xs-offset-4" id = "shipping-cost-container">
+            <span class="sidecart-text">
+              Shipping Cost
+            </span>
+            <span class="order-total-container">
+              <span class="sidecart-number" id="shipping-cost-number">
+                <%=number_to_currency @shipping%>
+              </span>
+            </span>
+          </span>
+        </div>
+        <div class="total-total col-xs-12">
+          <span class="col-xs-8 col-xs-offset-4">
+            <span class="sidecart-text" id="total-total-text">
+              Total
+            </span>
+            <span class="order-total-container">
+              <span id="total-total-number">
+                <%=number_to_currency @total%>
+              </span>
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="shipping-container">
+        <div class="section-title-container checkout-title-container">
+          <span class="section-title" id="address-checkout-title">Shipping address</span>
+        </div>
+        <%= link_to order_checkout_path(current_order), class: "btn btn-lg simple-button-black change-address", id:"final-checkout" do %>
+          <span class="button-text-black">
+            Change Address
+          </span>
+        <%end%>
+        <div class="shipping-address">
+          <span class="small-text">
+            <%=@address.name%>
+          </span>
+          <br>
+          <span class="small-text">
+            <%=@address.line1%>
+          </span>
+          <span class="small-text">
+            <%=@address.line2%>
+          </span>
+          <br>
+          <span class="small-text">
+            <%=@address.city%>
+          </span>
+          <br>
+          <span class="small-text">
+            <%=@address.zip%>
+          </span>
+          <br>
+          <span class="small-text">
+            <%=IsoCountryCodes.find(@address.country).name%>
+          </span>
+        </div>
       </div>
     </div>
   </div>

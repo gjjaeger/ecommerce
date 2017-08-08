@@ -951,6 +951,19 @@ body{
   display: none;
 }
 
+.shipping-content{
+  max-height: 75vh;
+  overflow: scroll;
+}
+
+.checkout-content{
+  margin: 50px 25px;
+}
+
+.totals{
+  display:none;
+}
+
 @media screen and (max-width: 1200px) {
   .preview-images{
     width:100px;
@@ -1184,6 +1197,10 @@ body{
     vertical-align: bottom;
   }
 
+  .totals{
+    display:inline-block;
+  }
+
   .progress-bar-item span{
     position: absolute;
     bottom: 0;
@@ -1206,7 +1223,7 @@ body{
     display: table-row;
   }
 
-  .cart-table.title-row{
+  .cart-table .title-row{
     display: none;
   }
 

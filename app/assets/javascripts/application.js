@@ -716,9 +716,19 @@ $(document).on('turbolinks:load', function(){
         var state = $('input#state').val();
         var zip = $('input#zip').val();
         var country = $('#country').val();
-        $("#address-form").animate({
-          left: "-100%"
-        }, 1000);
+        var windowWidth = $(window).width();
+        if (windowWidth <= 650){
+          placedivoverdiv('#address-form','.circle-spinner2');
+          $('#address-form').hide();
+          $("#order-summary-content").animate({
+            left: "-100%"
+          }, 1000);
+        }
+        else {
+          $("#address-form").animate({
+            left: "-100%"
+          }, 1000);
+        };
         ajaxCall3();
         $.ajax({
           type: "POST",
@@ -750,15 +760,29 @@ $(document).on('turbolinks:load', function(){
       $.get("/orders/"+ id + "/shipping", function() {
       })
       .success(function (data) {
-        var shippingData= $(data).find('.shipping-content')
+        var windowWidth = $(window).width();
+        if (windowWidth <= 650){
+          var shippingData= $(data).find('.shipping-method-address-container')
+        }
+        else{
+          var shippingData= $(data).find('.shipping-content')
+        };
         // $('#total-price').html('<%=number_to_currency@shipping%>');
         $('#order-summary-content').html(shippingData);
+        $("#order-summary-content").animate({
+          left: "0%"
+        }, 1000);
         $('.checkout-progress-container').html($(data).find('.checkout-progress-container'));
         // $("#product-modal").modal("show");
         $('.circle-spinner').hide();
         $('.circle-spinner2').hide();
-        $("#address-form :input").prop("disabled", false);
+        $("#payment-form :input").prop("disabled", false);
         radioButtons();
+        if (windowWidth >= 650){
+          $('.shipping-content').animate({
+            scrollTop: $(".sub-total").offset().top
+          },'slow');
+        };
       });
     };
 
@@ -796,12 +820,22 @@ $(document).on('turbolinks:load', function(){
       $.get("/orders/new", function() {
       })
       .success( function (data) {
-        products = $(data).find('#payment-form');
-        $('#address-form').html(products);
-        $("#address-form :input").prop("disabled", true);
-        $("#address-form").animate({
-          left: "0%"
-        }, 1000);
+        var paymentForm = $(data).find('#payment-form');
+        var windowWidth = $(window).width();
+        if (windowWidth <= 650){
+          $('#payment-form-placeholder').html(paymentForm);
+          $("#payment-form-placeholder :input").prop("disabled", true);
+          $("#payment-form-placeholder").animate({
+            left: "0%"
+          }, 1000);
+        }
+        else{
+          $('#address-form').html(paymentForm);
+          $("#address-form :input").prop("disabled", true);
+          $("#address-form").animate({
+            left: "0%"
+          }, 1000);
+        };
         updateCreditCard();
         $('.spinner').hide();
       });
