@@ -900,10 +900,6 @@ body{
   width: 40px !important;
 }
 
-.sub-total{
-  text-align: right!important;
-}
-
 .small-screen-size-container, .small-screen-unit-price-container{
   display: none;
 }
@@ -962,6 +958,19 @@ body{
 
 .totals{
   display:none;
+}
+
+.small-screen-shipping-container{
+  display: none;
+}
+
+#order-summary-content{
+  padding: 0 !important;
+}
+
+.cart-info .sub-total{
+  text-align: right;
+  padding-right: 0 !important;
 }
 
 @media screen and (max-width: 1200px) {
@@ -1181,6 +1190,53 @@ body{
 }
 
 @media screen and (max-width: 650px) {
+
+  #payment-form{
+    margin-top: 30px;
+    border: 1px solid $light-grey;
+  }
+
+  .cart-content{
+    display: none;
+  }
+
+  #address-checkout-title, #shipping-method-title{
+    font-size: 16px !important;
+  }
+
+  .totals .sub-total, .totals .shipping-total, .totals .total-total{
+    padding-left: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 200px !important;
+  }
+
+  .totals .sub-total span, .totals .shipping-total span{
+    font-size: 10px !important;
+    color: grey;
+    line-height: 25px;
+  }
+
+  .total-total span{
+    font-size: 14px !important;
+    color: black;
+  }
+
+  .totals{
+    width: 100% !important;
+    border-top: 1px solid $light-grey;
+  }
+
+  .order-total-container{
+    float: right;
+    vertical-align: middle;
+    line-height: 25px;
+  }
+
+  .shipping-address span{
+    font-size: 10px !important;
+    line-height: 0px !important;
+  }
   #address-form, #order-summary-content{
     width: 100%;
   }
@@ -1199,6 +1255,10 @@ body{
 
   .totals{
     display:inline-block;
+  }
+
+  .small-screen-shipping-container{
+    display: block;
   }
 
   .progress-bar-item span{

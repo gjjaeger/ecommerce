@@ -104,39 +104,43 @@ $(document).on('turbolinks:load', function(){
       // }).show();
   });
 
-  function updateOrderItemCheckout(checkoutQuantityVar){
-    var checkoutQuantity = checkoutQuantityVar.val();
-    var orderItemId=checkoutQuantityVar.siblings('.order_item_id').val();
-    $.ajax({
-        url: '/order_items/'+orderItemId,
-        type: 'put',
-        dataType: 'json',
-        data: {order_item: {quantity: checkoutQuantity}},
-        success: function(data) {
+  function orderItemCheckout(){
+    function updateOrderItemCheckout(checkoutQuantityVar){
+      var checkoutQuantity = checkoutQuantityVar.val();
+      var orderItemId=checkoutQuantityVar.siblings('.order_item_id').val();
+      $.ajax({
+          url: '/order_items/'+orderItemId,
+          type: 'put',
+          dataType: 'json',
+          data: {order_item: {quantity: checkoutQuantity}},
+          success: function(data) {
+            checkoutQuantityVar.blur();
+            $('.total_price_per_product.'+orderItemId).load(location.href + ' .total_price_per_product.'+orderItemId);
+            $('.sub-total-number').load(location.href + ' .sub-total-number');
+            $('#order-total').load(location.href + ' #order-total');
+          }
+      });
+    };
 
-                 checkoutQuantityVar.blur();
-                 $('.total_price_per_product.'+orderItemId).load(location.href + ' .total_price_per_product.'+orderItemId);
-                 $('.sub-total-number').load(location.href + ' .sub-total-number');
-                 $('#order-total').load(location.href + ' #order-total');
-                 }
+    $('.checkout-quantity').on('change', function() {
+      updateOrderItemCheckout($(this));
+    });
+    // else if (quantity==0 && quantityElement.selector===".checkout-quantity") {
+    //   $(this).val($('.order_item_quantity').val());
+    // }
+    $('.checkout-plus-quantity').on('click',function(){
+      updateOrderItemCheckout($("."+$(this).attr("data-href")));
+    });
+
+    $('.checkout-minus-quantity').on('click',function(){
+      updateOrderItemCheckout($("."+$(this).attr("data-href")));
     });
   };
 
-  $('.checkout-quantity').on('change', function() {
-    updateOrderItemCheckout($(this));
-  });
-  // else if (quantity==0 && quantityElement.selector===".checkout-quantity") {
-  //   $(this).val($('.order_item_quantity').val());
-  // }
-  $('.checkout-plus-quantity').on('click',function(){
-    updateOrderItemCheckout($("."+$(this).attr("data-href")));
-  });
-
-  $('.checkout-minus-quantity').on('click',function(){
-    updateOrderItemCheckout($("."+$(this).attr("data-href")));
-  });
+  orderItemCheckout();
 
   function cartFunctions() {
+
     $('.delete_order_item').bind('ajax:success', function() {
       $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
         $(".dropdown-toggle-cart").dropdown();
@@ -676,6 +680,8 @@ $(document).on('turbolinks:load', function(){
   $('.delete_order_item_checkout').bind('ajax:success', function() {
     $('.cart-info').load(location.href + ' .cart-info', function(){
       shipping();
+      cartFunctions();
+      orderItemCheckout();
     });
   });
 
@@ -749,7 +755,7 @@ $(document).on('turbolinks:load', function(){
       })
       .success( function (data) {
         var content = $(data).find('.shipping-page');
-        $('#content').html(content);
+        $('.cart-page').html(content);
         $('.spinner').hide();
         shipping();
       });
@@ -798,8 +804,9 @@ $(document).on('turbolinks:load', function(){
           data: { selected_rate: selected_rate},
           success : function(data){
             $('.circle-spinner').hide();
-            var shippingData= $(data).find('.sidecart-container')
-            $('.sidecart-container').html(shippingData);
+            var updatedTotals= $(data).find('.totals').length>=1 ? '.totals' : '.sidecart-container';
+            var updatedContent= $(data).find(updatedTotals)
+            $(updatedTotals).html(updatedContent);
             $("#submit-payment").prop("disabled", false);
           }
         });
