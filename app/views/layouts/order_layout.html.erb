@@ -31,6 +31,20 @@
   <body>
     <header>
       <nav class="navbar-fixed-top" id="navbar">
+        <ul class="nav navbar-nav navbar-left currency-dropdown">
+          <li class="dropdown" id="currency-dropdown">
+            <a href="javascript:void(0)" class="currency-dropdown-button currency-field small-text"><%=current_currency%><i class='hi hi-angle-down'></i></a>
+            <ul class="dropdown-currency-menu">
+              <a href="javascript:void(0)" class="closebtn">&times;</a>
+              <%major_currencies(Money::Currency.table).each do |currency|%>
+                <li class="currency" data-href=<%=currency[:id]%>><span class="small-text currency-symbol"><%=currency[:symbol]%></span><span class="small-text currency-code"><%=currency[:id]%></span></li>
+              <%end%>
+              <%all_currencies(Money::Currency.table).each do |currency|%>
+                <li class="currency" data-href=<%=currency[:id]%>><span class="small-text currency-symbol"><%=currency[:symbol]%></span><span class="small-text currency-code"><%=currency[:id]%></span></li>
+              <%end%>
+            </ul>
+          </li>
+        </ul>
         <ul class="nav navbar-nav navbar navbar-center">
           <li>
             <%= link_to products_path, class:"logo-link" do%><span><%= image_tag("logo.jpg", :class=> "navbar-logo") %></span><%end%>
@@ -38,7 +52,9 @@
         </ul>
       </nav>
     </header>
-    <%= yield %>
+    <div class="yield-container">
+      <%= yield %>
+    </div>
   </body>
   <%= render "layouts/footer" %>
   <div class="spinner">

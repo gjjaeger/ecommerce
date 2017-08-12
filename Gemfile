@@ -38,6 +38,8 @@ source 'https://rubygems.org'
   gem 'will_paginate-bootstrap'
   gem 'country_select'
   gem 'card-rails'
+  gem 'money-rails', '~>1'
+  gem 'eu_central_bank', '~> 1.1.3'
 
 
 

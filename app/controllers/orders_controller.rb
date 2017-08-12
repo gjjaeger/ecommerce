@@ -35,6 +35,7 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
+    @order.currency_total = session[:currency]
 
     respond_to do |format|
       if @order.save
@@ -72,37 +73,48 @@ class OrdersController < ApplicationController
   end
 
   def checkout
+    @order_total_currency_price=Money.default_bank.exchange(current_order.calculate_sgd_total*100, "SGD", current_currency.upcase)
+    @freeShippingAmount = Money.default_bank.exchange(200*100, "SGD", current_currency.upcase)
     @address = Address.new()
     @order=Order.find(current_order)
     render :layout=>'order_layout'
   end
 
   def cart
+    @order_total_currency_price=Money.default_bank.exchange(current_order.calculate_sgd_total*100, "SGD", current_currency.upcase)
     @order=Order.find(current_order)
+    @freeShippingAmount = Money.default_bank.exchange(200*100, "SGD", current_currency.upcase)
     render :layout=>'order_layout'
   end
 
   def shipping
     shipment=EasyPost::Shipment.retrieve(current_order.shipment_id)
+
     @rates=shipment.rates
-    @lowest_rate=@rates.min_by{|h| h.rate}.rate
+    @rates = @rates.each{|h| h.rate = Money.default_bank.exchange((h.rate.to_f*100), h.currency.upcase , current_currency.upcase)}
+    @lowest_rate=Money.new((@rates.min_by{|h| h.rate}.rate), (@rates.min_by{|h| h.rate}.currency))
     @order=current_order
+    @zero_object=Money.new(0,current_currency.upcase)
     order = Order.find(current_order)
     if !@order.order_items.any? {|order_item| order_item.product.category_id=="3" }
-      totalship = 0
+      totalship = @zero_object
+      selected_rate = params[:selected_rate] ? (Money.new((@rates.select {|e| e.id == params[:selected_rate]}[0].rate),(@rates.select {|e| e.id == params[:selected_rate]}[0].currency.upcase))) : nil
       if current_order.total_price >= 200
-        totalship= params[:selected_rate] ? (@rates.select {|e| e.id == params[:selected_rate]}[0].rate.to_f)-(@lowest_rate.to_f) : @rates.min_by{|h| h[:rate]}.rate
+        totalship= selected_rate ? (selected_rate-@lowest_rate) : @lowest_rate
       else
-        totalship= params[:selected_rate] ? @rates.select {|e| e.id == params[:selected_rate]}[0].rate : @rates.min_by{|h| h[:rate]}.rate
+        totalship= params[:selected_rate] ? selected_rate : @lowest_rate
       end
       if params[:selected_rate]
-        @shipping=((current_order.total_price)>=200 && @rates.select {|e| e.id == params[:selected_rate]}[0].rate==@lowest_rate) ? 0 : totalship
+        @shipping=((current_order.total_price)>=200 && selected_rate==@lowest_rate) ? @zero_object : totalship
       else
-        @shipping=((current_order.total_price)>=200 ? 0 : totalship)
+        @shipping=((current_order.total_price)>=200 ? @zero_object : totalship)
       end
-      @total100 = (current_order.total_price * 100) + ((@shipping.to_f)*100)
-      @total = (current_order.total_price) + ((@shipping.to_f))
+      @order_total= current_order.calculate_total(current_currency.upcase)
+
+      @total = @shipping + @order_total
+      @total100 = @total
       order.total_shipping=totalship
+      order.total_shipping_currency=totalship.currency.iso_code
       order.selected_rate = params[:selected_rate] ? params[:selected_rate] : @rates.min_by{|h| h[:rate]}.id
       order.save!
     end

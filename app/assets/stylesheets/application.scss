@@ -35,6 +35,65 @@ $dark-blue: #0e647d;
   margin:0;
 }
 
+.dropdown-currency-menu {
+  height: 100%;
+  width: 0px;
+  margin:0 !important;
+  padding: 0!important;
+  padding-top: 30px !important;
+  position: fixed;
+  z-index: 10000000;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  background-color: $light-grey;
+}
+
+body{
+  transition: margin-left .5s;
+}
+
+.dropdown-currency-menu li {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  height:30px;
+  width:100px !important;
+  z-index: 500000000000 !important;
+  color:black!important;
+}
+
+.dropdown-currency-menu .closebtn {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  font-size: 36px !important;
+  margin-left: 50px;
+  font-weight: 100 !important;
+}
+
+.currency:hover{
+  cursor: pointer;
+  .currency-symbol{
+    display: inline-block;
+  }
+}
+
+.currency-symbol{
+  position:absolute;
+  left:10px;
+  display: none;
+}
+
+.closebtn:hover {
+  text-decoration: none;
+  background-color: transparent !important;
+}
+
 input:focus::-webkit-input-placeholder { opacity:0; }
 input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
 input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
@@ -973,6 +1032,18 @@ body{
   padding-right: 0 !important;
 }
 
+.dropdown-currency-menu{
+
+  overflow: scroll;
+}
+
+.dropdown-currency-menu li{
+  width:100% !important;
+  text-align: center;
+  padding: 3px;
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 1200px) {
   .preview-images{
     width:100px;
@@ -1118,6 +1189,7 @@ body{
     border: 1px solid $light-grey !important;
     padding: 0 !important;
   }
+
   .dropdown-menu-nav li{
     width:100% !important;
     border-bottom: 1px solid $light-grey;
@@ -1193,7 +1265,44 @@ body{
 
   #payment-form{
     margin-top: 30px;
-    border: 1px solid $light-grey;
+  }
+
+  .shipping-address{
+    float: left !important;
+  }
+
+  .change-address span{
+    font-size: 10px !important;
+  }
+
+  .change-address{
+    padding: 5px !important;
+    width: 160px !important;
+  }
+
+  #continue-shopping{
+    width: 180px !important;
+    padding: 5px
+  }
+
+  .return-to-shop-container{
+    text-align: left !important;
+    padding-bottom: 15px !important;
+    padding-top: 15px !important;
+  }
+
+  #final-checkout{
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  #final-checkout span{
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+
+  #continue-shopping span{
+    font-size: 12px !important;
   }
 
   .cart-content{

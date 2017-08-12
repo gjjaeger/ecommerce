@@ -36,7 +36,13 @@ class CategoriesController < ApplicationController
       else
         @products1=@category.products.where("(stock > ?)", 0)
       end
-      @products2=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 400, @category.id.to_s, 0)
+      @lowPrice = params[:low] ? params[:low] : 0
+      @highPrice = params[:high] ? params[:high] : 400
+      @currency = params[:currency] ? params[:currency] : current_currency;
+      lowPrice = params[:low]&&params[:currency] ? (Money.default_bank.exchange(params[:low].to_f*100, @currency, "SGD")).to_f : 0;
+      highPrice = params[:high]&&params[:currency] ? (Money.default_bank.exchange(params[:high].to_f*100, @currency, "SGD")).to_f : 400;
+
+      @products2=Product.where("(price >= ? AND price <= ? AND category_id = ? AND stock > ?)", lowPrice, highPrice, @category.id.to_s, 0)
       @productss=(@products1 & @products2)
     # elsif params[:id] == '3'
     #   @products=Product.where("(price >= ? AND price <= ? AND category_id = ?)", params[:low] ? params[:low] : 0, params[:high] ? params[:high] : 100, @category.id.to_s)

@@ -27,7 +27,6 @@ class AddressesController < ApplicationController
       :phone => '415-456-7890'
     )
 
-    session[:rates]=[]
     customs_items = []
     parcels=[]
     current_order.order_items.each do |item|

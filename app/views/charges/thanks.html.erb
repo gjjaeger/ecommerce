@@ -1,1 +1,35 @@
-<h1>You were successfully charged from the custom form!</h1>
+<div class="container">
+  <div class="btn-container return-to-shop-container col-xs-12">
+    <button class="btn btn-lg simple-button-black" id="continue-shopping">
+      <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+        <span class="button-text-black">Return To Shop</span>
+      </a>
+    </button>
+  </div>
+  <div class="checkout-progress-container">
+
+    <div class="checkout-progress col-xs-12">
+      <div class="span progress-bar-item col-xs-3 text-center"><span>Cart Checkout</span></div>
+      <div class="span progress-bar-item col-xs-3 text-center"><span>Shipping</span></div>
+      <div class="span progress-bar-item col-xs-3 text-center"><span>Payment</span></div>
+      <div class="span progress-bar-item col-xs-3 text-center" id="current-step-item"><span>Confirmation</span></div>
+    </div>
+    <div class="checkout-progress-count col-xs-12">
+      <div class="span progress-bar-number col-xs-3 text-center"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
+      <div class="span progress-bar-number col-xs-3 text-center"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
+      <div class="span progress-bar-number col-xs-3 text-center"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
+      <div class="span progress-bar-number col-xs-3 text-center" id="current-step-number"><span>4</span></div>
+    </div>
+  </div>
+  <div class="confirmation-content">
+    <i class="fa fa-check-circle text-center" id="confirmation-tick" aria-hidden="true"></i>
+    <span class="text-center confirmation-text">Thank you for your purchase. Your shipment is on its way.</span>
+    <div class="center-return-to-shop-container">
+      <button class="btn btn-lg simple-button-black" id="continue-shopping">
+        <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+          <span class="button-text-black">Return To Shop</span>
+        </a>
+      </button>
+    </div>
+  </div>
+</div>

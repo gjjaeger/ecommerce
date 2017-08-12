@@ -29,11 +29,8 @@
           </div>
 
           <span class="product-name col-xs-12"><%= product.name %></span>
-          <% if product.category_id == "1" %>
-            <span class="product-price col-xs-12"><span class="starting-from">Starting from</span> <%= number_to_currency product.sizes.first.price %> - <%=product.sizes.first.amount%>g</span>
-          <% else %>
-            <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
-          <% end %>
+          <span class="product-price col-xs-12"><%=humanized_money_with_symbol product.currency_price(current_currency) %></span>
+
           <% if admin_signed_in? %>
             <div class="row">
               <% if product.category_id == "2"%>

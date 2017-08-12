@@ -120,7 +120,7 @@
               <span class="product-show-name"><%=@product.name%></span>
             </div>
             <div class="col-xs-12 product-show-price-div text-left">
-              <span class="product-show-price"><%=number_to_currency @product.price%></span>
+              <span class="product-show-price currency-field"><%=humanized_money_with_symbol @product.currency_price("#{current_currency}") %></span>
             </div>
             <div class="col-xs-12 jewelery-add-cart">
               <%if @product.category_id=="2"%>
@@ -211,7 +211,7 @@
                       </div>
                     </div>
                     <span class="product-name col-xs-12"><%= product.name %></span>
-                    <span class="product-price col-xs-12"><%= number_to_currency product.price %></span>
+                    <span class="product-price col-xs-12"><%=humanized_money_with_symbol product.currency_price("#{current_currency}") %></span>
                   </div>
                 </div>
               <%end%>

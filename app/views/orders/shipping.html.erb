@@ -64,7 +64,7 @@
                   </span>
                 </td>
                 <td>
-                  <span class="total_price_per_product small-text <%=order_item.id%>"><%=number_to_currency order_item.product.price*order_item.quantity%></span>
+                  <span class="total_price_per_product small-text <%=order_item.id%>"><%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}")* order_item.quantity%></span>
                 </td>
               </div>
             </div>
@@ -80,7 +80,7 @@
           </span>
           <span class="order-total-container">
             <span class="sidecart-number">
-              <%= number_to_currency current_order.calculate_total %>
+              <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
             </span>
           </span>
         </span>
@@ -92,7 +92,7 @@
           </span>
           <span class="order-total-container">
             <span class="sidecart-number" id="shipping-cost-number">
-              <%=number_to_currency @shipping%>
+              <%=humanized_money_with_symbol @shipping%>
             </span>
           </span>
         </span>
@@ -104,7 +104,7 @@
           </span>
           <span class="order-total-container">
             <span id="total-total-number">
-              <%=number_to_currency @total%>
+              <%=humanized_money_with_symbol @total%>
             </span>
           </span>
         </span>
@@ -115,7 +115,7 @@
         <div class="section-title-container checkout-title-container">
           <span class="section-title" id="address-checkout-title">Shipping address</span>
         </div>
-        <%= link_to order_checkout_path(current_order), class: "btn btn-lg simple-button-black change-address", id:"final-checkout" do %>
+        <%= link_to order_checkout_path(current_order), class: "btn btn-lg simple-button-black change-address" do %>
           <span class="button-text-black">
             Change Address
           </span>
@@ -151,7 +151,7 @@
       <%@rates.each do|rate|%>
         <div class="col-xs-12">
           <%= radio_button_tag 'rate', rate[:id], rate[:rate]==@lowest_rate ? true : false, class:"rate-radio", :"data-href"=>current_order.id%>
-          <span class="small-text radio-button-text"><%=(rate[:service].split /(?=[A-Z])/).first==="First" ? "Standard" : (rate[:service].split /(?=[A-Z])/).first%> <%=rate[:courier]%> <%=rate[:delivery_days]%> <%if current_order.total_price >= 200 && rate[:rate]==@lowest_rate%><span class="small-text bold">free </span><span class="original-price small-text">(<%=number_to_currency rate[:rate]%>)</span><%elsif current_order.total_price >= 200 && rate[:rate]!=@lowest_rate%><span class="small-text bold"><%=number_to_currency (rate[:rate].to_f-@lowest_rate.to_f)%> </span><span class="original-price small-text">(<%=number_to_currency rate[:rate]%>)</span><%else%><span class="small-text bold"><%=number_to_currency rate[:rate]%></span><%end%></span>
+          <span class="small-text radio-button-text"><%=(rate[:service].split /(?=[A-Z])/).first==="First" ? "Standard" : (rate[:service].split /(?=[A-Z])/).first%> <%=rate[:courier]%> <%=rate[:delivery_days]%> <%if current_order.total_price >= 200 && rate[:rate]==@lowest_rate%><span class="small-text bold">free </span><span class="original-price small-text">(<%=humanized_money_with_symbol rate[:rate]%>)</span><%elsif current_order.total_price >= 200 && rate[:rate]!=@lowest_rate%><span class="small-text bold"><%=humanized_money_with_symbol (rate[:rate]-@lowest_rate)%> </span><span class="original-price small-text">(<%=humanized_money_with_symbol rate[:rate]%>)</span><%else%><span class="small-text bold"><%=number_to_currency rate[:rate]%></span><%end%></span>
         </div>
       <%end%>
       <div class="totals">
@@ -161,7 +161,7 @@
           </span>
           <span class="order-total-container">
             <span class="sidecart-number">
-              <%= number_to_currency current_order.calculate_total %>
+              <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
             </span>
           </span>
         </div>
@@ -172,7 +172,7 @@
             </span>
             <span class="order-total-container">
               <span class="sidecart-number" id="shipping-cost-number">
-                <%=number_to_currency @shipping%>
+                <%=humanized_money_with_symbol @shipping%>
               </span>
             </span>
           </span>
@@ -183,7 +183,7 @@
           </span>
           <span class="order-total-container">
             <span id="total-total-number">
-              <%=number_to_currency @total%>
+              <%=humanized_money_with_symbol @total%>
             </span>
           </span>
         </div>

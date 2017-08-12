@@ -6,6 +6,10 @@ class ChargesController < ApplicationController
   def new
   end
 
+  def thanks
+    render :layout=>'order_layout'
+  end
+
   def create
     order_object=Order.find(current_order)
     address=Address.find(order_object.address_id)
@@ -19,48 +23,48 @@ class ChargesController < ApplicationController
         :customer    => customer.id,
         :amount      => Integer(current_order.total_shipping*100),
         :description => "Shipping/Delivery",
-        :currency    => 'usd'
+        :currency    => current_order.total_shipping_currency
       )
     end
+    byebug
     current_order.order_items.each do |item|
       charge = Stripe::Charge.create(
         :customer    => customer.id,
         :amount      => if(item.product.category_id=="1")
                           retrieve_size_price(item.size, item.product_id)*100*item.quantity
                         else
-                          Integer(item.product.price*100*item.quantity)
+                          Integer(item.product.currency_price(current_currency)*100*item.quantity)
                         end,
         :description => params[:email],
-        :currency    => 'usd'
+        :currency    => current_currency
       )
-      order = Stripe::Order.create(
-        :currency => 'usd',
-        :email => params[:email],
-        :items => [
-          {
-            :type => 'sku',
-            :parent =>  if(item.product.category_id=="1")
-                          retrieve_size_sku(item.size, item.product.id)
-                        else
-                          item.product.sku_id
-                        end,
-            :quantity => item.quantity,
-          }
-        ],
-        :shipping => {
-          :name => address.name,
-          :address => {
-            :line1 => address.line1,
-            :line2 => address.line2,
-            :city => address.city,
-            :state => address.state,
-            :country => address.country,
-            :postal_code => address.zip
-          }
-        },
-      )
+      # order = Stripe::Order.create(
+      #   :currency => current_currency,
+      #   :email => params[:email],
+      #   :items => [
+      #     {
+      #       :type => 'sku',
+      #       :parent =>  if(item.product.category_id=="1")
+      #                     retrieve_size_sku(item.size, item.product.id)
+      #                   else
+      #                     item.product.sku_id
+      #                   end,
+      #       :quantity => item.quantity,
+      #     }
+      #   ],
+      #   :shipping => {
+      #     :name => address.name,
+      #     :address => {
+      #       :line1 => address.line1,
+      #       :line2 => address.line2,
+      #       :city => address.city,
+      #       :state => address.state,
+      #       :country => address.country,
+      #       :postal_code => address.zip
+      #     }
+      #   },
+      # )
       shipment=EasyPost::Shipment.retrieve(current_order.shipment_id)
-      debugger;
       purchased=shipment.buy(rate: shipment.rates.select {|e| e.id == current_order.selected_rate}[0])
       label = shipment.label(file_format:"PDF")
       tracker=purchased[:tracker]
@@ -71,12 +75,6 @@ class ChargesController < ApplicationController
       @shipment = Shipment.create(:recipient => address.name, :tracker_code => tracker[:tracking_code], :carrier => tracker[:carrier], :est_delivery_date => tracker[:est_delivery_date], :order_item_id => item.id, :shipment_id => shipment.id, :public_url => tracker[:public_url])
     end
 
-    # session[:rates].each do |rate|
-    #   shipment=EasyPost::Shipment.retrieve(rate[5])
-    #   purchased=shipment.buy(rate: shipment.lowest_rate())
-    #   byebug
-    #   label = shipment.label(file_format:"PDF")
-    # end
 
     # @shippingAddress=Address.create(:line1 => params[:stripeShippingAddressLine1], :city => params[:stripeShippingAddressCity],:country => params[:stripeShippingAddressCountry], :postal_code => params[:stripeShippingAddressZip])
     @order = Order.find(current_order)
@@ -130,7 +128,7 @@ class ChargesController < ApplicationController
       #   end
       # end
       SendEmailJob.set(wait: 20.seconds).perform_later(params[:stripeEmail])
-
+      byebug
       redirect_to thanks_path
     end
   rescue Stripe::CardError => e

@@ -3,13 +3,15 @@ class Order < ApplicationRecord
   before_save :update_total
   before_create :update_status
   has_one :address
+  register_currency :sgd
 
-  def calculate_total
-    self.order_items.collect { |item| if item.product.price!=nil
-      item.product.price
-    else
-      Size.where({amount: item.size, product_id: item.product.id}).first.price
-    end * item.quantity }.sum
+
+  def calculate_total(currency)
+    self.order_items.collect { |item| Money.new(item.product.price* 100, "SGD").exchange_to(currency.upcase){|x| x.round} * item.quantity }.sum
+  end
+
+  def calculate_sgd_total
+    self.order_items.collect { |item| item.product.price * item.quantity }.sum
   end
 
   private
@@ -21,6 +23,10 @@ class Order < ApplicationRecord
   end
 
   def update_total
-    self.total_price = calculate_total
+    current_currency=ApplicationController.helpers.current
+    self.currency_total=current_currency
+    self.total_price = calculate_total(current_currency)
   end
+
+
 end

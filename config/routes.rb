@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     get "delete"
     get "delivery"
   end
+  match '/update_currency' => 'application#update_currency', as: :update_currency, :via => :get
   resources :images
   resource :cart, only: [:show]
   resources :charges, only: [:new, :create]

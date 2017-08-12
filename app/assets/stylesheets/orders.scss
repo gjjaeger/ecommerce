@@ -181,8 +181,18 @@ tr.title-row>th{
 }
 
 #continue-shopping, #return-to-cart, .change-address{
-  background-color: rgb(245,245,245) !important;
+  background-color: white !important;
   border-color: rgb(239, 239, 239)!important;
+}
+
+#return-to-cart, .change-address{
+  width:150px !important;
+  float: right !important;
+  margin-bottom: 10px;
+}
+
+.change-address{
+  width: 200px !important;
 }
 
 #shopping-cart-checkout-title, #address-checkout-title{
@@ -223,23 +233,13 @@ tr.title-row>th{
   padding-top: 40px;
 }
 
-#return-to-cart, .change-address{
-  width:150px !important;
-  float: right;
-  margin-bottom: 10px;
-}
-
-.change-address{
-  width: 200px !important;
-}
-
 #continue-shopping span, #return-to-cart span, .change-address span{
   color: grey !important;
 }
 
 .final-checkout, #submit-payment, #shipping{
-  background-color: #9edcec !important;
-  border-color: rgb(239, 239, 239)!important;
+  background-color: white !important;
+  border-color: black !important;
 }
 
 .form-control{
@@ -253,7 +253,7 @@ tr.title-row>th{
 }
 
 .final-checkout:hover, #submit-payment:hover, #shipping:hover{
-  background-color: white !important;
+  border-color: $light-grey !important;
 }
 
 .final-checkout span, #submit-payment span, #shipping span{

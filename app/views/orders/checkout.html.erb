@@ -1,6 +1,14 @@
 <div class="">
   <div class="shipping-page container">
+    <div class="btn-container return-to-shop-container col-xs-12">
+      <button class="btn btn-lg simple-button-black" id="continue-shopping">
+        <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+          <span class="button-text-black">Return To Shop</span>
+        </a>
+      </button>
+    </div>
     <div class="checkout-progress-container">
+
       <div class="checkout-progress col-xs-12">
         <%= link_to order_cart_path(current_order), class: "", id:"" do %>
           <div class="span progress-bar-item col-xs-3 text-center"><span>Cart Checkout</span></div>
@@ -65,7 +73,7 @@
       <div class="shipping-button-container">
         <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"shipping" do %>
           <span class="button-text-black">
-            Continue
+            Continue<i class='hi hi-angle-right proceed-icon'></i>
           </span>
         <%end%>
       </div>
@@ -110,7 +118,7 @@
                     </span>
                   </td>
                   <td>
-                    <span class="total_price_per_product small-text <%=order_item.id%>"><%=number_to_currency order_item.product.price*order_item.quantity%></span>
+                    <span class="total_price_per_product small-text <%=order_item.id%>"><%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}")* order_item.quantity%></span>
                   </td>
                 </div>
               </div>
@@ -126,7 +134,7 @@
             </span>
             <span class="order-total-container">
               <span class="sidecart-number">
-                <%= number_to_currency current_order.calculate_total %>
+                <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
               </span>
             </span>
           </span>
@@ -138,11 +146,11 @@
             </span>
             <span class="order-total-container">
               <span class="small-small-text">
-                <%if current_order.calculate_total >= 200%>
-                  <%=number_to_currency 0%>
+                <%if @order_total_currency_price >= @freeShippingAmount%>
+                  <%=humanized_money_with_symbol 0%>
                 <%else%>
-                  <span classid="shipping-cost-number">
-                    Please Provide your Address
+                  <span class="shipping-cost-number">
+                    <span class="small-text">Please Provide your Address</span>
                   </span>
                 <%end%>
               </span>
@@ -156,7 +164,7 @@
             </span>
             <span class="order-total-container">
               <span id="total-total-number">
-                <%= number_to_currency current_order.calculate_total %>
+                <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
               </span>
             </span>
           </span>

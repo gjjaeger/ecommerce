@@ -9,7 +9,7 @@
               <span class="item-info">
                 <span class="cart-product-name", id="cart-product-name", data-href = <%=item.product.id%>><%= item.product.name%></span>
                 <span class="cart-product-price", id="cart-product-price", data-href=<%=item.quantity%>>
-                  <%=number_to_currency item.product.price*item.quantity%>
+                  <%=humanized_money_with_symbol (item.product.currency_price("#{current_currency}"))*item.quantity %>
                 </span>
                 <span id="cart-product-quantity">Qty.: <%=item.quantity%></span>
                 <span class="last-row">
@@ -30,11 +30,11 @@
   <div class="total-and-shipping col-xs-12">
     <span class="total-container col-xs-12">
       <span class="total-cart-text">Total:</span>
-      <span class="total-cart-number"><%=number_to_currency current_order.calculate_total%></span>
+      <span class="total-cart-number"><%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%></span>
     </span>
     <span class="shipping-container col-xs-12">
       <span class="shipping-cart-text">Shipping:</span>
-      <span class="shipping-cart-number"><%if current_order.calculate_total>= 200%>Free<%else%>Calculated at Checkout<%end%></span>
+      <span class="shipping-cart-number"><%if current_order.calculate_sgd_total>= 200%>Free<%else%>Calculated at Checkout<%end%></span>
     </span>
   </div>
 <%end%>

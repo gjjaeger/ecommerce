@@ -2,6 +2,13 @@
   <div class="container checkout-content" id="content">
     <div class="big wrapper col-xs-12" id="order-summary-content">
       <div class="">
+        <div class="btn-container return-to-shop-container col-xs-12">
+          <button class="btn btn-lg simple-button-black" id="continue-shopping">
+            <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
+              <span class="button-text-black">Return To Shop</span>
+            </a>
+          </button>
+        </div>
         <div class="checkout-progress-container">
           <div class="checkout-progress col-xs-12">
             <div class="span progress-bar-item col-xs-3 text-center" id="current-step-item"><span>Cart Checkout</span></div>
@@ -17,13 +24,6 @@
           </div>
         </div>
         <div class="cart-info">
-          <div class="btn-container col-xs-12">
-            <button class="btn btn-lg simple-button-black" id="continue-shopping">
-              <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring" class="link_to">
-                <span class="button-text-black">Continue Shopping</span>
-              </a>
-            </button>
-          </div>
           <div class="section-title-container checkout-title-container col-xs-12">
             <span class="section-title">Shopping Cart</span>
           </div>
@@ -71,7 +71,7 @@
                         </span>
                         <span class="small-screen-unit-price-container block text-left">
                           <span class="small-text" id="very-small-screen-price">
-                            Price: <%=number_to_currency order_item.product.price%>
+                            Price: <%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}") %>
                           </span>
                         </span>
                       </span>
@@ -108,7 +108,7 @@
                           </span>
                           <span class="small-screen-unit-price-container">
                             <span class="small-text" id="very-small-screen-price">
-                              Unit Price: <%=number_to_currency order_item.product.price%>
+                              Unit Price: <%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}") %>
                             </span>
                           </span>
                         </td>
@@ -118,7 +118,7 @@
                           </span>
                         </td>
                         <td>
-                          <span class="small-text"><%=number_to_currency order_item.product.price%></span>
+                          <span class="small-text"><%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}") %></span>
                         </td>
 
                         <td>
@@ -136,7 +136,7 @@
                         </td>
 
                         <td>
-                          <span class="total_price_per_product small-text <%=order_item.id%>"><%=number_to_currency order_item.product.price*order_item.quantity%></span>
+                          <span class="total_price_per_product small-text <%=order_item.id%>"><%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}")* order_item.quantity%></span>
                         </td>
 
                         <td>
@@ -164,7 +164,7 @@
             </span>
             <span class="order-total-container">
               <span class="sub-total-number">
-                <%= number_to_currency current_order.calculate_total %>
+                <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
               </span>
             </span>
           </div>
@@ -172,13 +172,20 @@
             <%if @order.order_items.any?%>
               <%= button_tag :class=>"btn btn-lg simple-button-black final-checkout",:"data-href" => @order.id, :id=>"final-checkout" do %>
                 <span class="button-text-black">
-                  Proceed to checkout
+                  Proceed to checkout<i class='hi hi-angle-right proceed-icon'></i>
                 </span>
               <%end%>
             <%end%>
           </div>
+          <div class="till-free-ship">
+            <%if @order_total_currency_price <= @freeShippingAmount%>
+              <span class="small-text">Spend an extra <%=humanized_money_with_symbol @freeShippingAmount-current_order.calculate_total("#{current_currency}")%> and receive free shipping</span>
+            <%else%>
+              <span class="small-text">You receive free shipping for this order</span>
+            <%end%>
+          </div>
           <div class="shipping-div">
-            <span class="free-shipping-text">Free Shipping on all orders above $200</span>
+            <span class="free-shipping-text">Free Shipping on all orders above <%= humanized_money_with_symbol @freeShippingAmount%></span>
           </div>
         </div>
       </div>
