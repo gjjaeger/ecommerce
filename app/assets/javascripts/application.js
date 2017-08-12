@@ -142,11 +142,10 @@ $(document).on('turbolinks:load', function(){
     function add_order_item(){
       var quantity = $('.jewelery-quantity').val();
       var product_id = $('.product_id').val();
-      var order_id = $('.order_id').val();
       $.ajax({
         type: "POST",
         url: "/order_items",
-        data: { order_item: { quantity: quantity, product_id:product_id, order_id:order_id} },
+        data: { order_item: { quantity: quantity, product_id:product_id} },
         success : function(){
           $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
             $(".dropdown-toggle-cart").dropdown();

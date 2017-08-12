@@ -23,7 +23,7 @@ module ApplicationHelper
     if session[:order_id]
       return Order.find(session[:order_id])
     else
-      return Order.create()
+      return Order.new()
     end
   end
 

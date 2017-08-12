@@ -35,7 +35,6 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
-    byebug
     @order.currency_total = current_currency
 
     respond_to do |format|
