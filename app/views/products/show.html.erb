@@ -127,7 +127,6 @@
                 <%= form_for @order_item do |f| %>
                   <div class="cart-form">
                     <%= f.hidden_field :product_id, :class=>"product_id", value: @product.id %>
-                    <%byebug%>
                     <%= f.hidden_field :order_id, :class=>"order_id", value: current_order.id %>
                     <div class="cart-notice"></div>
                     <%= f.hidden_field :quantity, :class=>"jewelery-quantity quantity", value:1, :"data-href" => @product.stock %>
