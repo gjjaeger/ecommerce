@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(order_params)
-    @order.currency_total = session[:currency]
+    @order.currency_total = current_currency
 
     respond_to do |format|
       if @order.save
