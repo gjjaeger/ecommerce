@@ -19,6 +19,14 @@ module ApplicationHelper
     end.compact.flatten
   end
 
+  def current_order
+    if session[:order_id]
+      return Order.find(session[:order_id])
+    else
+      return Order.new()
+    end
+  end
+
   def current
     if Thread.current[:currency]
       Thread.current[:currency]
