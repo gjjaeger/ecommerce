@@ -17,6 +17,9 @@ class ApplicationController < ActionController::Base
   def update_currency
     session[:currency] = params[:currency]
     Thread.current[:currency]=params[:currency]
+    @order =Order.find(current_order)
+    @order.currency_total = current_currency
+    @order.save!
   end
 
   def current_order_items
