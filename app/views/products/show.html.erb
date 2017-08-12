@@ -124,12 +124,12 @@
             </div>
             <div class="col-xs-12 jewelery-add-cart">
               <%if @product.category_id=="2"%>
-                <%= form_for @order_item do |f| %>
+                <%= form_for @order_item, remote: true do |f| %>
                   <div class="cart-form">
                     <%= f.hidden_field :product_id, :class=>"product_id", value: @product.id %>
                     <div class="cart-notice"></div>
                     <%= f.hidden_field :quantity, :class=>"jewelery-quantity quantity", value:1, :"data-href" => @product.stock %>
-                    <%= button_tag(:class=>"add-cart btn btn-default", :id=>"jewelery-add-cart") do %>
+                    <%= button_tag(type: 'submit', :class=>"add-cart btn btn-default", :id=>"jewelery-add-cart") do %>
                       <span class="add-cart-text">Add to cart</span>
                     <%end%>
                   </div>
