@@ -24,8 +24,7 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @order = Order.find(item_params[:order_id])
-    byebug
+    @order = current_order
     if @order.order_items.exists?(product_id: item_params[:product_id])
       @item = @order.order_items.find_by({product_id: item_params[:product_id]})
       @item.quantity += item_params[:quantity].to_i

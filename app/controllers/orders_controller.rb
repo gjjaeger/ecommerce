@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.create(order_params)
+    @order = Order.new(order_params)
     @order.currency_total = session[:currency]
 
     respond_to do |format|
