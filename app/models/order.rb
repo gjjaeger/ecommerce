@@ -24,7 +24,7 @@ class Order < ApplicationRecord
 
   def update_total
     current_currency=ApplicationController.helpers.current
-    self.currency_total=current_currency
+
     self.total_price = calculate_total(current_currency)
   end
 
