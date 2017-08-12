@@ -31,8 +31,7 @@ class OrderItemsController < ApplicationController
     else
       @item = @order.order_items.new(item_params)
     end
-    @order.currency_total = current_currency
-
+    
     @item.save!
     @order.save!
     session[:order_id] = @order.id

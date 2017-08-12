@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
     session[:currency] = params[:currency]
     Thread.current[:currency]=params[:currency]
     @order =Order.find(current_order)
-    @order.currency_total = current_currency
     @order.save!
   end
 
