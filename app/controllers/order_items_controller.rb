@@ -24,7 +24,7 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   # POST /order_items.json
   def create
-    @order = current_order
+    @order = Order.find(item_params[:order_id])
     if @order.order_items.exists?(product_id: item_params[:product_id])
       @item = @order.order_items.find_by({product_id: item_params[:product_id]})
       @item.quantity += item_params[:quantity].to_i
@@ -34,7 +34,7 @@ class OrderItemsController < ApplicationController
     @item.save!
     @order.save!
     session[:order_id] = @order.id
-    
+
     # redirect_to product_path(params[:order_item][:product_id])
 
     # respond_to do |format|
@@ -66,6 +66,7 @@ class OrderItemsController < ApplicationController
   # DELETE /order_items/1.json
   def destroy
     @order = current_order
+    byebug
     @item = @order.order_items.find(params[:id])
     @item.destroy
     @order.save
@@ -88,6 +89,6 @@ class OrderItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:order_item).permit(:quantity, :product_id, :size, :requested_date, :requested_time, :delivery)
+      params.require(:order_item).permit(:quantity, :product_id, :order_id)
     end
 end
