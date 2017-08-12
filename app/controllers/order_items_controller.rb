@@ -66,7 +66,6 @@ class OrderItemsController < ApplicationController
   # DELETE /order_items/1.json
   def destroy
     @order = current_order
-    byebug
     @item = @order.order_items.find(params[:id])
     @item.destroy
     @order.save
