@@ -34,11 +34,7 @@ class OrderItemsController < ApplicationController
     @item.save!
     @order.save!
     session[:order_id] = @order.id
-    respond_to do |format|
-      format.html { redirect_to products_path }
-      format.json { head :no_content }
-      format.js   { render :layout => false }
-    end
+    
     # redirect_to product_path(params[:order_item][:product_id])
 
     # respond_to do |format|

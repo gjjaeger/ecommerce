@@ -139,6 +139,27 @@ $(document).on('turbolinks:load', function(){
   orderItemCheckout();
 
   function cartFunctions() {
+    function add_order_item(){
+      var quantity = $('.jewelery-quantity').val();
+      var product_id = $('.product_id').val();
+      var order_id = $('.order_id').val();
+      $.ajax({
+        type: "POST",
+        url: "/order_items",
+        data: { order_item: { quantity: quantity, product_id:product_id, order_id:order_id} },
+        success : function(){
+          $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+            $(".dropdown-toggle-cart").dropdown();
+            $('#dropdown-cart-button').addClass("open");
+            cartFunctions();
+            filterFunctions();
+          });
+          $('.add-cart').prop("disabled", false);
+        }
+      });
+    }
+
+
 
     $('.delete_order_item').bind('ajax:success', function() {
       $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
@@ -308,9 +329,14 @@ $(document).on('turbolinks:load', function(){
 
     };
     $('.add-cart').on('click', function (event) {
-        if (checkStock(quantityElement)===false){
-          event.preventDefault();
-        }
+      $('.add-cart').prop("disabled", true);
+      if (checkStock(quantityElement)===false){
+        event.preventDefault();
+      }
+      else{
+        event.preventDefault();
+        add_order_item();
+      };
       // $('#dropdown-toggle-button').removeClass("open")
     });
   };
@@ -325,7 +351,6 @@ $(document).on('turbolinks:load', function(){
 
 
   function filterFunctions(){
-    debugger;
     if (localStorage.getItem("currency")!=null) {
       localStorage.setItem("currency", "JPY");
     };
@@ -806,15 +831,7 @@ $(document).on('turbolinks:load', function(){
   });
 
   //order-item create.js
-  $('.add-cart').closest('form').bind('ajax:success', function() {
-    $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
-      $(".dropdown-toggle-cart").dropdown();
-      $('#dropdown-cart-button').addClass("open");
-      cartFunctions();
-      filterFunctions();
-    });
-    $('.add-cart').prop("disabled", false);
-  });
+
 
   function placedivoverdiv(div1, div2){
     var position = $(div1).offset();
