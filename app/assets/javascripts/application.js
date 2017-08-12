@@ -807,11 +807,11 @@ $(document).on('turbolinks:load', function(){
 
   //order-item create.js
   $('.add-cart').closest('form').bind('ajax:success', function() {
-    debugger;
     $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
       $(".dropdown-toggle-cart").dropdown();
       $('#dropdown-cart-button').addClass("open");
       cartFunctions();
+      filterFunctions();
     });
     $('.add-cart').prop("disabled", false);
   });
