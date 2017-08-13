@@ -12,8 +12,9 @@
                   <%=humanized_money_with_symbol (item.product.currency_price("#{current_currency}"))*item.quantity %>
                 </span>
                 <span id="cart-product-quantity">Qty.: <%=item.quantity%></span>
+                <span id="cart-product-size">Size: <%=item.product.length%>cm</span>
                 <span class="last-row">
-                  <span id="cart-product-size">Size: <%=item.product.length%>cm</span>
+                  <span id="cart-product-single-price">Price: <%=humanized_money_with_symbol item.product.currency_price(current_currency)%></span>
                   <%=link_to order_item_path(item), :data => {:method => "delete"}, remote: true, :class =>"delete_order_item" do%>
                     <span class="remove-text"><i class="fa fa-trash" aria-hidden="true"></i></span>
                   <%end%>
@@ -34,7 +35,7 @@
     </span>
     <span class="shipping-container col-xs-12">
       <span class="shipping-cart-text">Shipping:</span>
-      <span class="shipping-cart-number"><%if current_order.calculate_sgd_total>= 200%>Free<%else%>Calculated at Checkout<%end%></span>
+      <span class="shipping-cart-number"><%if current_order.calculate_usd_total>= freeShippingAmountUSD%>Free<%else%>Calculated at Checkout<%end%></span>
     </span>
   </div>
 <%end%>

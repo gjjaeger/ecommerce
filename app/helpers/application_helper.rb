@@ -34,4 +34,16 @@ module ApplicationHelper
       IsoCountryCodes.find(IsoCountryCodes.search_by_name("Japan")[0].alpha2).currency
     end
   end
+
+  def freeShippingAmount
+    return 200
+  end
+
+  def freeShippingAmountUSD
+    Money.new(freeShippingAmount, "USD")
+  end
+
+  def freeShippingAmountCurrency
+    Money.default_bank.exchange(freeShippingAmount, "USD", current_currency.upcase)
+  end
 end

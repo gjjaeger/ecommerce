@@ -23,6 +23,6 @@ class Product < ApplicationRecord
   end
 
   def currency_price (currency)
-    Money.new(self.price*100,'SGD').exchange_to(currency){|x| x.round()}
+    Money.new(self.price,'SGD').exchange_to(currency)
   end
 end

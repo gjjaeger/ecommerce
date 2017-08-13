@@ -26,7 +26,6 @@ class ChargesController < ApplicationController
         :currency    => current_order.total_shipping_currency
       )
     end
-    byebug
     current_order.order_items.each do |item|
       charge = Stripe::Charge.create(
         :customer    => customer.id,
@@ -128,7 +127,6 @@ class ChargesController < ApplicationController
       #   end
       # end
       SendEmailJob.set(wait: 20.seconds).perform_later(params[:stripeEmail])
-      byebug
       redirect_to thanks_path
     end
   rescue Stripe::CardError => e

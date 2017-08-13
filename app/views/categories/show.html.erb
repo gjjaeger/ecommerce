@@ -41,7 +41,7 @@
           <span class="sorted-by small-text">Price</span><span class="pull-right"><i class='hi hi-angle-down sort-caret'></i></span></span></a>
           <div class="dropdown-menu pricer-dropdown"role="menu">
             <div class="price-output">
-              <span id="dropdown-pricer" data-href = <%=session[:currency]%>><span class="small-text"><%=money_without_cents_and_with_symbol Money.default_bank.exchange(@lowPrice.to_f*100, @currency, current_currency.upcase)%> - <%=money_without_cents_and_with_symbol Money.default_bank.exchange(@highPrice.to_f*100, @currency, current_currency.upcase)%></span></span>
+              <span id="dropdown-pricer" data-href = <%=session[:currency]%>><span class="small-text"><%=humanized_money_with_symbol Money.default_bank.exchange(@lowPrice.to_f*100, @currency, current_currency.upcase)%> - <%=humanized_money_with_symbol Money.default_bank.exchange(@highPrice.to_f*100, @currency, current_currency.upcase)%></span></span>
             </div>
             <div class="slider">
               <div id = "dropdown-slider" class="price-slider" data-href = <%=@category.id%>></div>
@@ -87,7 +87,7 @@
 
         <div class="price-filter col-xs-12">
           <div class="price-output">
-            <span id="pricer" data-href = <%=session[:currency]%>><span class="small-text"><%=money_without_cents_and_with_symbol Money.new(@lowPrice.to_f*100, current_currency.upcase)%> - <%=money_without_cents_and_with_symbol Money.new(@highPrice.to_f*100, current_currency.upcase)%></span></span>
+            <span id="pricer" data-href = <%=session[:currency]%>><span class="small-text"><%=humanized_money_with_symbol Money.new(@lowPrice, current_currency)%> - <%=humanized_money_with_symbol Money.new(@highPrice, current_currency)%></span></span>
           </div>
           <div class="slider">
             <div id = "slider-3" class="price-slider" data-href = <%=@category.id%>></div>
@@ -144,6 +144,7 @@
     <%= will_paginate @products, renderer: BootstrapPagination::Rails %>
   </div>
 </div>
+
 
 
 <div id="product-modal" class="modal"></div>

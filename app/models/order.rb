@@ -7,11 +7,15 @@ class Order < ApplicationRecord
 
 
   def calculate_total(currency)
-    self.order_items.collect { |item| Money.new(item.product.price* 100, "SGD").exchange_to(currency.upcase){|x| x.round} * item.quantity }.sum
+    self.order_items.collect { |item| Money.new(item.product.price, "SGD").exchange_to(currency.upcase) * item.quantity }.sum
   end
 
   def calculate_sgd_total
     self.order_items.collect { |item| item.product.price * item.quantity }.sum
+  end
+
+  def calculate_usd_total
+    self.order_items.collect { |item| Money.new(item.product.price, "SGD").exchange_to("USD") * item.quantity }.sum
   end
 
   private

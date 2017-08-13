@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :in_country
   helper_method :current_currency
   include ChargesHelper
+  include ApplicationHelper
 
   def current_order
     if session[:order_id]

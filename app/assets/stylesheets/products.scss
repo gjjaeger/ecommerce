@@ -578,7 +578,7 @@ input:focus{
   font-weight: bold !important;
 }
 
-#cart-product-quantity{
+#cart-product-quantity, #cart-product-size{
   width:100%;
   float: left;
   text-align: left;
@@ -586,7 +586,7 @@ input:focus{
   color: #666;
 }
 
-#cart-product-size{
+#cart-product-single-price{
   float: left;
   text-align: left;
   font-size: 10px !important;

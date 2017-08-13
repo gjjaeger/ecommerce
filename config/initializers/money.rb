@@ -11,7 +11,7 @@ MoneyRails.configure do |config|
     :symbol              => "S$",
     :symbol_first        => true,
     :subunit             => "Subcent",
-    :subunit_to_unit     => 100,
+    :subunit_to_unit     => 1,
     :thousands_separator => ",",
     :decimal_mark        => "."
   }
@@ -71,7 +71,7 @@ MoneyRails.configure do |config|
     :decimal_mark        => "."
   }
   config.register_currency = {
-    :priority            => 7,
+    :priority            => 50,
     :iso_code            => "JPY",
     :name                => "Japanese Yen",
     :symbol              => "¥",

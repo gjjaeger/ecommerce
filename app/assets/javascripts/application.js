@@ -28,7 +28,6 @@
 //= require turbolinks
 
 $(document).on('turbolinks:load', function(){
-
   var dropdownSlider = $( "#dropdown-slider" );
   $(window).resize(function(){
     sizeChecker();
@@ -146,7 +145,7 @@ $(document).on('turbolinks:load', function(){
         $('#dropdown-cart-button').addClass("open");
       });
     });
-    
+
     $('.add-cart').closest('form').bind('ajax:success', function() {
       $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
         $(".dropdown-toggle-cart").dropdown();
@@ -405,7 +404,9 @@ $(document).on('turbolinks:load', function(){
     var currency = localStorage.getItem('currency');
     var currentPricerText = pricerElement.text()
     var lowPriceText = currentPricerText.substring(0,currentPricerText.indexOf("-"));
-    var currencySymbol = lowPriceText.match("[^0-9]");
+    var currencySymbol = lowPriceText.match(/[^0-9 , .]/g);
+    currencySymbol=currencySymbol.toString().replace(/[,]/g, '');
+
     localStorage.setItem('currencySymbol',currencySymbol);
     function numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -481,16 +482,30 @@ $(document).on('turbolinks:load', function(){
         })
         .done(function(data){
           localStorage.setItem("currency", newCurrency);
-          $('.yield-container').load(location.href + ' .yield-container', function(){
-            shipping();
-            cartFunctions();
-            filterFunctions();
+          var pagenumber= 1 ;
+          tags = checkedTagBoxes().length>0 ? checkedTagBoxes() : 0;
+          var id = sliderElement.attr('data-href');
+          var lowPrice = localStorage.getItem('lowPrice');
+          var highPrice =localStorage.getItem('highPrice');
+          var sortBy = localStorage.getItem('sortBy') ? localStorage.getItem('sortBy') : null;
+          var order = localStorage.getItem('order') ? localStorage.getItem('order') : null;
+          localStorage.setItem('currency', pricerElement.attr('data-href'));
+          var currency = localStorage.getItem('currency');
+          $.get("/categories/"+ id, { low: lowPrice, high: highPrice, currency:currency, page: pagenumber, tags: tags, sort: sortBy, order: order  }, function() {
+          })
+          .success( function (data) {
+            $('.yield-container').load(location.href + ' .yield-container', function(){
+              shipping();
+              cartFunctions();
+              filterFunctions();
+            });
+            $('#navbar').load(location.href + ' #navbar', function(){
+              $(".dropdown-toggle-cart").dropdown();
+              filterFunctions();
+
+            $('.footer-div').load(location.href + ' .footer-div');
+            });
           });
-          $('#navbar').load(location.href + ' #navbar', function(){
-            $(".dropdown-toggle-cart").dropdown();
-            filterFunctions();
-          });
-          $('.footer-div').load(location.href + ' .footer-div');
         });
       });
     };
@@ -555,6 +570,9 @@ $(document).on('turbolinks:load', function(){
           }
           else if (sortedBy[0] === "newness" && orderedBy[0] === "ascending"){
             var sortbytext = "newest";
+          }
+          else if (sortedBy[0] === null){
+            var sortbytext = "sort by";
           };
           $('#sort-by-dropdown:first-child').html('<span class="sort-button-text"><span class="sorted-by small-text">'+ sortbytext + '</span><span class="pull-right"><i class="hi hi-angle-down sort-caret"></i></span></span>');
         };
@@ -574,6 +592,7 @@ $(document).on('turbolinks:load', function(){
           max: 400,
           values: [ minimumPrice, maximumPrice ]
         });
+        sliderElement.draggable();
       };
     };
 

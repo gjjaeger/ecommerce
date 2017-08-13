@@ -12,7 +12,7 @@
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <link rel="stylesheet" href="https://cdn.hippicons.com/css/hippicons-min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
     <script src="https://use.fontawesome.com/4430b10b2e.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/card.js'></script>
@@ -23,7 +23,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -98,6 +99,16 @@
                   <span class="empty-cart">
                     <span class="small-text">Your shopping cart is empty.</span>
                   </span>
+                  <div class="total-and-shipping col-xs-12">
+                    <span class="total-container col-xs-12">
+                      <span class="total-cart-text">Total:</span>
+                      <span class="total-cart-number"><%=humanized_money_with_symbol Money.new(0,current_currency)%></span>
+                    </span>
+                    <span class="shipping-container col-xs-12">
+                      <span class="shipping-cart-text">Shipping:</span>
+                      <span class="shipping-cart-number"><%if current_order.calculate_usd_total>= freeShippingAmountUSD%>Free<%else%>Calculated at Checkout<%end%></span>
+                    </span>
+                  </div>
                 </li>
               <%end%>
               <%if current_order_items!=nil && current_order_items.any?%>
