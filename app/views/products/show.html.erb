@@ -124,7 +124,7 @@
             </div>
             <div class="col-xs-12 jewelery-add-cart">
               <%if @product.category_id=="2"%>
-                <%= form_for @order_item, remote: true do |f| %>
+                <%= form_for @order_item, remote: true, class:"add-to-cart-form" do |f| %>
                   <div class="cart-form">
                     <%= f.hidden_field :product_id, :class=>"product_id", value: @product.id %>
                     <div class="cart-notice"></div>

@@ -74,7 +74,7 @@ class OrdersController < ApplicationController
 
   def checkout
     @order_total_currency_price=Money.default_bank.exchange(current_order.calculate_sgd_total*100, "SGD", current_currency.upcase)
-    @freeShippingAmount = Money.default_bank.exchange(200*100, "SGD", current_currency.upcase)
+    @freeShippingAmount = Money.default_bank.exchange(200, "USD", current_currency.upcase)
     @address = Address.new()
     @order=Order.find(current_order)
     render :layout=>'order_layout'
@@ -83,7 +83,7 @@ class OrdersController < ApplicationController
   def cart
     @order_total_currency_price=Money.default_bank.exchange(current_order.calculate_sgd_total*100, "SGD", current_currency.upcase)
     @order=Order.find(current_order)
-    @freeShippingAmount = Money.default_bank.exchange(200*100, "SGD", current_currency.upcase)
+    @freeShippingAmount = Money.default_bank.exchange(200, "USD", current_currency.upcase)
     render :layout=>'order_layout'
   end
 

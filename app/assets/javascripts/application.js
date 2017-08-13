@@ -140,6 +140,22 @@ $(document).on('turbolinks:load', function(){
   orderItemCheckout();
 
   function cartFunctions() {
+    $('.delete_order_item').bind('ajax:success', function() {
+      $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+        $(".dropdown-toggle-cart").dropdown();
+        $('#dropdown-cart-button').addClass("open");
+      });
+    });
+    
+    $('.add-cart').closest('form').bind('ajax:success', function() {
+      $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+        $(".dropdown-toggle-cart").dropdown();
+        $('#dropdown-cart-button').addClass("open");
+        cartFunctions();
+        filterFunctions();
+      });
+      $('.add-cart').prop("disabled", false);
+    });
     // function add_order_item(){
     //   var quantity = $('.jewelery-quantity').val();
     //   var product_id = $('.product_id').val();
@@ -159,12 +175,7 @@ $(document).on('turbolinks:load', function(){
     //   });
     // }
 
-    $('.delete_order_item').bind('ajax:success', function() {
-      $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
-        $(".dropdown-toggle-cart").dropdown();
-        $('#dropdown-cart-button').addClass("open");
-      });
-    });
+
     // $('.quantity').val(0);
     var selectElement = $('.selectpicker').length > 0 ? $('.selectpicker') : null ;
     var quantityElement = $('.quantity').length > 0 ? $('.quantity') : $('.checkout-quantity') ;
@@ -811,15 +822,7 @@ $(document).on('turbolinks:load', function(){
   });
 
   //order-item create.js
-  $('.add-cart').closest('form').bind('ajax:success', function() {
-    $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
-      $(".dropdown-toggle-cart").dropdown();
-      $('#dropdown-cart-button').addClass("open");
-      cartFunctions();
-      filterFunctions();
-    });
-    $('.add-cart').prop("disabled", false);
-  });
+
 
   function placedivoverdiv(div1, div2){
     var position = $(div1).offset();
