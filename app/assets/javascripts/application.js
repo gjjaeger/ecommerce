@@ -352,7 +352,11 @@ $(document).on('turbolinks:load', function(){
 
     $('.currency-dropdown-button').on('click', function(){
       $(".dropdown-currency-menu").width(100);
-      $("body").css('margin-left','100px');;
+      $("body").css('margin-left','100px');
+      var windowWidth = $(window).width();
+      if (windowWidth <= 535){
+        $('.currency-symbol').show();
+      }
     });
 
     currencyClick();
@@ -456,7 +460,7 @@ $(document).on('turbolinks:load', function(){
 
 
     function currencyClick(){
-      $('.currency').click(function(){
+      $('.currency').unbind().click(function(){
         $(".dropdown-currency-menu").width(0);
         $("body").css('margin-left','0px');
         var newCurrency=$(this).attr('data-href');
@@ -473,9 +477,9 @@ $(document).on('turbolinks:load', function(){
           });
           $('#navbar').load(location.href + ' #navbar', function(){
             $(".dropdown-toggle-cart").dropdown();
-            $('#dropdown-cart-button').addClass("open");
             filterFunctions();
           });
+          $('.footer-div').load(location.href + ' .footer-div');
         });
       });
     };

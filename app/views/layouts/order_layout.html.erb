@@ -39,9 +39,6 @@
               <%major_currencies(Money::Currency.table).each do |currency|%>
                 <li class="currency" data-href=<%=currency[:id]%>><span class="small-text currency-symbol"><%=currency[:symbol]%></span><span class="small-text currency-code"><%=currency[:id]%></span></li>
               <%end%>
-              <%all_currencies(Money::Currency.table).each do |currency|%>
-                <li class="currency" data-href=<%=currency[:id]%>><span class="small-text currency-symbol"><%=currency[:symbol]%></span><span class="small-text currency-code"><%=currency[:id]%></span></li>
-              <%end%>
             </ul>
           </li>
         </ul>

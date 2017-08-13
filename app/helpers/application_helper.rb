@@ -4,7 +4,7 @@ module ApplicationHelper
       symbol = attributes[:symbol]
       priority = attributes[:priority]
 
-      if priority && priority < 50
+      if priority && priority < 10
         array[priority] ||= []
         array[priority] << {id: id , symbol: attributes[:symbol]}
       end

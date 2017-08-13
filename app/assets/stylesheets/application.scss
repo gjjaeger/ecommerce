@@ -104,6 +104,15 @@ body{
   font-weight: 100 !important;
 }
 
+.hi-angle-up{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.footer-currency-dropdown .currency-dropdown-button{
+  padding-left: 5px;
+}
+
 .currency:hover{
   cursor: pointer;
   .currency-symbol{
@@ -115,6 +124,7 @@ body{
   position:absolute;
   left:10px;
   display: none;
+  line-height: 30px !important;
 }
 
 .closebtn:hover {
