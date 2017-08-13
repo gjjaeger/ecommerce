@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
   end
 
   def update_currency
-    byebug
     session[:currency] = params[:currency].upcase
     Thread.current[:currency]=params[:currency]
     current_order.save!
