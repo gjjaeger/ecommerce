@@ -15,10 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   def update_currency
-    session[:currency] = params[:currency]
+    byebug
+    session[:currency] = params[:currency].upcase
     Thread.current[:currency]=params[:currency]
-    @order =Order.find(current_order)
-    @order.save!
+    current_order.save!
   end
 
   def current_order_items
