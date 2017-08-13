@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     if session[:currency]
       current_currency = session[:currency]
     else
-      current_currency = IsoCountryCodes.find(IsoCountryCodes.search_by_name("Japan")[0].alpha2).currency
+      current_currency = IsoCountryCodes.find(IsoCountryCodes.search_by_name(in_country)[0].alpha2).currency
     end
     return current_currency
   end
