@@ -19,7 +19,6 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
-
 //= require moment
 //= require bootstrap-datetimepicker
 //= require bootstrap-select
@@ -27,6 +26,8 @@
 //= require cocoon
 //= require_tree .
 //= require turbolinks
+//= require jquery.ui.touch-punch
+
 
 $(document).on('turbolinks:load', function(){
   var dropdownSlider = $( "#dropdown-slider" );
@@ -594,14 +595,6 @@ $(document).on('turbolinks:load', function(){
         localStorage.setItem("sliderlowPrice", localStorage.getItem('lowPrice'));
         localStorage.setItem("sliderhighPrice", localStorage.getItem('highPrice'));
         //infinite loop
-
-        $('#slider-tester').slider({
-          range:true,
-          min: 0 ,
-          max: 400,
-          values: [ minimumPrice, maximumPrice ]
-        });
-        $('#slider-tester').draggable();
 
         sliderElement.slider({
           range:true,

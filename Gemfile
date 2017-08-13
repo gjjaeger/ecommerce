@@ -28,7 +28,7 @@ source 'https://rubygems.org'
   gem 'mail'
   gem 'mailgun-ruby'
   gem 'delayed_job_active_record'
-  gem 'jquery-ui-rails'
+  gem 'jquery-ui-rails', '~> 5.0.5'
   gem 'figaro'
   gem 'geocoder'
   gem 'bootstrap-select-rails'
@@ -41,7 +41,6 @@ source 'https://rubygems.org'
   gem 'money-rails', '~>1'
   gem 'eu_central_bank', '~> 1.1.3'
   gem 'touchpunch-rails'
-
 
 
   group :development, :test do

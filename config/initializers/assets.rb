@@ -4,7 +4,6 @@
 Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += ['payment.js']
 Rails.application.config.assets.precompile += %w( jquery.js )
-Rails.application.config.assets.precompile += %w( jquery-ui.js )
 
 
 # Add additional assets to the asset load path
