@@ -1,5 +1,19 @@
 <footer>
   <div class="footer-div">
+    <ul class="nav navbar-nav navbar-left footer-currency-dropdown">
+      <li class="dropdown" id="currency-dropdown">
+        <a href="javascript:void(0)" class="currency-dropdown-button currency-field small-text"><%=current_currency%><i class='hi hi-angle-down'></i></a>
+        <ul class="dropdown-currency-menu">
+          <a href="javascript:void(0)" class="closebtn">&times;</a>
+          <%major_currencies(Money::Currency.table).each do |currency|%>
+            <li class="currency" data-href=<%=currency[:id]%>><span class="small-text currency-symbol"><%=currency[:symbol]%></span><span class="small-text currency-code"><%=currency[:id]%></span></li>
+          <%end%>
+          <%all_currencies(Money::Currency.table).each do |currency|%>
+            <li class="currency" data-href=<%=currency[:id]%>><span class="small-text currency-symbol"><%=currency[:symbol]%></span><span class="small-text currency-code"><%=currency[:id]%></span></li>
+          <%end%>
+        </ul>
+      </li>
+    </ul>
     <span class="firstfooterrow"><span class="made-by small-text">Made by Gabriel Jaeger</span><span class="email-address"><i class="fa fa-envelope general-icon"></i><a href="mailto:support@company.com" class="email-link"><span class="email-address-text small-text">email@gmail.com</span></a></span><span class="address"><i class="fa fa-map-marker general-icon"></i><span class="address-text small-text">63 Beach Road, 50193 Singapore</span></span></span><span class="secondfooterrow"><span class="made-by2 small-text">Made by Gabriel Jaeger</span><span class="copyright small-text">&copy Copyright JewelQueen</span></span></span>
   </div>
 </footer>

@@ -116,6 +116,7 @@ $(document).on('turbolinks:load', function(){
             checkoutQuantityVar.blur();
             $('.total_price_per_product.'+orderItemId).load(location.href + ' .total_price_per_product.'+orderItemId);
             $('.sub-total-number').load(location.href + ' .sub-total-number');
+            $('.till-free-ship').load(location.href + ' .till-free-ship');
             $('#order-total').load(location.href + ' #order-total');
           }
       });
@@ -139,6 +140,24 @@ $(document).on('turbolinks:load', function(){
   orderItemCheckout();
 
   function cartFunctions() {
+    // function add_order_item(){
+    //   var quantity = $('.jewelery-quantity').val();
+    //   var product_id = $('.product_id').val();
+    //   $.ajax({
+    //     type: "POST",
+    //     url: "/order_items",
+    //     data: { order_item: { quantity: quantity, product_id:product_id} },
+    //     success : function(){
+    //       $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
+    //         $(".dropdown-toggle-cart").dropdown();
+    //         $('#dropdown-cart-button').addClass("open");
+    //         cartFunctions();
+    //         filterFunctions();
+    //       });
+    //       $('.add-cart').prop("disabled", false);
+    //     }
+    //   });
+    // }
 
     $('.delete_order_item').bind('ajax:success', function() {
       $('.dropdown-button-container').load(location.href + ' #dropdown-cart-button', function(){
@@ -322,10 +341,7 @@ $(document).on('turbolinks:load', function(){
 
   filterFunctions();
 
-
-
   function filterFunctions(){
-    debugger;
     if (localStorage.getItem("currency")!=null) {
       localStorage.setItem("currency", "JPY");
     };
@@ -339,26 +355,7 @@ $(document).on('turbolinks:load', function(){
       $("body").css('margin-left','100px');;
     });
 
-    $('.currency').on('click',function(){
-      $(".dropdown-currency-menu").width(0);
-      $("body").css('margin-left','0px');
-      var newCurrency=$(this).attr('data-href');
-      $.ajax({
-        url: "/update_currency",
-        data: {currency: newCurrency}
-      })
-      .done(function(data){
-        localStorage.setItem("currency", newCurrency);
-        $('#navbar').load(location.href + ' #navbar');
-        $('.yield-container').load(location.href + ' .yield-container', function(){
-          shipping();
-          cartFunctions();
-          $(".dropdown-toggle-cart").dropdown();
-          filterFunctions();
-        });
-
-      });
-    });
+    currencyClick();
 
     $('.tab-item').on('click', function(){
       $('.tab-item').removeClass("active");
@@ -454,6 +451,35 @@ $(document).on('turbolinks:load', function(){
       }
     });
 
+    currencyClick();
+
+
+
+    function currencyClick(){
+      $('.currency').click(function(){
+        $(".dropdown-currency-menu").width(0);
+        $("body").css('margin-left','0px');
+        var newCurrency=$(this).attr('data-href');
+        $.ajax({
+          url: "/update_currency",
+          data: {currency: newCurrency}
+        })
+        .done(function(data){
+          localStorage.setItem("currency", newCurrency);
+          $('.yield-container').load(location.href + ' .yield-container', function(){
+            shipping();
+            cartFunctions();
+            filterFunctions();
+          });
+          $('#navbar').load(location.href + ' #navbar', function(){
+            $(".dropdown-toggle-cart").dropdown();
+            $('#dropdown-cart-button').addClass("open");
+            filterFunctions();
+          });
+        });
+      });
+    };
+
     // $('#filter-button').click(function(){
     //   $('.filter').show();
     //   var filterWidth = $('.filter').outerWidth(true);
@@ -526,11 +552,6 @@ $(document).on('turbolinks:load', function(){
         localStorage.setItem("sliderlowPrice", localStorage.getItem('lowPrice'));
         localStorage.setItem("sliderhighPrice", localStorage.getItem('highPrice'));
         //infinite loop
-        while (localStorage.getItem('refresh_count')<1){
-          debugger;
-          localStorage.setItem('refresh_count',1);
-          location.reload();
-        };
 
         sliderElement.slider({
           range:true,
@@ -682,26 +703,6 @@ $(document).on('turbolinks:load', function(){
     return isFormValid;
   };
 
-  $('.currency').on('click',function(){
-    $(".dropdown-currency-menu").width(0);
-    $("body").css('margin-left','0px');
-    var newCurrency=$(this).attr('data-href');
-    $.ajax({
-      url: "/update_currency",
-      data: {currency: newCurrency}
-    })
-    .done(function(data){
-      localStorage.setItem("currency", newCurrency);
-      $('#navbar').load(location.href + ' #navbar');
-      $('.yield-container').load(location.href + ' .yield-container', function(){
-        shipping();
-        cartFunctions();
-        $(".dropdown-toggle-cart").dropdown();
-        filterFunctions();
-      });
-
-    });
-  });
     //was inside currency.click function
     // tags = checkedTagBoxes().length>0 ? checkedTagBoxes() : 0;
     // var tagsForUrl='';
@@ -828,6 +829,14 @@ $(document).on('turbolinks:load', function(){
 
   function shipping() {
     $('#shipping').click(function(event){
+      var leftPoint = $('#current-step-number span').offset().left + $('#current-step-number span').outerWidth();
+      var rightPoint = $('.payment-step-number span').offset().left;
+      debugger;
+      var width = rightPoint - leftPoint;
+      $(".truck-icon").animate({
+        left: width
+      }, 3000);
+
       event.preventDefault();
       if (formchecker()){
         $('.shipping-method-placeholder').show();
@@ -870,13 +879,25 @@ $(document).on('turbolinks:load', function(){
     });
 
 
+
     $('#final-checkout').click(function(){
+      var rightPoint = $('.shipping-step-number .second-step-number').offset().left - $('.container').offset().left - $('.checkout-progress').offset().left-$('.truck-icon').width();
+      debugger;
+      $(".shopping-bag-icon").animate({
+        left: rightPoint
+      }, 3000);
+      debugger;
+      $('.truck-platform').css({left: rightPoint});
       var id = $("#final-checkout").attr('data-href');
       $.get("/orders/" + id + "/checkout", function() {
       })
       .success( function (data) {
-        var content = $(data).find('.shipping-page');
-        $('.cart-page').html(content);
+        $('.progress-bar-item').removeAttr('id');
+        $('.shipping-step').attr("id","current-step-item");
+        $('.progress-bar-number').removeAttr('id');
+        $('.shipping-step-number').attr("id","current-step-number");
+        var content = $(data).find('.shipping-page-content');
+        $('.cart-page-content').html(content);
         $('.spinner').hide();
         shipping();
       });
@@ -895,21 +916,25 @@ $(document).on('turbolinks:load', function(){
           var shippingData= $(data).find('.shipping-content')
         };
         // $('#total-price').html('<%=number_to_currency@shipping%>');
-        $('#order-summary-content').html(shippingData);
+        $('.cart-content').html(shippingData);
         $("#order-summary-content").animate({
           left: "0%"
         }, 1000);
-        $('.checkout-progress-container').html($(data).find('.checkout-progress-container'));
+        // $('.checkout-progress-container').html($(data).find('.checkout-progress-container'));
         // $("#product-modal").modal("show");
         $('.circle-spinner').hide();
         $('.circle-spinner2').hide();
         $("#payment-form :input").prop("disabled", false);
         radioButtons();
-        if (windowWidth >= 650){
-          $('.shipping-content').animate({
-            scrollTop: $(".sub-total").offset().top
-          },'slow');
-        };
+        // if (windowWidth >= 650){
+        //   $('.shipping-content').animate({
+        //     scrollTop: $(".sub-total").offset().top
+        //   },'slow');
+        // };
+        $('.progress-bar-item').removeAttr('id');
+        $('.payment-step').attr("id","current-step-item");
+        $('.progress-bar-number').removeAttr('id');
+        $('.payment-step-number').attr("id","current-step-number");
       });
     };
 

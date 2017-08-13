@@ -31,6 +31,11 @@
   <body>
     <header>
       <nav class="navbar-fixed-top" id="navbar">
+        <ul class="nav navbar-nav navbar navbar-center">
+          <li class="navbar-logo-container">
+            <%= link_to products_path, class:"logo-link" do%><%= image_tag("logo.jpg", :class=> "navbar-logo") %><%end%>
+          </li>
+        </ul>
         <ul class="nav navbar-nav navbar-left currency-dropdown">
           <li class="dropdown" id="currency-dropdown">
             <a href="javascript:void(0)" class="currency-dropdown-button currency-field small-text"><%=current_currency%><i class='hi hi-angle-down'></i></a>
@@ -57,11 +62,7 @@
           </li>
         </ul>
 
-        <ul class="nav navbar-nav navbar navbar-center">
-          <li class="navbar-logo-container">
-            <%= link_to products_path, class:"logo-link" do%><%= image_tag("logo.jpg", :class=> "navbar-logo") %><%end%>
-          </li>
-        </ul>
+
         <ul class="nav navbar-nav home-navbar-button">
           <li><%= link_to products_path do%><span class="small-text">Home</span><%end%></li>
           <%if admin_signed_in?%>
@@ -79,6 +80,7 @@
             <a href="<%= request.base_url %>/categories/2/?low=0&high=400&tags%5B%5D=Bracelet&tags%5B%5D=Earring&tags%5B%5D=Necklace&tags%5B%5D=Ring"><span class="shop-dropdown small-text">Shop</span></span></a>
           </li>
         </ul>
+
         <ul class="nav navbar-nav navbar-right dropdown-button-container">
           <li class="dropdown" id="dropdown-cart-button">
             <a href="#" class="dropdown-toggle has-dropdown dropdown-button dropdown-toggle-cart" data-toggle="dropdown" role="button" aria-expanded="false"><span class="cart-dropdown" id="order-total-container">

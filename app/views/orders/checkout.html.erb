@@ -21,166 +21,168 @@
         <%= link_to order_cart_path(current_order), class: "", id:"" do %>
           <div class="span progress-bar-number col-xs-3 text-center"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
         <%end%>
-        <div class="span progress-bar-number col-xs-3 text-center" id="current-step-number"><span>2</span></div>
-        <div class="span progress-bar-number col-xs-3 text-center"><span>3</span></div>
+        <div class="span progress-bar-number col-xs-3 text-center" id="current-step-number"><span>2</span><i class="fa fa-truck truck-icon" aria-hidden="true"></i></div>
+        <div class="span progress-bar-number col-xs-3 text-center step-3"><span>3</span></div>
         <div class="span progress-bar-number col-xs-3 text-center"><span>4</span></div>
       </div>
     </div>
-    <%= form_for @address, :html => {:id => 'address-form', :class => 'col-xs-6'} do |f| %>
-      <div class="section-title-container">
-        <span class="section-title">Shipping Address</span>
-      </div>
-      <div class=" panel-body">
-        <div class="form-group">
-          <div class="col-md-12">
-            <%= f.text_field :name, class: "form-control required", id: "name", placeholder: "Full Name", :required => true %>
+    <div class="shipping-page-content">
+      <%= form_for @address, :html => {:id => 'address-form', :class => 'col-xs-6'} do |f| %>
+        <div class="section-title-container">
+          <span class="section-title">Shipping Address</span>
+        </div>
+        <div class=" panel-body">
+          <div class="form-group">
+            <div class="col-md-12">
+              <%= f.text_field :name, class: "form-control required", id: "name", placeholder: "Full Name", :required => true %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-8">
+              <%= f.text_field :line1, class: "form-control required", id: "line1", placeholder: "Address Line 1", :required=>true %>
+              <p class="help-block">Street address, P.O. box, company name, c/o</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <%= f.text_field :line2, class: "form-control", id: "line2", placeholder: "Address Line 2" %>
+              <p class="help-block">Apartment #</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6">
+              <%= f.text_field :city, class: "form-control required", id: "city", placeholder: "City", :required=>true %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6">
+              <%= f.text_field :state, class: "form-control required", id: "state", placeholder: "State / Province / Region", :required=>true %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-4">
+              <%= f.text_field :zip, class: "form-control required", id: "zip", placeholder: "Zip / Postal Code", :required=>true %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-8">
+              <%= f.country_select(:country, {selected: @address.country, include_blank: 'Select a country', required:true}, {class: "form-control required", id:"country", :required=>true }) %>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <div class="col-md-8">
-            <%= f.text_field :line1, class: "form-control required", id: "line1", placeholder: "Address Line 1", :required=>true %>
-            <p class="help-block">Street address, P.O. box, company name, c/o</p>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-4">
-            <%= f.text_field :line2, class: "form-control", id: "line2", placeholder: "Address Line 2" %>
-            <p class="help-block">Apartment #</p>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-6">
-            <%= f.text_field :city, class: "form-control required", id: "city", placeholder: "City", :required=>true %>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-6">
-            <%= f.text_field :state, class: "form-control required", id: "state", placeholder: "State / Province / Region", :required=>true %>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-4">
-            <%= f.text_field :zip, class: "form-control required", id: "zip", placeholder: "Zip / Postal Code", :required=>true %>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-md-8">
-            <%= f.country_select(:country, {selected: @address.country, include_blank: 'Select a country', required:true}, {class: "form-control required", id:"country", :required=>true }) %>
-          </div>
-        </div>
-      </div>
 
-      <div class="shipping-button-container">
-        <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"shipping" do %>
-          <span class="button-text-black">
-            Continue<i class='hi hi-angle-right proceed-icon'></i>
-          </span>
-        <%end%>
-      </div>
-    <%end%>
-    <div class="big wrapper col-xs-6" id="order-summary-content">
-      <div class="cart-content">
-        <div class="section-title-container checkout-title-container">
-          <span class="section-title" id="shopping-cart-checkout-title">Shopping Cart</span>
+        <div class="shipping-button-container">
+          <%= button_tag :class=>"col-xs-12 btn btn-lg simple-button-black",:"data-href" => @order.id, :id=>"shipping" do %>
+            <span class="button-text-black">
+              Continue<i class='hi hi-angle-right proceed-icon'></i>
+            </span>
+          <%end%>
         </div>
-        <%= link_to order_cart_path(current_order), class: "btn btn-lg simple-button-black", id:"return-to-cart" do %>
-          <span class="button-text-black">
-            Edit Cart
-          </span>
-        <%end%>
+      <%end%>
+      <div class="big wrapper col-xs-6" id="order-summary-content">
+        <div class="cart-content">
+          <div class="section-title-container checkout-title-container">
+            <span class="section-title" id="shopping-cart-checkout-title">Shopping Cart</span>
+          </div>
+          <%= link_to order_cart_path(current_order), class: "btn btn-lg simple-button-black", id:"return-to-cart" do %>
+            <span class="button-text-black">
+              Edit Cart
+            </span>
+          <%end%>
 
-        <table class="checkout-table">
-          <tr class="title-row">
-            <th class="small-column"></th>
-            <th class="checkout-tab-item">Name</th>
-            <th class="checkout-tab-item">Qty</th>
-            <th class="checkout-tab-item">Total Price</th>
-          </tr>
-          <tr class="spacer"></tr>
-
-          <%@order.order_items.each do |order_item|%>
-            <tr class="order-item-row" id=<%=order_item.id%>>
-              <div class="order-item">
-                <div class="checkout-details">
-                  <td>
-                    <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
-                  </td>
-                  <td>
-                    <span class="checkout-name-container">
-                      <span class="small-text checkout-product-name">
-                        <%=order_item.product.name%>
-                      </span>
-                    </span>
-                  </td>
-                  <td>
-                    <span class="small-text">
-                      <%=order_item.quantity%>
-                    </span>
-                  </td>
-                  <td>
-                    <span class="total_price_per_product small-text <%=order_item.id%>"><%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}")* order_item.quantity%></span>
-                  </td>
-                </div>
-              </div>
+          <table class="checkout-table">
+            <tr class="title-row">
+              <th class="small-column"></th>
+              <th class="checkout-tab-item">Name</th>
+              <th class="checkout-tab-item">Qty</th>
+              <th class="checkout-tab-item">Total Price</th>
             </tr>
             <tr class="spacer"></tr>
-          <%end%>
-        </table>
-        <div class="border-bottom"></div>
-        <div class="sub-total col-xs-12">
-          <span class="col-xs-8 col-xs-offset-4">
-            <span class="sidecart-text">
-              Subtotal
-            </span>
-            <span class="order-total-container">
-              <span class="sidecart-number">
-                <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
-              </span>
-            </span>
-          </span>
-        </div>
-        <div class="shipping-total col-xs-12">
-          <span class="col-xs-8 col-xs-offset-4">
-            <span class="sidecart-text">
-              Shipping Cost
-            </span>
-            <span class="order-total-container">
-              <span class="small-small-text">
-                <%if @order_total_currency_price >= @freeShippingAmount%>
-                  <%=humanized_money_with_symbol 0%>
-                <%else%>
-                  <span class="shipping-cost-number">
-                    <span class="small-text">Please Provide your Address</span>
-                  </span>
-                <%end%>
-              </span>
-            </span>
-          </span>
-        </div>
-        <div class="total-total col-xs-12">
-          <span class="col-xs-8 col-xs-offset-4">
-            <span class="sidecart-text" id="total-total-text">
-              Total
-            </span>
-            <span class="order-total-container">
-              <span id="total-total-number">
-                <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
-              </span>
-            </span>
-          </span>
-        </div>
-        <div class="shipping-method-placeholder">
-          <div class="section-title-container checkout-title-container">
-            <span class="section-title" id="shipping-method-title">Shipping methods</span>
-          </div>
-          <div class="spinner-placeholder"></div>
-        </div>
 
+            <%@order.order_items.each do |order_item|%>
+              <tr class="order-item-row" id=<%=order_item.id%>>
+                <div class="order-item">
+                  <div class="checkout-details">
+                    <td>
+                      <%= image_tag(order_item.product.images.first.photo.url, :class=> "checkout-cart-item-image") %>
+                    </td>
+                    <td>
+                      <span class="checkout-name-container">
+                        <span class="small-text checkout-product-name">
+                          <%=order_item.product.name%>
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="small-text">
+                        <%=order_item.quantity%>
+                      </span>
+                    </td>
+                    <td>
+                      <span class="total_price_per_product small-text <%=order_item.id%>"><%=humanized_money_with_symbol order_item.product.currency_price("#{current_currency}")* order_item.quantity%></span>
+                    </td>
+                  </div>
+                </div>
+              </tr>
+              <tr class="spacer"></tr>
+            <%end%>
+          </table>
+          <div class="border-bottom"></div>
+          <div class="sub-total col-xs-12">
+            <span class="col-xs-8 col-xs-offset-4">
+              <span class="sidecart-text">
+                Subtotal
+              </span>
+              <span class="order-total-container">
+                <span class="sidecart-number">
+                  <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
+                </span>
+              </span>
+            </span>
+          </div>
+          <div class="shipping-total col-xs-12">
+            <span class="col-xs-8 col-xs-offset-4">
+              <span class="sidecart-text">
+                Shipping Cost
+              </span>
+              <span class="order-total-container">
+                <span class="small-small-text">
+                  <%if @order_total_currency_price >= @freeShippingAmount%>
+                    <%=humanized_money_with_symbol 0%>
+                  <%else%>
+                    <span class="shipping-cost-number">
+                      <span class="small-text">Please Provide your Address</span>
+                    </span>
+                  <%end%>
+                </span>
+              </span>
+            </span>
+          </div>
+          <div class="total-total col-xs-12">
+            <span class="col-xs-8 col-xs-offset-4">
+              <span class="sidecart-text" id="total-total-text">
+                Total
+              </span>
+              <span class="order-total-container">
+                <span id="total-total-number">
+                  <%=humanized_money_with_symbol current_order.calculate_total("#{current_currency}")%>
+                </span>
+              </span>
+            </span>
+          </div>
+          <div class="shipping-method-placeholder">
+            <div class="section-title-container checkout-title-container">
+              <span class="section-title" id="shipping-method-title">Shipping methods</span>
+            </div>
+            <div class="spinner-placeholder"></div>
+          </div>
+
+        </div>
       </div>
-    </div>
-    <div id="shipping-content">
-    </div>
-    <div id="payment-form-placeholder">
+      <div id="shipping-content">
+      </div>
+      <div id="payment-form-placeholder">
+      </div>
     </div>
   </div>
 </div>

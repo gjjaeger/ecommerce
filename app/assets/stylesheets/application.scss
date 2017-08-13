@@ -67,6 +67,33 @@ body{
   color:black!important;
 }
 
+.truck-icon, .shopping-bag-icon{
+  position: absolute!important;
+  background-color: white !important;
+  font-size: 12px;
+  line-height: 20px;
+  color:black !important;
+  border-radius: 0% !important;
+  height: 20px !important;
+  width: 20px !important;
+  vertical-align: top;
+  top:-100% !important;
+}
+
+.truck-icon{
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+
+.truck-platform{
+  top: -110%;
+  position: absolute !important;
+}
+
 .dropdown-currency-menu .closebtn {
   position: absolute;
   top: 0;
@@ -753,20 +780,54 @@ body{
   text-align: center;
 }
 
-.navbar-logo{
+.footer-currency-dropdown{
+  position: absolute !important;
+  left:0px;
+  height: 100% !important;
+  vertical-align: middle;
+  display: none !important;
+}
+
+.navbar-logo-container{
+  height: 100% !important;
+}
+body{
+  overflow-y: hidden;
+  height: 100% !important;
+}
+
+html { overflow:auto; }
+
+.yield-container{
+  overflow: scroll !important;
+}
+
+
+.logo-link{
+  position: absolute;
   width:100px;
+  height: 100% !important;
+}
+
+.navbar-logo{
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .navbar-center{
-
-  position: relative;
+  position: absolute !important;
   left: 50%;
-  margin-left: -50px !important;  /* 50% of your logo width */
-  display: block;
+  transform:translateX(-50%);
+  display: inline-block;
+  height: 100% !important;
 }
 
 .logo-link{
   padding: 0 !important;
+}
+
+.logo-link:hover{
+  background-color: transparent !important;
 }
 
 .sk-circle-wrapper{
@@ -1480,6 +1541,25 @@ body{
 };
 
 @media screen and (max-width: 535px) {
+  .currency-dropdown{
+    display: none;
+  }
+
+  .footer-currency-dropdown{
+    display: inline-block;
+  }
+
+
+  .currency-dropdown-button, #currency-dropdown{
+    height: 100% !important;
+  }
+
+  .currency-dropdown-button{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 27px !important;
+    vertical-align: middle !important;
+  }
   .made-by2{
     display: none;
   }
