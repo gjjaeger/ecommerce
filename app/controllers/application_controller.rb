@@ -37,10 +37,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_currency
+    supported_countries = ["Singapore","Australia","Japan","United States of America","United Kingdom", "Germany", "Canada"]
     if session[:currency]
       current_currency = session[:currency]
-    else
+    elsif (supported_countries.include?(in_country))
       current_currency = IsoCountryCodes.find(IsoCountryCodes.search_by_name(in_country)[0].alpha2).currency
+    else
+      current_currency = IsoCountryCodes.find(IsoCountryCodes.search_by_name("United States of America")[0].alpha2).currency
     end
     return current_currency
   end
