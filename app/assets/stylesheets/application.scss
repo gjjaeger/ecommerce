@@ -36,6 +36,7 @@ $dark-blue: #0e647d;
 }
 
 .dropdown-currency-menu {
+  touch-action: none !important;
   height: 100%;
   width: 0px;
   margin:0 !important;
