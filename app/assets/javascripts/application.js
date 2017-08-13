@@ -19,6 +19,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery-ui
+
 //= require moment
 //= require bootstrap-datetimepicker
 //= require bootstrap-select
@@ -351,7 +352,13 @@ $(document).on('turbolinks:load', function(){
 
   filterFunctions();
 
+
+
   function filterFunctions(){
+    $('.has-dropdown').dropdown();
+    $('#dropdown-categories-toggle-button').dropdown();
+    $('#dropdown-sort-toggle-button').dropdown();
+
     if (localStorage.getItem("currency")!=null) {
       localStorage.setItem("currency", "JPY");
     };
@@ -368,6 +375,12 @@ $(document).on('turbolinks:load', function(){
         $('.currency-symbol').show();
       }
     });
+
+    function setCurrency(){
+      var currencySymbol = lowPriceText.match(/[^0-9 , .]/g);
+      currencySymbol=currencySymbol.toString().replace(/[,]/g, '');
+      localStorage.setItem('currencySymbol',currencySymbol);
+    };
 
     currencyClick();
 
@@ -404,10 +417,7 @@ $(document).on('turbolinks:load', function(){
     var currency = localStorage.getItem('currency');
     var currentPricerText = pricerElement.text()
     var lowPriceText = currentPricerText.substring(0,currentPricerText.indexOf("-"));
-    var currencySymbol = lowPriceText.match(/[^0-9 , .]/g);
-    currencySymbol=currencySymbol.toString().replace(/[,]/g, '');
 
-    localStorage.setItem('currencySymbol',currencySymbol);
     function numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -466,9 +476,6 @@ $(document).on('turbolinks:load', function(){
         })
       }
     });
-
-    currencyClick();
-
 
 
     function currencyClick(){
@@ -546,6 +553,8 @@ $(document).on('turbolinks:load', function(){
         //   }
         // };
 
+        setCurrency();
+
         if (getParameterByName('tags%5B%5D')){
           var tagParameters = getParameterByName('tags%5B%5D');
           $('.tag-check-box').attr('checked', false);
@@ -586,13 +595,20 @@ $(document).on('turbolinks:load', function(){
         localStorage.setItem("sliderhighPrice", localStorage.getItem('highPrice'));
         //infinite loop
 
+        $('#slider-tester').slider({
+          range:true,
+          min: 0 ,
+          max: 400,
+          values: [ minimumPrice, maximumPrice ]
+        });
+        $('#slider-tester').draggable();
+
         sliderElement.slider({
           range:true,
           min: 0 ,
           max: 400,
           values: [ minimumPrice, maximumPrice ]
         });
-        sliderElement.draggable();
       };
     };
 
@@ -857,7 +873,6 @@ $(document).on('turbolinks:load', function(){
     $('#shipping').click(function(event){
       var leftPoint = $('#current-step-number span').offset().left + $('#current-step-number span').outerWidth();
       var rightPoint = $('.payment-step-number span').offset().left;
-      debugger;
       var width = rightPoint - leftPoint;
       $(".truck-icon").animate({
         left: width
@@ -908,11 +923,9 @@ $(document).on('turbolinks:load', function(){
 
     $('#final-checkout').click(function(){
       var rightPoint = $('.shipping-step-number .second-step-number').offset().left - $('.container').offset().left - $('.checkout-progress').offset().left-$('.truck-icon').width();
-      debugger;
       $(".shopping-bag-icon").animate({
         left: rightPoint
       }, 3000);
-      debugger;
       $('.truck-platform').css({left: rightPoint});
       var id = $("#final-checkout").attr('data-href');
       $.get("/orders/" + id + "/checkout", function() {

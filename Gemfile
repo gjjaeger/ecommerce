@@ -40,6 +40,7 @@ source 'https://rubygems.org'
   gem 'card-rails'
   gem 'money-rails', '~>1'
   gem 'eu_central_bank', '~> 1.1.3'
+  gem 'touchpunch-rails'
 
 
 
