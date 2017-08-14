@@ -30,7 +30,6 @@
 
 
 $(document).on('turbolinks:load', function(){
-  var dropdownSlider = $( "#dropdown-slider" );
   $(window).resize(function(){
     sizeChecker();
   });
@@ -65,12 +64,6 @@ $(document).on('turbolinks:load', function(){
   shipping();
 
   $('#carouselExampleIndicators').carousel();
-
-  $('#cake-modal').on('shown.bs.modal', function() {
-    cartFunctions();
-    prepareCakeModal();
-    updateCakeModal();
-  });
 
   cartFunctions(); //run functions for non-cakes
 
@@ -274,39 +267,39 @@ $(document).on('turbolinks:load', function(){
       // };
     };
 
-    $('.minus-quantity').on('click',function(){
-      var checkoutQuantityElement = $(this).attr("data-href") ? $(this).attr("data-href") : null;
-      quantityElement = checkoutQuantityElement ? $('.'+checkoutQuantityElement) : quantityElement;
-      var quantity = parseInt(quantityElement.val());
-      if (quantityElement.hasClass("checkout-quantity")){
-        if (quantity > 1){
-          quantityElement.val(quantity-1);
-        };
-      }
-      else{
-        if (quantity > 0){
-          quantityElement.val(quantity-1);
-        };
-      };
-      if (selectElement != null){
-        updateButtonWithSelect(selectElement, quantityElement);
-      }
-      else {
-        updateButton(quantityElement);
-      };
-    });
-    $('.plus-quantity').on('click',function(){
-      var checkoutQuantityElement = $(this).attr("data-href") ? $(this).attr("data-href") : null;
-      quantityElement = checkoutQuantityElement ? $('.'+checkoutQuantityElement) : quantityElement;
-      var quantity = parseInt(quantityElement.val());
-      quantityElement.val(quantity+=1);
-      if (selectElement != null){
-        updateButtonWithSelect(selectElement, quantityElement);
-      }
-      else {
-        checkStock(quantityElement);
-      };
-    });
+    // $('.minus-quantity').on('click',function(){
+    //   var checkoutQuantityElement = $(this).attr("data-href") ? $(this).attr("data-href") : null;
+    //   quantityElement = checkoutQuantityElement ? $('.'+checkoutQuantityElement) : quantityElement;
+    //   var quantity = parseInt(quantityElement.val());
+    //   if (quantityElement.hasClass("checkout-quantity")){
+    //     if (quantity > 1){
+    //       quantityElement.val(quantity-1);
+    //     };
+    //   }
+    //   else{
+    //     if (quantity > 0){
+    //       quantityElement.val(quantity-1);
+    //     };
+    //   };
+    //   if (selectElement != null){
+    //     updateButtonWithSelect(selectElement, quantityElement);
+    //   }
+    //   else {
+    //     updateButton(quantityElement);
+    //   };
+    // });
+    // $('.plus-quantity').on('click',function(){
+    //   var checkoutQuantityElement = $(this).attr("data-href") ? $(this).attr("data-href") : null;
+    //   quantityElement = checkoutQuantityElement ? $('.'+checkoutQuantityElement) : quantityElement;
+    //   var quantity = parseInt(quantityElement.val());
+    //   quantityElement.val(quantity+=1);
+    //   if (selectElement != null){
+    //     updateButtonWithSelect(selectElement, quantityElement);
+    //   }
+    //   else {
+    //     checkStock(quantityElement);
+    //   };
+    // });
     function checkStock(quantityElementVar){
       var quantity = parseInt(quantityElementVar.val());
       var stock = quantityElementVar.attr('data-href') ? parseInt(quantityElementVar.attr('data-href')) : null
@@ -378,9 +371,12 @@ $(document).on('turbolinks:load', function(){
     });
 
     function setCurrency(){
+      var lowPriceText = currentPricerText.substring(0,currentPricerText.indexOf("-"));
       var currencySymbol = lowPriceText.match(/[^0-9 , .]/g);
-      currencySymbol=currencySymbol.toString().replace(/[,]/g, '');
-      localStorage.setItem('currencySymbol',currencySymbol);
+      if (currencySymbol){
+        currencySymbol=currencySymbol.toString().replace(/[,]/g, '');
+        localStorage.setItem('currencySymbol',currencySymbol);
+      };
     };
 
     currencyClick();
@@ -419,28 +415,26 @@ $(document).on('turbolinks:load', function(){
     var currentPricerText = pricerElement.text()
     var lowPriceText = currentPricerText.substring(0,currentPricerText.indexOf("-"));
 
-    function numberWithCommas(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+
     sliderElement.slider({
       range:true,
       min: minRange,
       max: maxRange,
       values: [ 0, 400 ],
       slide: function( event, ui ) {
-        var currentPricerText = pricerElement.text()
-        var lowPriceText = currentPricerText.substring(0,currentPricerText.indexOf("-"));
-        var highPriceText = currentPricerText.substring(currentPricerText.indexOf("-")+1);
-        var lastLowPriceCurrency = lowPriceText.replace(/[^0-9.]/g, '');
-        lastLowPriceCurrency=parseInt(lastLowPriceCurrency) != 0 ? parseInt(lastLowPriceCurrency) : 1
-        var lastHighPriceCurrency = parseInt(highPriceText.replace(/[^0-9.]/g, ''));
-        var lastUI0 = localStorage.getItem("sliderlowPrice") != 0 ? localStorage.getItem("sliderlowPrice") : 1 ;
-        var lastUI1 = localStorage.getItem("sliderhighPrice");
-        var newLowPriceCurrency=parseInt(lastLowPriceCurrency)/lastUI0*ui.values[0].toFixed(0);
-        var newHighPriceCurrency=parseInt(lastHighPriceCurrency)/lastUI1*ui.values[1].toFixed(0);
-        newLowPriceCurrency=numberWithCommas(Math.floor(newLowPriceCurrency));
-        newHighPriceCurrency=numberWithCommas(Math.ceil(newHighPriceCurrency));
-        pricerElement.html('<span class=small-text>'+localStorage.getItem('currencySymbol')+newLowPriceCurrency+ " - "+localStorage.getItem('currencySymbol')+newHighPriceCurrency+'</span>');
+        // var currentPricerText = pricerElement.text()
+        // var lowPriceText = currentPricerText.substring(0,currentPricerText.indexOf("-"));
+        // var highPriceText = currentPricerText.substring(currentPricerText.indexOf("-")+1);
+        // var lastLowPriceCurrency = lowPriceText.replace(/[^0-9.]/g, '');
+        // lastLowPriceCurrency=parseInt(lastLowPriceCurrency) != 0 ? parseInt(lastLowPriceCurrency) : 1
+        // var lastHighPriceCurrency = parseInt(highPriceText.replace(/[^0-9.]/g, ''));
+        // var lastUI0 = localStorage.getItem("sliderlowPrice") != 0 ? localStorage.getItem("sliderlowPrice") : 1 ;
+        // var lastUI1 = localStorage.getItem("sliderhighPrice");
+        // var newLowPriceCurrency=parseInt(lastLowPriceCurrency)/lastUI0*ui.values[0].toFixed(0);
+        // var newHighPriceCurrency=parseInt(lastHighPriceCurrency)/lastUI1*ui.values[1].toFixed(0);
+        // newLowPriceCurrency=numberWithCommas(Math.floor(newLowPriceCurrency));
+        // newHighPriceCurrency=numberWithCommas(Math.ceil(newHighPriceCurrency));
+        pricerElement.html('<span class=small-text>'+localStorage.getItem('currencySymbol')+ui.values[0]+ " - "+localStorage.getItem('currencySymbol')+ui.values[1]+'</span>');
         localStorage.setItem("sliderlowPrice", ui.values[0]);
         localStorage.setItem("sliderhighPrice", ui.values[1]);
       },
@@ -473,7 +467,6 @@ $(document).on('turbolinks:load', function(){
           $('.pagination-links').html($(data).find('.pagination-links'));
           $('.spinner').hide();
           pricerElement.load(location.href + pricerElementSelector);
-
         })
       }
     });
@@ -491,7 +484,7 @@ $(document).on('turbolinks:load', function(){
         .done(function(data){
           localStorage.setItem("currency", newCurrency);
           var pagenumber= 1 ;
-          tags = checkedTagBoxes().length>0 ? checkedTagBoxes() : 0;
+          tags = checkedTagBoxes() && checkedTagBoxes().length>0 ? checkedTagBoxes() : 0;
           var id = sliderElement.attr('data-href');
           var lowPrice = localStorage.getItem('lowPrice');
           var highPrice =localStorage.getItem('highPrice');
@@ -581,7 +574,7 @@ $(document).on('turbolinks:load', function(){
           else if (sortedBy[0] === "newness" && orderedBy[0] === "ascending"){
             var sortbytext = "newest";
           }
-          else if (sortedBy[0] === null){
+          else if (sortedBy[0] == "null"){
             var sortbytext = "sort by";
           };
           $('#sort-by-dropdown:first-child').html('<span class="sort-button-text"><span class="sorted-by small-text">'+ sortbytext + '</span><span class="pull-right"><i class="hi hi-angle-down sort-caret"></i></span></span>');
@@ -864,12 +857,13 @@ $(document).on('turbolinks:load', function(){
 
   function shipping() {
     $('#shipping').click(function(event){
-      var leftPoint = $('#current-step-number span').offset().left + $('#current-step-number span').outerWidth();
-      var rightPoint = $('.payment-step-number span').offset().left;
-      var width = rightPoint - leftPoint;
+      var rightPoint = $('.third-stop').offset().left - $('.container').offset().left - $('.checkout-progress').offset().left-$('.truck-icon').outerWidth();
       $(".truck-icon").animate({
-        left: width
-      }, 3000);
+        left: rightPoint/2 + $('.truck-icon').outerWidth()
+      }, 5000, function(){
+
+      });
+
 
       event.preventDefault();
       if (formchecker()){
@@ -912,14 +906,46 @@ $(document).on('turbolinks:load', function(){
       else return;
     });
 
-
+    var rightPoint = $('.second-stop').offset().left - $('.container').offset().left - $('.checkout-progress').offset().left-$('.truck-loading').outerWidth();
+    var secondStopLeft = $('.second-stop').offset().left;
+    var conveyorWidth = $('.second-stop').offset().left - $('.first-stop').offset().left;
+    $('#conveyorBelt').width(conveyorWidth-$('.truck-icon').outerWidth()-5);
 
     $('#final-checkout').click(function(){
-      var rightPoint = $('.shipping-step-number .second-step-number').offset().left - $('.container').offset().left - $('.checkout-progress').offset().left-$('.truck-icon').width();
+
       $(".shopping-bag-icon").animate({
-        left: rightPoint
-      }, 3000);
-      $('.truck-platform').css({left: rightPoint});
+        left: rightPoint + $('.truck-icon').innerWidth() +10
+      }, 5000, function(){
+        $(".shopping-bag-icon").hide();
+        $('#conveyorBelt').css({border:'0px'});
+        moveTruck();
+      });
+      function moveTruck(){
+        $(".truck-icon").animate({
+          left: $('.truck-icon').innerWidth()
+        }, 1000)
+      };
+      // $.fn.animateRotate = function(angle, duration, easing, complete) {
+      //   return this.each(function() {
+      //     var $elem = $(this);
+      //
+      //     $({deg: 0}).animate({deg: angle}, {
+      //       duration: duration,
+      //       easing: easing,
+      //       step: function(now) {
+      //         $elem.css({
+      //            transform: 'rotate(' + now + 'deg)'
+      //          });
+      //       },
+      //       complete: complete || $.noop
+      //     });
+      //   });
+      // };
+
+
+      // var currentOffset = $('#truck-platform').offset().left
+      // var truckIconWidth = $('.truck-icon').outerWidth();
+      // $('.truck-platform').css({left: currentOffset - truckIconWidth });
       var id = $("#final-checkout").attr('data-href');
       $.get("/orders/" + id + "/checkout", function() {
       })

@@ -30,7 +30,6 @@ $(document).on('turbolinks:load', function(){
   $('#product-modal').on('shown.bs.modal', function() {
     shipping();
     $('div #payment').click(function(){
-      debugger;
     });
   });
 

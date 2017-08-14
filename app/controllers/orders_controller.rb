@@ -91,7 +91,7 @@ class OrdersController < ApplicationController
     shipment=EasyPost::Shipment.retrieve(current_order.shipment_id)
 
     @rates=shipment.rates
-    @rates = @rates.each{|h| h.rate = Money.default_bank.exchange((h.rate.to_f*100), h.currency.upcase , current_currency.upcase)}
+    @rates = @rates.each{|h| h.rate = Money.default_bank.exchange((h.rate), h.currency.upcase , current_currency.upcase)}
     @lowest_rate=Money.new((@rates.min_by{|h| h.rate}.rate), (@rates.min_by{|h| h.rate}.currency))
     @order=current_order
     @zero_object=Money.new(0,current_currency.upcase)

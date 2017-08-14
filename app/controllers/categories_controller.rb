@@ -17,7 +17,9 @@ class CategoriesController < ApplicationController
     @tags=@category.tags.select("name").group(:name)
     @newest_products=@category.products.last(2)
     # fresh_when last_modified: @category.tags.maximum(:updated_at)
-
+    if params[:sort]== "null"
+      @sortBy = "Sort By"
+    end
 
     if params[:id] == '2'
       tagss=[]
